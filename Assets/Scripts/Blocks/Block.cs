@@ -1,23 +1,60 @@
-﻿using System;
-using Scripts.Physics;
+﻿using Physics;
+using Unity.Mathematics;
 using UnityEngine;
 
-namespace Scripts.Blocks
+namespace Blocks
 {
-    public class Block : MonoBehaviour
+    public abstract class Block : MonoBehaviour
     {
-        private BlockData _blockData;
         private PhysicsObject2D _physicsObject;
-        private Camera _camera;
 
+        public BlockData blockData;
+        private SpriteRenderer _spriteRenderer;
+        
+        private Camera _mainCamera;
+        private float _cameraHeight;
+        private float _cameraWidth;
+        
         private void Awake()
         {
-            _physicsObject = gameObject.GetComponent<PhysicsObject2D>();
+            _physicsObject = GetComponent<PhysicsObject2D>();
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+            
+            SetSprite();
+            
+            _mainCamera = Camera.main;
+            _cameraHeight = 2f * _mainCamera.orthographicSize;
+            _cameraWidth = _cameraHeight * _mainCamera.aspect;
         }
+
+        public abstract void OnHit();
+
+        protected abstract void OnMiss();
 
         private void Update()
         {
-            throw new NotImplementedException();
+            if (!(_physicsObject.velocity.y < 0) ||
+                (!(transform.position.y + blockData.radius < -_cameraHeight / 2f - 1f) &&
+                 !(transform.position.x + blockData.radius < -_cameraWidth / 2f - 1f) &&
+                 !(transform.position.x - blockData.radius > _cameraWidth / 2f + 1f))) return;
+            Destroy(gameObject);
+            //OnMiss();
+        }
+
+        private void SetSprite()
+        {
+            _spriteRenderer.sprite = blockData.sprite;
+        }
+
+        public void ThrowItself(Vector3 position, float angle, float velocity, float angularVelocity)
+        {
+            transform.position = position;
+            _physicsObject.SetMainAndAngularVelocity(
+                new Vector2(
+                    velocity * math.cos(angle), 
+                    velocity * math.sin(angle)), 
+                angularVelocity);
+            _physicsObject.isFrozen = false;
         }
     }
 }

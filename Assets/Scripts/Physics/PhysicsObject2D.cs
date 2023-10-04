@@ -1,39 +1,33 @@
 ﻿using UnityEngine;
 
-namespace Scripts.Physics
+namespace Physics
 {
     public class PhysicsObject2D : MonoBehaviour
     {
-        private Vector2 _velocity;
-        private float _angularVelocity = 30f;
-        private float _gravity;
+        public Vector2 velocity;
+        public float angularVelocity;
+        public Vector2 gravity;
+        public bool isFrozen;
 
         private void Awake()
         {
-            _gravity = -9.80665f;
+            isFrozen = true;
+            gravity = new Vector2(0, -9.81f);
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
-            _velocity.y += _gravity * Time.deltaTime;
-            transform.Translate(_velocity * Time.deltaTime, Space.World);
-            transform.Rotate(Vector3.forward, _angularVelocity * Time.deltaTime);
+            if (isFrozen) return;
+            var deltaTime = Time.fixedDeltaTime;
+            velocity += gravity * deltaTime;
+            transform.position += (Vector3)velocity * deltaTime;
+            transform.rotation *= Quaternion.Euler(0f, 0f, angularVelocity * deltaTime);
         }
 
-        public void SetVelocity(Vector2 velocity)
+        public void SetMainAndAngularVelocity(Vector2 newVelocity, float newAngularVelocity)
         {
-            _velocity = velocity;
-        }
-
-        public void SetAngularVelocity(float angularVelocity)
-        {
-            _angularVelocity = angularVelocity;
-        }
-
-        public void SetVelocityAndAngularVelocity(Vector2 velocity, float angularVelocity)
-        {
-            _velocity = velocity;
-            _angularVelocity = angularVelocity;
+            this.velocity = newVelocity;
+            this.angularVelocity = newAngularVelocity;
         }
     }
 }
