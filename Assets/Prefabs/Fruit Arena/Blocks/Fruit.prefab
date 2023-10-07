@@ -62,7 +62,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0f17cb8b0384025b53b1123cd5a2477, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  physicsObject: {fileID: 6527169966905685123}
   blockData: {fileID: 0}
+  spriteRenderer: {fileID: 6085316780666921919}
+  mainCamera: {fileID: 0}
 --- !u!212 &6085316780666921919
 SpriteRenderer:
   m_ObjectHideFlags: 0
