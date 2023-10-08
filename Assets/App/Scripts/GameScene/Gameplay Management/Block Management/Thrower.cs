@@ -14,7 +14,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management
         {
             var randomPoint = GetRandomPoint(throwZone);
             var launchAngle = GetRandomLaunchAngle(throwZone);
-            var launchVelocity = GetRandomVelocity(throwZone, randomPoint, launchAngle);
+            var launchVelocity = GetRandomVelocity(throwZone, launchAngle);
             
             block.ThrowItself(randomPoint, launchVelocity, 30f);
         }
@@ -39,25 +39,13 @@ namespace App.GameScene.Gameplay_Management.Block_Management
             return Random.Range(minLaunchAngle, maxLaunchAngle);
         }
         
-        private Vector2 GetRandomVelocity(ThrowZone throwZone, Vector2 point, float launchAngle)
+        private Vector2 GetRandomVelocity(ThrowZone throwZone, float launchAngle)
         {
-            var g = Physics2D.gravity.magnitude;
-            
-            float angleInRadians = launchAngle * Mathf.Deg2Rad;
-
-            float initialVelocityX = Mathf.Sqrt((2 * g * cameraWidth) / Mathf.Sin(2 * angleInRadians));
-            float initialVelocityY = (cameraHeight / 2f - point.y) / Mathf.Sin(angleInRadians);
-
-            return new Vector2(initialVelocityX, initialVelocityY);
-            
-            var verticalVelocity = Random.Range(
-                Mathf.Sqrt(2 * g * -point.y), 
-                Mathf.Sqrt(2 * g * (cameraHeight / 2f - point.y)));
-            
             var radLaunchAngle = launchAngle * Mathf.Deg2Rad;
             var direction = new Vector2(Mathf.Cos(radLaunchAngle), Mathf.Sin(radLaunchAngle));
+            var velocity = Random.Range(throwZone.startThrowVelocity, throwZone.endThrowVelocity);
             
-            return direction * (verticalVelocity / direction.y);
+            return direction * velocity;
         }
     }
 }

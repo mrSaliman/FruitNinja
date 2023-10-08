@@ -169,7 +169,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management
                 if (throwZone.endThrowAngle < throwZone.startThrowAngle)
                     throwZone.endThrowAngle = throwZone.startThrowAngle;
             }
-            
+
             EditorGUI.BeginChangeCheck();
             throwZone.endThrowAngle = EditorGUILayout.Slider("EndThrowAngle", throwZone.endThrowAngle, 0, 180);
             if (EditorGUI.EndChangeCheck())
@@ -177,8 +177,24 @@ namespace App.GameScene.Gameplay_Management.Block_Management
                 if (throwZone.endThrowAngle < throwZone.startThrowAngle)
                     throwZone.startThrowAngle = throwZone.endThrowAngle;
             }
-            
+
             throwZone.platformAngle = EditorGUILayout.Slider("PlatformAngle", throwZone.platformAngle, -180, 180);
+            
+            EditorGUI.BeginChangeCheck();
+            throwZone.startThrowVelocity = EditorGUILayout.Slider("StartThrowVelocity", throwZone.startThrowVelocity, 0, 30);
+            if (EditorGUI.EndChangeCheck())
+            {
+                if (throwZone.endThrowVelocity < throwZone.startThrowVelocity)
+                    throwZone.endThrowVelocity = throwZone.startThrowVelocity;
+            }
+
+            EditorGUI.BeginChangeCheck();
+            throwZone.endThrowVelocity = EditorGUILayout.Slider("EndThrowVelocity", throwZone.endThrowVelocity, 0, 30);
+            if (EditorGUI.EndChangeCheck())
+            {
+                if (throwZone.endThrowVelocity < throwZone.startThrowVelocity)
+                    throwZone.startThrowVelocity = throwZone.endThrowVelocity;
+            }
 
             EditorGUI.BeginChangeCheck();
             throwZone.radius = EditorGUILayout.FloatField("Radius", throwZone.radius);
@@ -186,9 +202,11 @@ namespace App.GameScene.Gameplay_Management.Block_Management
             {
                 if (throwZone.radius < 0) throwZone.radius = 0;
             }
-            
+
             throwZone.probability = EditorGUILayout.FloatField("Probability", throwZone.probability);
-            
+
+            throwZone.showTrajectory = EditorGUILayout.Toggle("Show Trajectories", throwZone.showTrajectory);
+
             EditorApplication.QueuePlayerLoopUpdate();
         }
     }

@@ -23,6 +23,8 @@ namespace App.GameScene.Blocks
 
         private void Update()
         {
+            if (transform.position.y + _radius >= cameraHeight / 2f &&
+                physicsObject.velocity.y > 0) physicsObject.velocity.y *= -1f;
             if (!(physicsObject.velocity.y < 0) ||
                 (!(transform.position.y + _radius < -cameraHeight / 2f) &&
                  !(transform.position.x + _radius < -cameraWidth / 2f) &&
