@@ -22,6 +22,8 @@ namespace App.GameScene.Gameplay_Management.Block_Management
         
         [HideInInspector] public List<ThrowZone> throwZones = new List<ThrowZone>();
 
+        private readonly List<Block> _currentPack = new();
+
         private bool _stop;
         
         private void Awake()
@@ -55,20 +57,21 @@ namespace App.GameScene.Gameplay_Management.Block_Management
             var throwPackDelay = settings.BaseThrowPackDelay;
             var throwBlockDelay = settings.BaseThrowBlockDelay;
             var difficultyFactor = settings.DifficultyFactor;
+            var maxDifficulty = settings.MaxDifficulty;
+            var difficulty = 1f;
             
             do
             {
-                var pack = GeneratePack(settings.PackSizeRange);
-                StartCoroutine(ThrowPack(pack, throwBlockDelay));
-                throwPackDelay *= difficultyFactor;
-                throwBlockDelay *= difficultyFactor;
+                GeneratePack(settings.PackSizeRange);
+                StartCoroutine(ThrowPack(_currentPack, throwBlockDelay * difficulty));
+                if (difficulty > maxDifficulty) difficulty *= difficultyFactor;
                 yield return new WaitForSeconds(throwPackDelay);
             } while (!_stop);
         }
 
-        private List<Block> GeneratePack(Vector2Int packSizeRange)
+        private void GeneratePack(Vector2Int packSizeRange)
         {
-            List<Block> result = new();
+            _currentPack.Clear();
             System.Random random = new();
             var size = random.Next(packSizeRange.x, packSizeRange.y + 1);
             
@@ -78,10 +81,8 @@ namespace App.GameScene.Gameplay_Management.Block_Management
                 block.SetSprite(sprites[random.Next(sprites.Count)]);
                 block.cameraHeight = _cameraHeight;
                 block.cameraWidth = _cameraWidth;
-                result.Add(block);
+                _currentPack.Add(block);
             }
-
-            return result;
         }
 
         private IEnumerator ThrowPack(List<Block> blocks, float delay)

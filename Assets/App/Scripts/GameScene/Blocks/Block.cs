@@ -1,6 +1,6 @@
 ﻿using App.GameScene.Physics;
+using App.GameScene.User_Input;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace App.GameScene.Blocks
 {
@@ -17,7 +17,7 @@ namespace App.GameScene.Blocks
         [HideInInspector] public float cameraHeight;
         [HideInInspector] public float cameraWidth;
 
-        public abstract void OnHit();
+        protected abstract void OnHit();
 
         protected abstract void OnMiss();
 
@@ -25,12 +25,46 @@ namespace App.GameScene.Blocks
         {
             if (transform.position.y + _radius >= cameraHeight / 2f &&
                 physicsObject.velocity.y > 0) physicsObject.velocity.y *= -1f;
-            if (!(physicsObject.velocity.y < 0) ||
-                (!(transform.position.y + _radius < -cameraHeight / 2f) &&
-                 !(transform.position.x + _radius < -cameraWidth / 2f) &&
-                 !(transform.position.x - _radius > cameraWidth / 2f))) return;
-            Destroy(gameObject);
-            //OnMiss();
+
+            foreach (var deathLine in TouchHandler.DeathLines)
+            {
+                if (deathLine.Active == false) break;
+
+                if (DistanceToSegment(deathLine) <= _radius)
+                {
+                    //OnHit();
+                    Destroy(gameObject);
+                }
+            }
+
+            if (physicsObject.velocity.y < 0 &&
+                (transform.position.y + _radius < -cameraHeight / 2f ||
+                 transform.position.x + _radius < -cameraWidth / 2f ||
+                 transform.position.x - _radius > cameraWidth / 2f))
+            {
+                //OnMiss();
+                Destroy(gameObject);
+            }
+        }
+
+        private float DistanceToSegment(DeathLine deathLine)
+        {
+            var v = deathLine.To - deathLine.From;
+            var w = (Vector2)transform.position - deathLine.From;
+
+            var c1 = Vector2.Dot(w, v);
+            if (c1 <= 0)
+                return Vector2.Distance(transform.position, deathLine.From);
+            
+            var c2 = Vector2.Dot(v, v);
+            if (c2 <= c1)
+                return Vector2.Distance(transform.position, deathLine.To);
+
+            var b = c1 / c2;
+
+            var pb = deathLine.From + v * b;
+
+            return Vector2.Distance(transform.position, pb);
         }
 
         public void SetSprite(Sprite sprite)

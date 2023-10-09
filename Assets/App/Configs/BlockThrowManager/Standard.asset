@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Standard
   m_EditorClassIdentifier: 
   baseThrowBlockDelay: 0.3
-  baseThrowPackDelay: 5
-  difficultyFactor: 0.99
-  packSizeRange: {x: 4, y: 5}
+  baseThrowPackDelay: 2
+  difficultyFactor: 0.9
+  maxDifficulty: 0.35
+  packSizeRange: {x: 2, y: 5}

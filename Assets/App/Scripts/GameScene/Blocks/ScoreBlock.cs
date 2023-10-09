@@ -2,7 +2,7 @@
 {
     public class ScoreBlock : Block
     {
-        public override void OnHit()
+        protected override void OnHit()
         {
             throw new System.NotImplementedException();
         }
