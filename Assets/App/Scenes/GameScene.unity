@@ -123,7 +123,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &52511994
+--- !u!1 &313610252
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,52 +131,47 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 52511996}
-  - component: {fileID: 52511995}
+  - component: {fileID: 313610254}
+  - component: {fileID: 313610253}
   m_Layer: 0
-  m_Name: ThrowZone
+  m_Name: Entry Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &52511995
+--- !u!114 &313610253
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 52511994}
+  m_GameObject: {fileID: 313610252}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d67659cf0ea246959b1bfc18c6bf1fc3, type: 3}
+  m_Script: {fileID: 11500000, guid: 3059ae22906e4289b52b247f577f55f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xIndentation: 0
-  yIndentation: 0.583
-  radius: 1.52
-  platformAngle: -90
-  startThrowAngle: 87.2
-  endThrowAngle: 112.4
-  startThrowVelocity: 14.9
-  endThrowVelocity: 16.5
-  probability: 1
-  showTrajectory: 0
+  managers:
+  - {fileID: 2011780796}
+  - {fileID: 1765934569}
   mainCamera: {fileID: 519420031}
---- !u!4 &52511996
+--- !u!4 &313610254
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 52511994}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_GameObject: {fileID: 313610252}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2011780794}
-  m_RootOrder: 0
+  m_Children:
+  - {fileID: 2011780794}
+  - {fileID: 1765934570}
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
@@ -305,9 +300,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1256303081
+--- !u!1 &1765934568
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -315,106 +310,40 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1256303083}
-  - component: {fileID: 1256303082}
+  - component: {fileID: 1765934570}
+  - component: {fileID: 1765934569}
   m_Layer: 0
-  m_Name: ThrowZone
+  m_Name: Block Interaction Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1256303082
+--- !u!114 &1765934569
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1256303081}
+  m_GameObject: {fileID: 1765934568}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d67659cf0ea246959b1bfc18c6bf1fc3, type: 3}
+  m_Script: {fileID: 11500000, guid: 583d17582b7844a4a2d825a2e7081fbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xIndentation: 0.5
-  yIndentation: 0
-  radius: 2.61
-  platformAngle: 0
-  startThrowAngle: 71.7
-  endThrowAngle: 107.7
-  startThrowVelocity: 12.6
-  endThrowVelocity: 13.7
-  probability: 1
-  showTrajectory: 0
-  mainCamera: {fileID: 519420031}
---- !u!4 &1256303083
+--- !u!4 &1765934570
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1256303081}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_GameObject: {fileID: 1765934568}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2011780794}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1383486744
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1383486746}
-  - component: {fileID: 1383486745}
-  m_Layer: 0
-  m_Name: ThrowZone
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1383486745
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1383486744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d67659cf0ea246959b1bfc18c6bf1fc3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  xIndentation: 1
-  yIndentation: 0
-  radius: 2.1
-  platformAngle: 55
-  startThrowAngle: 76.6
-  endThrowAngle: 81.4
-  startThrowVelocity: 15.8
-  endThrowVelocity: 16.6
-  probability: 1
-  showTrajectory: 0
-  mainCamera: {fileID: 519420031}
---- !u!4 &1383486746
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1383486744}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2011780794}
+  m_Father: {fileID: 313610254}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2011780792
@@ -427,7 +356,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2011780794}
   - component: {fileID: 2011780796}
-  - component: {fileID: 2011780795}
   m_Layer: 0
   m_Name: Block Throw Manager
   m_TagString: Untagged
@@ -446,27 +374,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 52511996}
-  - {fileID: 1383486746}
-  - {fileID: 1256303083}
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_Children: []
+  m_Father: {fileID: 313610254}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2011780795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2011780792}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec0c4b8993da480a899b732ca7f670f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cameraHeight: 0
-  cameraWidth: 0
 --- !u!114 &2011780796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -479,8 +390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21b381c5d94341cc87daeb0fa87c489a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 519420031}
-  thrower: {fileID: 2011780795}
+  blockInteractionManager: {fileID: 1765934569}
   settings: {fileID: 11400000, guid: 431b068248d8a2143945850ae5a91e8c, type: 2}
   sprites:
   - {fileID: 21300000, guid: 1b5d2db4c98906d4098331af6065c336, type: 3}
@@ -493,7 +403,3 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 9481c5e7364662a4e8c4184bb293697e, type: 3}
   prefabs:
   - {fileID: 1057885724533165068, guid: fc12a6077ab56cd46bbdf51e36bbe7f7, type: 3}
-  throwZones:
-  - {fileID: 52511995}
-  - {fileID: 1383486745}
-  - {fileID: 1256303082}

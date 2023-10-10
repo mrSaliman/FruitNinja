@@ -2,25 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using App.GameScene.Blocks;
-using UnityEditor;
+using App.GameScene.Visualization;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace App.GameScene.Gameplay_Management.Block_Management
 {
-    public class BlockThrowManager : MonoBehaviour
+    public class BlockThrowManager : Manager
     {
-        [SerializeReference] private Camera mainCamera;
-        private float _cameraHeight;
-        private float _cameraWidth;
+        private CameraManager _cameraManager;
+        private Rect _cameraSize;
 
-        [SerializeReference] private Thrower thrower;
+        private Thrower _thrower;
+
+        [SerializeReference] private BlockInteractionManager blockInteractionManager;
 
         [SerializeField] private BlockThrowManagerSettings settings;
 
         [SerializeField] private List<Sprite> sprites;
         [SerializeField] private List<Block> prefabs;
         
-        [HideInInspector] public List<ThrowZone> throwZones = new List<ThrowZone>();
+        public readonly List<ThrowZone> ThrowZones = new List<ThrowZone>();
 
         private readonly List<Block> _currentPack = new();
 
@@ -28,32 +30,18 @@ namespace App.GameScene.Gameplay_Management.Block_Management
         
         private void Awake()
         {
-            _cameraHeight = 2f * mainCamera.orthographicSize;
-            _cameraWidth = _cameraHeight * mainCamera.aspect;
-
-            thrower.cameraHeight = _cameraHeight;
-            thrower.cameraWidth = _cameraWidth;
-
             StartCoroutine(StartThrowingLoop());
         }
         
-        public void AddNewThrowZone()
+        public override void Init(CameraManager cameraManager)
         {
-            var newThrowZoneObject = new GameObject("ThrowZone")
-            {
-                transform =
-                {
-                    parent = transform
-                }
-            };
-            var newThrowZone = newThrowZoneObject.AddComponent<ThrowZone>();
-            newThrowZone.mainCamera = mainCamera;
-
-            throwZones.Add(newThrowZone);
+            _cameraManager = cameraManager;
+            _thrower = new Thrower(cameraManager);
         }
 
         public IEnumerator StartThrowingLoop()
         {
+            _cameraSize = _cameraManager.CameraSize;
             var throwPackDelay = settings.BaseThrowPackDelay;
             var throwBlockDelay = settings.BaseThrowBlockDelay;
             var difficultyFactor = settings.DifficultyFactor;
@@ -63,7 +51,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management
             do
             {
                 GeneratePack(settings.PackSizeRange);
-                StartCoroutine(ThrowPack(_currentPack, throwBlockDelay * difficulty));
+                yield return StartCoroutine(ThrowPack(_currentPack, throwBlockDelay * difficulty));
                 if (difficulty > maxDifficulty) difficulty *= difficultyFactor;
                 yield return new WaitForSeconds(throwPackDelay);
             } while (!_stop);
@@ -77,11 +65,10 @@ namespace App.GameScene.Gameplay_Management.Block_Management
             
             for (var i = 0; i < size; i++)
             {
-                var block = Instantiate(prefabs[random.Next(prefabs.Count)], new Vector3(_cameraWidth, _cameraHeight), Quaternion.identity );
+                var block = Instantiate(prefabs[random.Next(prefabs.Count)], _cameraSize.size, Quaternion.identity);
                 block.SetSprite(sprites[random.Next(sprites.Count)]);
-                block.cameraHeight = _cameraHeight;
-                block.cameraWidth = _cameraWidth;
                 _currentPack.Add(block);
+                blockInteractionManager.AddBlock(block);
             }
         }
 
@@ -91,7 +78,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management
             
             foreach (var block in blocks)
             {
-                thrower.Throw(block, throwZone);
+                _thrower.Throw(block, throwZone);
                 yield return new WaitForSeconds(delay);
             }
             
@@ -99,117 +86,24 @@ namespace App.GameScene.Gameplay_Management.Block_Management
         
         private ThrowZone GetRandomThrowZone()
         {
-            if (throwZones.Count == 0) return null;
-            var totalProbability = throwZones.Sum(throwZone => throwZone.probability);
+            if (ThrowZones.Count == 0) return null;
+            var totalProbability = ThrowZones.Sum(throwZone => throwZone.Probability);
             var randomValue = Random.value * totalProbability;
-            foreach (var throwZone in throwZones)
+            foreach (var throwZone in ThrowZones)
             {
-                if (randomValue < throwZone.probability)
+                if (randomValue < throwZone.Probability)
                 {
                     return throwZone;
                 }
-                randomValue -= throwZone.probability;
+                randomValue -= throwZone.Probability;
             }
             
-            return throwZones[^1];
+            return ThrowZones[^1];
+        }
+
+        private void OnDrawGizmos()
+        {
+            GizmosDrawer.DrawThrowZones(ThrowZones, _cameraManager);
         }
     }
-    
-    #if UNITY_EDITOR
-    [CustomEditor(typeof(BlockThrowManager))]
-    internal class BlockThrowManagerEditor : Editor
-    {
-        private bool _showThrowZonesFoldout = true;
-        
-        public override void OnInspectorGUI()
-        {
-            var thrower = (BlockThrowManager)target;
-
-            DrawDefaultInspector();
-            
-            if (GUILayout.Button("Add New ThrowZone"))
-            {
-                thrower.AddNewThrowZone();
-            }
-            
-            if (thrower.throwZones.Count > 0 && GUILayout.Button("Remove Last ThrowZone"))
-            {
-                var lastIndex = thrower.throwZones.Count - 1;
-                DestroyImmediate(thrower.throwZones[lastIndex].gameObject);
-                thrower.throwZones.RemoveAt(lastIndex);
-            }
-            
-            _showThrowZonesFoldout = EditorGUILayout.BeginFoldoutHeaderGroup(_showThrowZonesFoldout, "ThrowZones");
-            if (_showThrowZonesFoldout)
-            {
-                EditorGUI.indentLevel++;
-                foreach (var throwZone in thrower.throwZones)
-                {
-                    EditorGUILayout.LabelField("ThrowZone Settings");
-                    EditorGUI.indentLevel++;
-
-                    DrawThrowZoneEditor(throwZone);
-
-                    EditorGUI.indentLevel--;
-                }
-                EditorGUI.indentLevel--;
-            }
-
-            EditorGUILayout.EndFoldoutHeaderGroup();
-        }
-
-        private void DrawThrowZoneEditor(ThrowZone throwZone)
-        {
-            throwZone.xIndentation = EditorGUILayout.Slider("XIndentation", throwZone.xIndentation, 0, 1);
-            throwZone.yIndentation = EditorGUILayout.Slider("YIndentation", throwZone.yIndentation, 0, 1);
-
-            EditorGUI.BeginChangeCheck();
-            throwZone.startThrowAngle = EditorGUILayout.Slider("StartThrowAngle", throwZone.startThrowAngle, 0, 180);
-            if (EditorGUI.EndChangeCheck())
-            {
-                if (throwZone.endThrowAngle < throwZone.startThrowAngle)
-                    throwZone.endThrowAngle = throwZone.startThrowAngle;
-            }
-
-            EditorGUI.BeginChangeCheck();
-            throwZone.endThrowAngle = EditorGUILayout.Slider("EndThrowAngle", throwZone.endThrowAngle, 0, 180);
-            if (EditorGUI.EndChangeCheck())
-            {
-                if (throwZone.endThrowAngle < throwZone.startThrowAngle)
-                    throwZone.startThrowAngle = throwZone.endThrowAngle;
-            }
-
-            throwZone.platformAngle = EditorGUILayout.Slider("PlatformAngle", throwZone.platformAngle, -180, 180);
-            
-            EditorGUI.BeginChangeCheck();
-            throwZone.startThrowVelocity = EditorGUILayout.Slider("StartThrowVelocity", throwZone.startThrowVelocity, 0, 30);
-            if (EditorGUI.EndChangeCheck())
-            {
-                if (throwZone.endThrowVelocity < throwZone.startThrowVelocity)
-                    throwZone.endThrowVelocity = throwZone.startThrowVelocity;
-            }
-
-            EditorGUI.BeginChangeCheck();
-            throwZone.endThrowVelocity = EditorGUILayout.Slider("EndThrowVelocity", throwZone.endThrowVelocity, 0, 30);
-            if (EditorGUI.EndChangeCheck())
-            {
-                if (throwZone.endThrowVelocity < throwZone.startThrowVelocity)
-                    throwZone.startThrowVelocity = throwZone.endThrowVelocity;
-            }
-
-            EditorGUI.BeginChangeCheck();
-            throwZone.radius = EditorGUILayout.FloatField("Radius", throwZone.radius);
-            if (EditorGUI.EndChangeCheck())
-            {
-                if (throwZone.radius < 0) throwZone.radius = 0;
-            }
-
-            throwZone.probability = EditorGUILayout.FloatField("Probability", throwZone.probability);
-
-            throwZone.showTrajectory = EditorGUILayout.Toggle("Show Trajectories", throwZone.showTrajectory);
-
-            EditorApplication.QueuePlayerLoopUpdate();
-        }
-    }
-    #endif
 }

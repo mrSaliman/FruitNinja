@@ -2,12 +2,12 @@
 {
     public class Bomb : Block
     {
-        protected override void OnHit()
+        public override void OnHit()
         {
             throw new System.NotImplementedException();
         }
 
-        protected override void OnMiss()
+        public override void OnMiss()
         {
             throw new System.NotImplementedException();
         }

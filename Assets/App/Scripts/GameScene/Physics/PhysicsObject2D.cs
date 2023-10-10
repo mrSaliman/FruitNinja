@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using App.Configs.Physics;
+using UnityEngine;
 
 namespace App.GameScene.Physics
 {
@@ -6,28 +7,20 @@ namespace App.GameScene.Physics
     {
         public Vector2 velocity;
         public float angularVelocity;
-        public Vector2 gravity;
         public bool isFrozen;
 
         private void Awake()
         {
             isFrozen = true;
-            gravity = new Vector2(0, -9.81f);
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             if (isFrozen) return;
-            var deltaTime = Time.fixedDeltaTime;
-            velocity += gravity * deltaTime;
+            var deltaTime = Time.deltaTime;
+            velocity += PhysicsConstants.Gravity * deltaTime;
             transform.position += (Vector3)velocity * deltaTime;
-            transform.rotation *= Quaternion.Euler(0f, 0f, angularVelocity * deltaTime);
         }
 
-        public void SetMainAndAngularVelocity(Vector2 newVelocity, float newAngularVelocity)
-        {
-            this.velocity = newVelocity;
-            this.angularVelocity = newAngularVelocity;
-        }
     }
 }
