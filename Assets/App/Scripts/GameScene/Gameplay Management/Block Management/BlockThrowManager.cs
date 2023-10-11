@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using App.GameScene.Blocks;
 using App.GameScene.Visualization;
@@ -10,51 +9,89 @@ namespace App.GameScene.Gameplay_Management.Block_Management
 {
     public class BlockThrowManager : Manager
     {
-        private CameraManager _cameraManager;
+        [SerializeReference] private CameraManager cameraManager;
         private Rect _cameraSize;
-
-        private Thrower _thrower;
-
+        
         [SerializeReference] private BlockInteractionManager blockInteractionManager;
-
+        
+        private RandomBlockThrower _randomBlockThrower;
+        
         [SerializeField] private BlockThrowManagerSettings settings;
 
         [SerializeField] private List<Sprite> sprites;
         [SerializeField] private List<Block> prefabs;
 
-        public List<ThrowZone> ThrowZones = new List<ThrowZone>();
+        public readonly List<ThrowZone> ThrowZones = new List<ThrowZone>();
+
 
         private readonly List<Block> _currentPack = new();
+        private ThrowZone _currentThrowZone;
 
-        private bool _stop;
+        private float _blockTimer,
+            _packTimer,
+            _difficulty,
+            _throwPackDelay,
+            _throwBlockDelay,
+            _difficultyFactor,
+            _maxDifficulty;
+        private bool _stop = true;
+        private int _blockIndex;
         
-        public override void Init(CameraManager cameraManager)
+        public override void Init()
         {
-            _cameraManager = cameraManager;
-            _thrower = new Thrower(cameraManager);
-            StartCoroutine(StartThrowingLoop());
+            _randomBlockThrower = new RandomBlockThrower(cameraManager);
+            StartThrowingLoop();
         }
 
-        public IEnumerator StartThrowingLoop()
+        private void Update()
         {
-            _cameraSize = _cameraManager.CameraRect;
-            var throwPackDelay = settings.BaseThrowPackDelay;
-            var throwBlockDelay = settings.BaseThrowBlockDelay;
-            var difficultyFactor = settings.DifficultyFactor;
-            var maxDifficulty = settings.MaxDifficulty;
-            var difficulty = 1f;
-            
-            do
+            if (_stop) return;
+            _blockTimer -= Time.deltaTime;
+            _packTimer -= Time.deltaTime;
+            ThrowingLoop();
+        }
+
+        private void ThrowingLoop()
+        {
+            if (ThrowZones.Count == 0) return;
+            if (_currentPack.Count - _blockIndex > 0)
             {
+                if (!(_blockTimer <= 0)) return;
+                _randomBlockThrower.Throw(_currentPack[_blockIndex], _currentThrowZone);
+                _blockIndex++;
+                _blockTimer = _throwBlockDelay * _difficulty;
+                
+                if (_currentPack.Count - _blockIndex == 1) _packTimer = _throwPackDelay * _difficulty;
+            }
+            else if (_packTimer <= 0)
+            {
+                _currentThrowZone = GetRandomThrowZone();
                 GeneratePack(settings.PackSizeRange);
-                yield return StartCoroutine(ThrowPack(_currentPack, throwBlockDelay * difficulty));
-                if (difficulty > maxDifficulty) difficulty *= difficultyFactor;
-                yield return new WaitForSeconds(throwPackDelay);
-            } while (!_stop);
+                if (_difficulty > _maxDifficulty) _difficulty *= _difficultyFactor;
+            }
+        }
+
+        private void StartThrowingLoop()
+        {
+            _stop = false;
+            
+            _throwPackDelay = settings.BaseThrowPackDelay;
+            _throwBlockDelay = settings.BaseThrowBlockDelay;
+            
+            _packTimer = _throwPackDelay;
+            _blockTimer = _throwBlockDelay;
+            _blockIndex = 0;
+            
+            _difficulty = 1f;
+            _difficultyFactor = settings.DifficultyFactor;
+            _maxDifficulty = settings.MaxDifficulty;
+            
+            _cameraSize = cameraManager.CameraRect;
         }
 
         private void GeneratePack(Vector2Int packSizeRange)
         {
+            _blockIndex = 0;
             _currentPack.Clear();
             System.Random random = new();
             var size = random.Next(packSizeRange.x, packSizeRange.y + 1);
@@ -66,18 +103,6 @@ namespace App.GameScene.Gameplay_Management.Block_Management
                 _currentPack.Add(block);
                 blockInteractionManager.AddBlock(block);
             }
-        }
-
-        private IEnumerator ThrowPack(List<Block> blocks, float delay)
-        {
-            var throwZone = GetRandomThrowZone();
-            
-            foreach (var block in blocks)
-            {
-                _thrower.Throw(block, throwZone);
-                yield return new WaitForSeconds(delay);
-            }
-            
         }
         
         private ThrowZone GetRandomThrowZone()
@@ -99,7 +124,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management
 
         private void OnDrawGizmos()
         {
-            GizmosDrawer.DrawThrowZones(ThrowZones, _cameraManager);
+            GizmosDrawer.DrawThrowZones(ThrowZones, cameraManager);
         }
     }
 }

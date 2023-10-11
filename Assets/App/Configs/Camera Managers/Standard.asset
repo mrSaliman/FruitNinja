@@ -9,11 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d23df4890ce4e15be5b0f1ef844af88, type: 3}
+  m_Script: {fileID: 11500000, guid: b8d80f00b0164961bb125799096c77c5, type: 3}
   m_Name: Standard
   m_EditorClassIdentifier: 
-  baseThrowBlockDelay: 0.3
-  baseThrowPackDelay: 2
-  difficultyFactor: 0.99
-  maxDifficulty: 0.35
-  packSizeRange: {x: 2, y: 5}
+  camera: {fileID: 0}

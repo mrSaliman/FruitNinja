@@ -39,7 +39,7 @@ namespace App.GameScene.Visualization
                 Gizmos.DrawLine(center, new Vector3(center.x + math.cos(radEndAngle) * throwZone.Radius / 2f, center.y + math.sin(radEndAngle) * throwZone.Radius / 2f));
             
                 
-                if(!throwZone.ShowTrajectory) return;
+                if(!throwZone.ShowTrajectory) continue;
                 DrawMinMaxTrajectory(new Vector2(
                         center.x - cosPlatform * throwZone.Radius, 
                         center.y - sinPlatform * throwZone.Radius), 

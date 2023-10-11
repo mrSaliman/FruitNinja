@@ -1,27 +1,24 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace App.GameScene.Visualization
 {
-    public class CameraManager
+    [CreateAssetMenu(menuName = "CameraManager", fileName = "New CameraManager")]
+    public class CameraManager : ScriptableObject
     {
-        private readonly Camera _camera;
+        [SerializeReference] public Camera camera;
         public Rect CameraRect
         {
             get
             {
-                Vector2 position = _camera.transform.position;
-                var width = _camera.orthographicSize * 2f * _camera.aspect; 
-                var height = _camera.orthographicSize * 2f;
+                Vector2 position = camera.transform.position;
+                var width = camera.orthographicSize * 2f * camera.aspect; 
+                var height = camera.orthographicSize * 2f;
                 
                 var cameraRect = new Rect(position.x - width / 2, position.y - height / 2, width, height);
                 
                 return cameraRect;
             }
-        }
-
-        public CameraManager(Camera camera)
-        {
-            _camera = camera;
         }
     }
 }

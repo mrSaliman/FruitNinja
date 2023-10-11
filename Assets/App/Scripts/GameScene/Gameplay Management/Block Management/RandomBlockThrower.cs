@@ -5,10 +5,10 @@ using Random = UnityEngine.Random;
 
 namespace App.GameScene.Gameplay_Management.Block_Management
 {
-    public class Thrower
+    public class RandomBlockThrower
     {
         private readonly CameraManager _cameraManager;
-        public Thrower(CameraManager cameraManager)
+        public RandomBlockThrower(CameraManager cameraManager)
         {
             _cameraManager = cameraManager;
         }
