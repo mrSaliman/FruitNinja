@@ -13,7 +13,7 @@ namespace App.GameScene.Visualization
             if (throwZones is null || cameraManager is null) return;
             foreach (var throwZone in throwZones)
             {
-                var cameraSize = cameraManager.CameraSize;
+                var cameraSize = cameraManager.CameraRect;
             
                 var radPlatformAngle = throwZone.PlatformAngle * Mathf.Deg2Rad;
                 var sinPlatform = math.sin(radPlatformAngle);

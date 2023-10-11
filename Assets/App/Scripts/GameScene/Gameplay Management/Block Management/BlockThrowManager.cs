@@ -21,27 +21,23 @@ namespace App.GameScene.Gameplay_Management.Block_Management
 
         [SerializeField] private List<Sprite> sprites;
         [SerializeField] private List<Block> prefabs;
-        
-        public readonly List<ThrowZone> ThrowZones = new List<ThrowZone>();
+
+        public List<ThrowZone> ThrowZones = new List<ThrowZone>();
 
         private readonly List<Block> _currentPack = new();
 
         private bool _stop;
         
-        private void Awake()
-        {
-            StartCoroutine(StartThrowingLoop());
-        }
-        
         public override void Init(CameraManager cameraManager)
         {
             _cameraManager = cameraManager;
             _thrower = new Thrower(cameraManager);
+            StartCoroutine(StartThrowingLoop());
         }
 
         public IEnumerator StartThrowingLoop()
         {
-            _cameraSize = _cameraManager.CameraSize;
+            _cameraSize = _cameraManager.CameraRect;
             var throwPackDelay = settings.BaseThrowPackDelay;
             var throwBlockDelay = settings.BaseThrowBlockDelay;
             var difficultyFactor = settings.DifficultyFactor;

@@ -14,7 +14,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management
 
         public override void Init(CameraManager cameraManager)
         {
-            _cameraSize = cameraManager.CameraSize;
+            _cameraSize = cameraManager.CameraRect;
         }
 
         public void AddBlock(Block block)
@@ -38,21 +38,26 @@ namespace App.GameScene.Gameplay_Management.Block_Management
                 if (block.transform.position.y + block.Radius >= _cameraSize.height / 2f &&
                     block.physicsObject.velocity.y > 0) block.physicsObject.velocity.y *= -1f;
 
+                if (block.physicsObject.velocity.y < 0 &&
+                    !_cameraSize.Overlaps(
+                        new Rect(block.transform.position,
+                            new Vector2(block.Radius * 2, block.Radius * 2))))
+                {
+                    //block.OnMiss();
+                    DeleteBlock(i);
+                    i--;
+                    continue;
+                }
+                
                 foreach (var deathLine in TouchHandler.DeathLines)
                 {
                     if (deathLine.Active == false) break;
 
                     if (!(DistanceToSegment(deathLine, block) <= block.Radius)) continue;
-                    block.OnHit();
-                    Destroy(gameObject);
+                    //block.OnHit();
+                    DeleteBlock(i);
+                    i--;
                 }
-
-                if (!(block.physicsObject.velocity.y < 0) ||
-                    _cameraSize.Overlaps(
-                        new Rect(block.transform.position,
-                            new Vector2(block.Radius * 2, block.Radius * 2)))) continue;
-                block.OnMiss();
-                DeleteBlock(i);
             }
         }
         

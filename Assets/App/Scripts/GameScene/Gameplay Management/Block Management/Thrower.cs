@@ -28,7 +28,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management
             var radians = throwZone.PlatformAngle * Mathf.Deg2Rad;
             var offset = new Vector2(Mathf.Cos(radians) * randomT * throwZone.Radius, Mathf.Sin(radians) * randomT * throwZone.Radius);
             
-            var cameraSize = _cameraManager.CameraSize;
+            var cameraSize = _cameraManager.CameraRect;
             var center = new Vector2(
                 (throwZone.XIndentation - 0.5f) * cameraSize.width,
                 (throwZone.YIndentation - 0.5f) * cameraSize.height);
