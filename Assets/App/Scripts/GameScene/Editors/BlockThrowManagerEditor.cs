@@ -1,4 +1,5 @@
-﻿using App.GameScene.Gameplay_Management.Block_Management;
+﻿using System.Collections.Generic;
+using App.GameScene.Gameplay_Management.Block_Management;
 using UnityEditor;
 using UnityEngine;
 
@@ -18,10 +19,11 @@ namespace App.GameScene.Editors
             
             if (GUILayout.Button("Add New ThrowZone"))
             {
+                blockThrowManager.ThrowZones ??= new List<ThrowZone>();
                 blockThrowManager.ThrowZones.Add(new ThrowZone());
             }
             
-            if (blockThrowManager.ThrowZones.Count > 0 && GUILayout.Button("Remove Last ThrowZone"))
+            if (blockThrowManager.ThrowZones is not null && blockThrowManager.ThrowZones.Count > 0 && GUILayout.Button("Remove Last ThrowZone"))
             {
                 var lastIndex = blockThrowManager.ThrowZones.Count - 1;
                 blockThrowManager.ThrowZones.RemoveAt(lastIndex);
@@ -31,15 +33,17 @@ namespace App.GameScene.Editors
             if (_showThrowZonesFoldout)
             {
                 EditorGUI.indentLevel++;
-                foreach (var throwZone in blockThrowManager.ThrowZones)
-                {
-                    EditorGUILayout.LabelField("ThrowZone Settings");
-                    EditorGUI.indentLevel++;
+                if (blockThrowManager.ThrowZones != null)
+                    foreach (var throwZone in blockThrowManager.ThrowZones)
+                    {
+                        EditorGUILayout.LabelField("ThrowZone Settings");
+                        EditorGUI.indentLevel++;
 
-                    DrawThrowZoneEditor(throwZone);
+                        DrawThrowZoneEditor(throwZone);
 
-                    EditorGUI.indentLevel--;
-                }
+                        EditorGUI.indentLevel--;
+                    }
+
                 EditorGUI.indentLevel--;
             }
 

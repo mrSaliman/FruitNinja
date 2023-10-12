@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 313610254}
   - component: {fileID: 313610253}
+  - component: {fileID: 313610255}
   m_Layer: 0
   m_Name: Entry Point
   m_TagString: Untagged
@@ -154,8 +155,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   managers:
   - {fileID: 1765934569}
-  - {fileID: 2011780796}
-  cameraManager: {fileID: 11400000, guid: 02177414553ec4644b815824ae2319a0, type: 2}
+  - {fileID: 2011780795}
+  cameraManager: {fileID: 313610255}
 --- !u!4 &313610254
 Transform:
   m_ObjectHideFlags: 0
@@ -173,6 +174,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &313610255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 313610252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8d80f00b0164961bb125799096c77c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 519420031}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,7 +300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 583d17582b7844a4a2d825a2e7081fbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraManager: {fileID: 11400000, guid: 02177414553ec4644b815824ae2319a0, type: 2}
+  cameraManager: {fileID: 313610255}
 --- !u!4 &1765934570
 Transform:
   m_ObjectHideFlags: 0
@@ -311,7 +325,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2011780794}
-  - component: {fileID: 2011780796}
+  - component: {fileID: 2011780795}
   m_Layer: 0
   m_Name: Block Throw Manager
   m_TagString: Untagged
@@ -334,7 +348,7 @@ Transform:
   m_Father: {fileID: 313610254}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2011780796
+--- !u!114 &2011780795
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -346,11 +360,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21b381c5d94341cc87daeb0fa87c489a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraManager: {fileID: 11400000, guid: 02177414553ec4644b815824ae2319a0, type: 2}
+  cameraManager: {fileID: 313610255}
   blockInteractionManager: {fileID: 1765934569}
   settings: {fileID: 11400000, guid: 431b068248d8a2143945850ae5a91e8c, type: 2}
   sprites:
-  - {fileID: 21300000, guid: 1b5d2db4c98906d4098331af6065c336, type: 3}
   - {fileID: 21300000, guid: 7b3c684e459121f43bbedd73896352a2, type: 3}
   - {fileID: 21300000, guid: bd6f63f6fa64f9c46b7346dbb01d4266, type: 3}
   - {fileID: 21300000, guid: a3625833248735449aab509034c53ff0, type: 3}
@@ -358,5 +371,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 60ca89ffeb26dee4987f854d3ad8c348, type: 3}
   - {fileID: 21300000, guid: bceea3a61340c6b41963a3e39a0fcc7f, type: 3}
   - {fileID: 21300000, guid: 9481c5e7364662a4e8c4184bb293697e, type: 3}
+  - {fileID: 21300000, guid: 1b5d2db4c98906d4098331af6065c336, type: 3}
   prefabs:
   - {fileID: 1057885724533165068, guid: fc12a6077ab56cd46bbdf51e36bbe7f7, type: 3}

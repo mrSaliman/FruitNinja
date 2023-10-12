@@ -21,7 +21,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management
         [SerializeField] private List<Sprite> sprites;
         [SerializeField] private List<Block> prefabs;
 
-        public readonly List<ThrowZone> ThrowZones = new List<ThrowZone>();
+        public List<ThrowZone> ThrowZones;
 
 
         private readonly List<Block> _currentPack = new();
@@ -53,7 +53,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management
 
         private void ThrowingLoop()
         {
-            if (ThrowZones.Count == 0) return;
+            if (ThrowZones is null || ThrowZones.Count == 0) return;
             if (_currentPack.Count - _blockIndex > 0)
             {
                 if (!(_blockTimer <= 0)) return;
@@ -107,7 +107,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management
         
         private ThrowZone GetRandomThrowZone()
         {
-            if (ThrowZones.Count == 0) return null;
+            if (ThrowZones is null || ThrowZones.Count == 0) return null;
             var totalProbability = ThrowZones.Sum(throwZone => throwZone.Probability);
             var randomValue = Random.value * totalProbability;
             foreach (var throwZone in ThrowZones)

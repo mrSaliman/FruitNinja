@@ -20,20 +20,4 @@ namespace App.GameScene.Gameplay_Management
             }
         }
     }
-    
-    #if UNITY_EDITOR
-    [CustomEditor(typeof(EntryPoint))]
-    internal class EntryPointEditor : Editor
-    {
-        public override void OnInspectorGUI()
-        {
-            var entryPoint = (EntryPoint)target;
-
-            DrawDefaultInspector();
-
-            entryPoint.cameraManager.camera = (Camera)EditorGUILayout.ObjectField("Camera Reference", entryPoint.cameraManager.camera, typeof(Camera), true);
-        }
-    }
-    #endif
-    
 }
