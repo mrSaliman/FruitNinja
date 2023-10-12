@@ -271,6 +271,51 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &708773141
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 708773143}
+  - component: {fileID: 708773142}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &708773142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708773141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e9a5848dc0741a495c1d951e64e78d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 519420031}
+--- !u!4 &708773143
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708773141}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1765934568
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,3 +419,24 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 1b5d2db4c98906d4098331af6065c336, type: 3}
   prefabs:
   - {fileID: 1057885724533165068, guid: fc12a6077ab56cd46bbdf51e36bbe7f7, type: 3}
+  ThrowZones:
+  - xIndentation: 0.5
+    yIndentation: 0
+    radius: 1.87
+    platformAngle: 0
+    startThrowAngle: 77
+    endThrowAngle: 104
+    startThrowVelocity: 12.3
+    endThrowVelocity: 13.7
+    probability: 1
+    showTrajectory: 0
+  - xIndentation: 0
+    yIndentation: 0.513
+    radius: 1.62
+    platformAngle: -90
+    startThrowAngle: 84
+    endThrowAngle: 124
+    startThrowVelocity: 11.3
+    endThrowVelocity: 13.2
+    probability: 1
+    showTrajectory: 1

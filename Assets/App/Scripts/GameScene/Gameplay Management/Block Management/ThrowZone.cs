@@ -1,16 +1,20 @@
-﻿namespace App.GameScene.Gameplay_Management.Block_Management
+﻿using System;
+using UnityEngine.Serialization;
+
+namespace App.GameScene.Gameplay_Management.Block_Management
 {
+    [Serializable]
     public class ThrowZone
     {
-        public float XIndentation;
-        public float YIndentation;
-        public float Radius;
-        public float PlatformAngle;
-        public float StartThrowAngle;
-        public float EndThrowAngle;
-        public float StartThrowVelocity;
-        public float EndThrowVelocity;
-        public float Probability;
-        public bool ShowTrajectory;
+        public float xIndentation;
+        public float yIndentation;
+        public float radius;
+        public float platformAngle;
+        public float startThrowAngle;
+        public float endThrowAngle;
+        public float startThrowVelocity;
+        public float endThrowVelocity;
+        public float probability;
+        public bool showTrajectory;
     }
 }

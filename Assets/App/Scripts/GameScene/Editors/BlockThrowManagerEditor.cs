@@ -52,53 +52,53 @@ namespace App.GameScene.Editors
 
         private void DrawThrowZoneEditor(ThrowZone throwZone)
         {
-            throwZone.XIndentation = EditorGUILayout.Slider("XIndentation", throwZone.XIndentation, 0, 1);
-            throwZone.YIndentation = EditorGUILayout.Slider("YIndentation", throwZone.YIndentation, 0, 1);
+            throwZone.xIndentation = EditorGUILayout.Slider("XIndentation", throwZone.xIndentation, 0, 1);
+            throwZone.yIndentation = EditorGUILayout.Slider("YIndentation", throwZone.yIndentation, 0, 1);
 
             EditorGUI.BeginChangeCheck();
-            throwZone.StartThrowAngle = EditorGUILayout.Slider("StartThrowAngle", throwZone.StartThrowAngle, 0, 180);
+            throwZone.startThrowAngle = EditorGUILayout.Slider("StartThrowAngle", throwZone.startThrowAngle, 0, 180);
             if (EditorGUI.EndChangeCheck())
             {
-                if (throwZone.EndThrowAngle < throwZone.StartThrowAngle)
-                    throwZone.EndThrowAngle = throwZone.StartThrowAngle;
+                if (throwZone.endThrowAngle < throwZone.startThrowAngle)
+                    throwZone.endThrowAngle = throwZone.startThrowAngle;
             }
 
             EditorGUI.BeginChangeCheck();
-            throwZone.EndThrowAngle = EditorGUILayout.Slider("EndThrowAngle", throwZone.EndThrowAngle, 0, 180);
+            throwZone.endThrowAngle = EditorGUILayout.Slider("EndThrowAngle", throwZone.endThrowAngle, 0, 180);
             if (EditorGUI.EndChangeCheck())
             {
-                if (throwZone.EndThrowAngle < throwZone.StartThrowAngle)
-                    throwZone.StartThrowAngle = throwZone.EndThrowAngle;
+                if (throwZone.endThrowAngle < throwZone.startThrowAngle)
+                    throwZone.startThrowAngle = throwZone.endThrowAngle;
             }
 
-            throwZone.PlatformAngle = EditorGUILayout.Slider("PlatformAngle", throwZone.PlatformAngle, -180, 180);
+            throwZone.platformAngle = EditorGUILayout.Slider("PlatformAngle", throwZone.platformAngle, -180, 180);
             
             EditorGUI.BeginChangeCheck();
-            throwZone.StartThrowVelocity = EditorGUILayout.Slider("StartThrowVelocity", throwZone.StartThrowVelocity, 0, 30);
+            throwZone.startThrowVelocity = EditorGUILayout.Slider("StartThrowVelocity", throwZone.startThrowVelocity, 0, 30);
             if (EditorGUI.EndChangeCheck())
             {
-                if (throwZone.EndThrowVelocity < throwZone.StartThrowVelocity)
-                    throwZone.EndThrowVelocity = throwZone.StartThrowVelocity;
+                if (throwZone.endThrowVelocity < throwZone.startThrowVelocity)
+                    throwZone.endThrowVelocity = throwZone.startThrowVelocity;
             }
 
             EditorGUI.BeginChangeCheck();
-            throwZone.EndThrowVelocity = EditorGUILayout.Slider("EndThrowVelocity", throwZone.EndThrowVelocity, 0, 30);
+            throwZone.endThrowVelocity = EditorGUILayout.Slider("EndThrowVelocity", throwZone.endThrowVelocity, 0, 30);
             if (EditorGUI.EndChangeCheck())
             {
-                if (throwZone.EndThrowVelocity < throwZone.StartThrowVelocity)
-                    throwZone.StartThrowVelocity = throwZone.EndThrowVelocity;
+                if (throwZone.endThrowVelocity < throwZone.startThrowVelocity)
+                    throwZone.startThrowVelocity = throwZone.endThrowVelocity;
             }
 
             EditorGUI.BeginChangeCheck();
-            throwZone.Radius = EditorGUILayout.FloatField("Radius", throwZone.Radius);
+            throwZone.radius = EditorGUILayout.FloatField("Radius", throwZone.radius);
             if (EditorGUI.EndChangeCheck())
             {
-                if (throwZone.Radius < 0) throwZone.Radius = 0;
+                if (throwZone.radius < 0) throwZone.radius = 0;
             }
 
-            throwZone.Probability = EditorGUILayout.FloatField("Probability", throwZone.Probability);
+            throwZone.probability = EditorGUILayout.FloatField("Probability", throwZone.probability);
 
-            throwZone.ShowTrajectory = EditorGUILayout.Toggle("Show Trajectories", throwZone.ShowTrajectory);
+            throwZone.showTrajectory = EditorGUILayout.Toggle("Show Trajectories", throwZone.showTrajectory);
 
             EditorApplication.QueuePlayerLoopUpdate();
         }

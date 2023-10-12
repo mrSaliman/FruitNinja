@@ -108,15 +108,15 @@ namespace App.GameScene.Gameplay_Management.Block_Management
         private ThrowZone GetRandomThrowZone()
         {
             if (ThrowZones is null || ThrowZones.Count == 0) return null;
-            var totalProbability = ThrowZones.Sum(throwZone => throwZone.Probability);
+            var totalProbability = ThrowZones.Sum(throwZone => throwZone.probability);
             var randomValue = Random.value * totalProbability;
             foreach (var throwZone in ThrowZones)
             {
-                if (randomValue < throwZone.Probability)
+                if (randomValue < throwZone.probability)
                 {
                     return throwZone;
                 }
-                randomValue -= throwZone.Probability;
+                randomValue -= throwZone.probability;
             }
             
             return ThrowZones[^1];
