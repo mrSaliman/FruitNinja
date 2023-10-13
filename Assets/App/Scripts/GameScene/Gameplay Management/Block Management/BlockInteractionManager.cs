@@ -33,6 +33,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management
 
         private void Update()
         {
+            _cameraSize = cameraManager.CameraRect;
             for (var i = 0; i < _blocks.Count; i++)
             {
                 var block = _blocks[i];
@@ -42,7 +43,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management
                 if (block.physicsObject.velocity.y < 0 &&
                     !_cameraSize.Overlaps(
                         new Rect(block.transform.position,
-                            new Vector2(block.Radius * 2, block.Radius * 2))))
+                            new Vector2(-block.Radius * 2, -block.Radius * 2)), true))
                 {
                     //block.OnMiss();
                     DeleteBlock(i);

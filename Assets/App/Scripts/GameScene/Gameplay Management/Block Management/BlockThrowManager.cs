@@ -3,6 +3,7 @@ using System.Linq;
 using App.GameScene.Blocks;
 using App.GameScene.Visualization;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace App.GameScene.Gameplay_Management.Block_Management
@@ -21,7 +22,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management
         [SerializeField] private List<Sprite> sprites;
         [SerializeField] private List<Block> prefabs;
 
-        public List<ThrowZone> ThrowZones;
+        [HideInInspector] public List<ThrowZone> throwZones;
 
 
         private readonly List<Block> _currentPack = new();
@@ -53,10 +54,11 @@ namespace App.GameScene.Gameplay_Management.Block_Management
 
         private void ThrowingLoop()
         {
-            if (ThrowZones is null || ThrowZones.Count == 0) return;
+            if (throwZones is null || throwZones.Count == 0) return;
             if (_currentPack.Count - _blockIndex > 0)
             {
                 if (!(_blockTimer <= 0)) return;
+                _currentThrowZone = GetRandomThrowZone();
                 _randomBlockThrower.Throw(_currentPack[_blockIndex], _currentThrowZone);
                 _blockIndex++;
                 _blockTimer = _throwBlockDelay * _difficulty;
@@ -65,7 +67,6 @@ namespace App.GameScene.Gameplay_Management.Block_Management
             }
             else if (_packTimer <= 0)
             {
-                _currentThrowZone = GetRandomThrowZone();
                 GeneratePack(settings.PackSizeRange);
                 if (_difficulty > _maxDifficulty) _difficulty *= _difficultyFactor;
             }
@@ -94,6 +95,9 @@ namespace App.GameScene.Gameplay_Management.Block_Management
             _blockIndex = 0;
             _currentPack.Clear();
             System.Random random = new();
+            
+            _cameraSize = cameraManager.CameraRect;
+            
             var size = random.Next(packSizeRange.x, packSizeRange.y + 1);
             
             for (var i = 0; i < size; i++)
@@ -107,10 +111,10 @@ namespace App.GameScene.Gameplay_Management.Block_Management
         
         private ThrowZone GetRandomThrowZone()
         {
-            if (ThrowZones is null || ThrowZones.Count == 0) return null;
-            var totalProbability = ThrowZones.Sum(throwZone => throwZone.probability);
+            if (throwZones is null || throwZones.Count == 0) return null;
+            var totalProbability = throwZones.Sum(throwZone => throwZone.probability);
             var randomValue = Random.value * totalProbability;
-            foreach (var throwZone in ThrowZones)
+            foreach (var throwZone in throwZones)
             {
                 if (randomValue < throwZone.probability)
                 {
@@ -119,12 +123,12 @@ namespace App.GameScene.Gameplay_Management.Block_Management
                 randomValue -= throwZone.probability;
             }
             
-            return ThrowZones[^1];
+            return throwZones[^1];
         }
 
         private void OnDrawGizmos()
         {
-            GizmosDrawer.DrawThrowZones(ThrowZones, cameraManager);
+            GizmosDrawer.DrawThrowZones(throwZones, cameraManager);
         }
     }
 }
