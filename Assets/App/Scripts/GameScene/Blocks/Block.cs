@@ -1,4 +1,5 @@
-﻿using App.GameScene.Physics;
+﻿using System;
+using App.GameScene.Physics;
 using UnityEngine;
 
 namespace App.GameScene.Blocks
@@ -8,8 +9,13 @@ namespace App.GameScene.Blocks
         public PhysicsObject2D physicsObject;
         
         public SpriteRenderer spriteRenderer;
+        private float _radius;
 
-        public float Radius { get; private set; }
+        public float Radius
+        {
+            get => _radius * transform.localScale.x;
+            private set => _radius = value;
+        }
 
         public abstract void OnHit();
 
@@ -18,7 +24,7 @@ namespace App.GameScene.Blocks
         public void SetSprite(Sprite sprite)
         {
             spriteRenderer.sprite = sprite;
-            var spriteSize = (Vector2)sprite.bounds.size - (new Vector2(sprite.border.x + sprite.border.w, sprite.border.y + sprite.border.z)) / sprite.pixelsPerUnit;
+            var spriteSize = (Vector2)sprite.bounds.size - (new Vector2(sprite.border.x + sprite.border.z, sprite.border.y + sprite.border.w)) / sprite.pixelsPerUnit;
             Radius = Mathf.Min(spriteSize.x, spriteSize.y) / 2f;
         }
 

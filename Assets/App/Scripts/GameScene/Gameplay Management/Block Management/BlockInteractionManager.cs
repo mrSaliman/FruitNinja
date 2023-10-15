@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using App.GameScene.Blocks;
-using App.GameScene.User_Input;
+using App.GameScene.Gameplay_Management.Input_Management;
 using App.GameScene.Visualization;
+using DG.Tweening;
 using UnityEngine;
 
 namespace App.GameScene.Gameplay_Management.Block_Management
@@ -27,6 +28,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management
         private void DeleteBlock(int index)
         {
             if (index < 0 || index >= _blocks.Count) return;
+            _blocks[index].transform.DOKill();
             Destroy(_blocks[index].gameObject);
             _blocks.RemoveAt(index);
         }
@@ -42,8 +44,8 @@ namespace App.GameScene.Gameplay_Management.Block_Management
 
                 if (block.physicsObject.velocity.y < 0 &&
                     !_cameraSize.Overlaps(
-                        new Rect(block.transform.position,
-                            new Vector2(-block.Radius * 2, -block.Radius * 2)), true))
+                        new Rect((Vector2)block.transform.position - new Vector2(block.Radius, block.Radius),
+                            new Vector2(block.Radius * 2, block.Radius * 2))))
                 {
                     //block.OnMiss();
                     DeleteBlock(i);
@@ -70,17 +72,17 @@ namespace App.GameScene.Gameplay_Management.Block_Management
 
             var c1 = Vector2.Dot(w, v);
             if (c1 <= 0)
-                return Vector2.Distance(block.transform.position, deathLine.From);
+                return Vector2.Distance(block.transform.position, deathLine.From) - deathLine.Thickness / 2f;
             
             var c2 = Vector2.Dot(v, v);
             if (c2 <= c1)
-                return Vector2.Distance(block.transform.position, deathLine.To);
+                return Vector2.Distance(block.transform.position, deathLine.To) - deathLine.Thickness / 2f;
 
             var b = c1 / c2;
 
             var pb = deathLine.From + v * b;
 
-            return Vector2.Distance(block.transform.position, pb);
+            return Vector2.Distance(block.transform.position, pb) - deathLine.Thickness / 2f;
         }
     }
 }

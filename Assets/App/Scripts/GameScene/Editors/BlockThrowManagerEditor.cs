@@ -9,7 +9,7 @@ namespace App.GameScene.Editors
     [CustomEditor(typeof(BlockThrowManager))]
     internal class BlockThrowManagerEditor : Editor
     {
-        private bool _showThrowZonesFoldout = true;
+        private bool _showThrowZonesFoldout;
         
         public override void OnInspectorGUI()
         {

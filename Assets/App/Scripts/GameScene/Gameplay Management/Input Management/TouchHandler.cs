@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace App.GameScene.User_Input
+namespace App.GameScene.Gameplay_Management.Input_Management
 {
     public class TouchHandler : MonoBehaviour
     {
@@ -33,7 +33,7 @@ namespace App.GameScene.User_Input
 
                     if (DeathLines.Count <= i)
                     {
-                        DeathLines.Add(new DeathLine(deathLineFrom, deathLineTo));
+                        DeathLines.Add(new DeathLine(deathLineFrom, deathLineTo, 0.2f));
                     }
                     else
                     {

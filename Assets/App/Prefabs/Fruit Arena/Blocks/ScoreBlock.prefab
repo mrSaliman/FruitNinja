@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6527169966905685123}
   - component: {fileID: 1057885724533165068}
   - component: {fileID: 6085316780666921919}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ScoreBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,7 +48,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocity: {x: 0, y: 0}
   angularVelocity: 0
-  gravity: {x: 0, y: 0}
   isFrozen: 0
 --- !u!114 &1057885724533165068
 MonoBehaviour:
@@ -63,9 +62,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   physicsObject: {fileID: 6527169966905685123}
-  blockData: {fileID: 0}
   spriteRenderer: {fileID: 6085316780666921919}
-  mainCamera: {fileID: 0}
 --- !u!212 &6085316780666921919
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -9,6 +9,8 @@ namespace App.GameScene.Gameplay_Management
         
         private void Awake()
         {
+            QualitySettings.vSyncCount = 0;
+            Application.targetFrameRate = 60;
             foreach (var manager in managers)
             {
                 manager.Init();

@@ -40,7 +40,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management
         
         public override void Init()
         {
-            _randomBlockThrower = new RandomBlockThrower(cameraManager);
+            _randomBlockThrower = new RandomBlockThrower();
             StartThrowingLoop();
         }
 
@@ -97,6 +97,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management
             System.Random random = new();
             
             _cameraSize = cameraManager.CameraRect;
+            _randomBlockThrower.CameraSize = _cameraSize;
             
             var size = random.Next(packSizeRange.x, packSizeRange.y + 1);
             
