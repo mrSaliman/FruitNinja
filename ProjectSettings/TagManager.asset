@@ -41,3 +41,21 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 2767604103
+    locked: 0
+  - name: Splash
+    uniqueID: 1371300861
+    locked: 0
+  - name: Shadow
+    uniqueID: 608448833
+    locked: 0
+  - name: Block
+    uniqueID: 725389655
+    locked: 0
+  - name: Cut&Label
+    uniqueID: 2396982537
+    locked: 0
+  - name: UI Elements
+    uniqueID: 320892599
+    locked: 0

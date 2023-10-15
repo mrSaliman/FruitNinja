@@ -5,9 +5,8 @@ namespace App.GameScene.Physics
 {
     public class PhysicsObject2D : MonoBehaviour
     {
-        public Vector2 velocity;
-        public float angularVelocity;
-        public bool isFrozen;
+        [HideInInspector] public Vector2 velocity;
+        [HideInInspector] public bool isFrozen;
 
         private void Awake()
         {

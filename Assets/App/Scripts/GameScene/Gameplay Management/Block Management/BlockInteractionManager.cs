@@ -9,7 +9,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management
 {
     public class BlockInteractionManager : Manager
     {
-        private readonly List<Block> _blocks = new List<Block>();
+        private readonly List<Block> _blocks = new();
         [SerializeReference] private CameraManager cameraManager;
         
         private Rect _cameraSize;

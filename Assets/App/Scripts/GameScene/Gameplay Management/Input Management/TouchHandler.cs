@@ -33,7 +33,7 @@ namespace App.GameScene.Gameplay_Management.Input_Management
 
                     if (DeathLines.Count <= i)
                     {
-                        DeathLines.Add(new DeathLine(deathLineFrom, deathLineTo, 0.2f));
+                        DeathLines.Add(new DeathLine(deathLineFrom, deathLineTo, 0.4f));
                     }
                     else
                     {
