@@ -12,11 +12,6 @@ namespace App.GameScene.Gameplay_Management.Input_Management
         
         private void Update()
         {
-            foreach (var deathLine in DeathLines)
-            {
-                if (deathLine.Active == false) break;
-                deathLine.Active = false;
-            }
             if (Input.touchCount <= 0) return;
 
             var i = 0;
@@ -39,7 +34,6 @@ namespace App.GameScene.Gameplay_Management.Input_Management
                     {
                         DeathLines[i].From = deathLineFrom;
                         DeathLines[i].To = deathLineTo;
-                        DeathLines[i].Active = true;
                     }
                 }
 
