@@ -626,6 +626,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraManager: {fileID: 313610255}
+  partPrefab: {fileID: 1186918169523176234, guid: 03947a5dc3371e24eb1854012a6e918b, type: 3}
 --- !u!4 &1765934570
 Transform:
   m_ObjectHideFlags: 0

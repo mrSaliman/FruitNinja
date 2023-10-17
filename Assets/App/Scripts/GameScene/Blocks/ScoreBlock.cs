@@ -1,15 +1,14 @@
-﻿namespace App.GameScene.Blocks
+﻿using System;
+using App.GameScene.Gameplay_Management.Input_Management;
+using UnityEngine;
+
+namespace App.GameScene.Blocks
 {
     public class ScoreBlock : Block
     {
-        public override void OnHit()
+        private void Awake()
         {
-            throw new System.NotImplementedException();
-        }
-
-        public override void OnMiss()
-        {
-            throw new System.NotImplementedException();
+            IsHalfable = true;
         }
     }
 }

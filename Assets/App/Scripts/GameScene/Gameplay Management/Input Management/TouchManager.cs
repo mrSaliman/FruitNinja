@@ -42,7 +42,7 @@ namespace App.GameScene.Gameplay_Management.Input_Management
                     var deathLineTo = cameraManager.mainCamera.ScreenToWorldPoint(currentPosition);
 
                     blockInteractionManager.HandleDeathLine(
-                        new DeathLine(deathLineFrom, deathLineTo, _deathLineThickness));
+                        new DeathLine(deathLineFrom, deathLineTo, _deathLineThickness, speed / 100f));
                 }
 
                 _previousPosition = currentPosition;
