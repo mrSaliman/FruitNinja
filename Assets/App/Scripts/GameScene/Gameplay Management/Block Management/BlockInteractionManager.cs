@@ -28,12 +28,11 @@ namespace App.GameScene.Gameplay_Management.Block_Management
             block.transform.parent = transform;
         }
 
-        private void DeleteBlock(int index)
+        private void DeleteBlock(Block block)
         {
-            if (index < 0 || index >= _blocks.Count) return;
-            _blocks[index].transform.DOKill();
-            Destroy(_blocks[index].gameObject);
-            _blocks.RemoveAt(index);
+            block.transform.DOKill();
+            Destroy(block.gameObject);
+            _blocks.Remove(block);
         }
 
         private void Update()
@@ -51,7 +50,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management
                             new Vector2(block.Radius * 2, block.Radius * 2)))) continue;
                 
                 block.OnMiss();
-                DeleteBlock(i);
+                DeleteBlock(block);
                 i--;
             }
         }
@@ -70,7 +69,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management
                 }
                 
                 block.OnHit();
-                DeleteBlock(i);
+                DeleteBlock(block);
                 i--;
             }
         }

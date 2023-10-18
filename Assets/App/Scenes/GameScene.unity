@@ -154,8 +154,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   managers:
-  - {fileID: 1765934569}
   - {fileID: 2011780795}
+  - {fileID: 1765934569}
   - {fileID: 1479789526}
 --- !u!4 &313610254
 Transform:
@@ -515,7 +515,7 @@ TrailRenderer:
   m_Time: 0.1
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.5
+    widthMultiplier: 1
     widthCurve:
       serializedVersion: 2
       m_Curve:
