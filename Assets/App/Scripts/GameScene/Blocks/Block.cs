@@ -16,6 +16,9 @@ namespace App.GameScene.Blocks
 
         public bool IsInteractable { get; protected set; } = true;
         public bool IsHalfable { get; protected set; } = false;
+
+        [SerializeField] [CanBeNull] protected DisappearingSprite disappearingSprite;
+        [CanBeNull] public Sprite splash;
         
         public delegate void BlockHitAction();
         public event BlockHitAction OnBlockHit;

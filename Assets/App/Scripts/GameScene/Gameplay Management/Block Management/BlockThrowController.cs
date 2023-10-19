@@ -17,10 +17,8 @@ namespace App.GameScene.Gameplay_Management.Block_Management
         private RandomBlockThrower _randomBlockThrower;
         
         [SerializeField] private BlockThrowControllerSettings settings;
-
-        [SerializeField] private List<Sprite> sprites;
-        [SerializeField] private List<Block> prefabs;
-
+        [SerializeField] private BlockAssignmentsContainer blockAssignmentsContainer;
+        
         [HideInInspector] public List<ThrowZone> throwZones;
 
 
@@ -104,8 +102,13 @@ namespace App.GameScene.Gameplay_Management.Block_Management
             
             for (var i = 0; i < size; i++)
             {
-                var block = Instantiate(prefabs[random.Next(prefabs.Count)], _cameraSize.size, Quaternion.identity);
-                block.SetSprite(sprites[random.Next(sprites.Count)]);
+                var blockTypeId = random.Next(blockAssignmentsContainer.BlockAssignments.Count);
+                var blockAssignment = blockAssignmentsContainer.BlockAssignments[blockTypeId];
+                var block = Instantiate(blockAssignment.blockPrefab, _cameraSize.size, Quaternion.identity);
+                var spriteSplashAssignment =
+                    blockAssignment.spriteSplashAssignments[random.Next(blockAssignment.spriteSplashAssignments.Count)];
+                block.SetSprite(spriteSplashAssignment.sprite);
+                block.splash = spriteSplashAssignment.splash;
                 _currentPack.Add(block);
                 _blockInteractionController.AddBlock(block);
             }

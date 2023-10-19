@@ -18,7 +18,9 @@ namespace App.GameScene.Visualization.UI
             if (_timer > 0)
             {
                 _timer -= Time.deltaTime;
-                canvasGroup.alpha = _timer / _timeToDie;
+                var div = _timer / _timeToDie;
+                canvasGroup.alpha = div;
+                label.rectTransform.localScale = Vector3.one * div;
             }
             else
             {

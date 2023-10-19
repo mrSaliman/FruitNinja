@@ -11,10 +11,12 @@ namespace App.GameScene.Gameplay_Management.UI_Management
         [SerializeField] private NumberLabel scoreLabel;
         [SerializeField] private PopLabel popLabelPrefab;
         [SerializeField] private Transform popLabelsContainer;
-        [SerializeField] private float comboTimerDelay;
+        [SerializeField] private ScoreControllerSettings settings;
 
         private CameraInfoProvider _cameraInfoProvider;
 
+        private int _maxCombo;
+        private float _comboTimerDelay;
         private int _comboCount;
         private float _comboTimer;
         
@@ -24,6 +26,8 @@ namespace App.GameScene.Gameplay_Management.UI_Management
             scoreLabel.ResetValue();
             _comboCount = 0;
             _comboTimer = 0;
+            _maxCombo = settings.MaxCombo;
+            _comboTimerDelay = settings.ComboTimerDelay;
         }
         
         private void Update()
@@ -42,6 +46,11 @@ namespace App.GameScene.Gameplay_Management.UI_Management
             }
         }
 
+        private void EnrollScoreForCombo(int combo)
+        {
+            scoreLabel.AddValueAnimated(50 * combo * (combo - 1));
+        }
+
         public void HandleBlockHit(Block block)
         {
             if (block is ScoreBlock)
@@ -49,7 +58,13 @@ namespace App.GameScene.Gameplay_Management.UI_Management
                 scoreLabel.AddValueAnimated(50);
                 SpawnPopLabel(block, 50.ToString());
                 _comboCount++;
-                _comboTimer = comboTimerDelay;
+                _comboTimer = _comboTimerDelay;
+                if (_comboCount > _maxCombo)
+                {
+                    EnrollScoreForCombo(_maxCombo);
+                    _comboTimer = 0;
+                    _comboCount = 0;
+                }
             }
         }
 

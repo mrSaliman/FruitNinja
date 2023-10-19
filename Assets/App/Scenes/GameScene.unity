@@ -193,11 +193,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
+  m_ReferenceResolution: {x: 1366, y: 768}
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -414,7 +414,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 30.859985, y: -29.089996}
+  m_AnchoredPosition: {x: 30.859985, y: -29.089966}
   m_SizeDelta: {x: 184, y: 89}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &739497485
@@ -439,8 +439,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 199ad8d8c489fdd46a83fc1bb3087881, type: 2}
-  m_sharedMaterial: {fileID: 4550154471387066619, guid: 199ad8d8c489fdd46a83fc1bb3087881, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 49f1070b72cd56b46ae9795227119864, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 83e66c33f29d2ff4bad1ea036bc94865, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -628,7 +628,7 @@ MonoBehaviour:
   scoreLabel: {fileID: 739497487}
   popLabelPrefab: {fileID: 8777934488636904390, guid: eb77630e65e81c346a0d00f1cee4447a, type: 3}
   popLabelsContainer: {fileID: 2014599094}
-  comboTimerDelay: 0.1
+  settings: {fileID: 11400000, guid: 69bf19324c0eb664a9420e881bb0ac86, type: 2}
 --- !u!4 &944998269
 Transform:
   m_ObjectHideFlags: 0
@@ -740,8 +740,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u041B\u0443\u0447\u0448\u0438\u0439: 0"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0af47835f9e3bcb4980f3c36b787ec1c, type: 2}
-  m_sharedMaterial: {fileID: 2848337271728071845, guid: 0af47835f9e3bcb4980f3c36b787ec1c, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 49f1070b72cd56b46ae9795227119864, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: dfd4d7e396edc7d40baee3c87ca5687f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1000,7 +1000,7 @@ TrailRenderer:
     colorGradient:
       serializedVersion: 2
       key0: {r: 0.048059803, g: 0.6542763, b: 0.6792453, a: 1}
-      key1: {r: 0.0023584962, g: 0.5, b: 0.0535835, a: 1}
+      key1: {r: 0.36862746, g: 0.0039215684, b: 0.3548613, a: 0.38039216}
       key2: {r: 0.0023584962, g: 0.5, b: 0.0535835, a: 0}
       key3: {r: 0.0023584962, g: 0.5, b: 0.0535835, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -1064,6 +1064,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 583d17582b7844a4a2d825a2e7081fbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  settings: {fileID: 11400000, guid: ca699216c369e654d83cfe25a411bdfc, type: 2}
   partPrefab: {fileID: 1186918169523176234, guid: 03947a5dc3371e24eb1854012a6e918b, type: 3}
 --- !u!4 &1765934570
 Transform:
@@ -1302,17 +1303,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings: {fileID: 11400000, guid: 431b068248d8a2143945850ae5a91e8c, type: 2}
-  sprites:
-  - {fileID: 21300000, guid: 7b3c684e459121f43bbedd73896352a2, type: 3}
-  - {fileID: 21300000, guid: bd6f63f6fa64f9c46b7346dbb01d4266, type: 3}
-  - {fileID: 21300000, guid: a3625833248735449aab509034c53ff0, type: 3}
-  - {fileID: 21300000, guid: f9a165db7925e8c459aa876173deb56c, type: 3}
-  - {fileID: 21300000, guid: 60ca89ffeb26dee4987f854d3ad8c348, type: 3}
-  - {fileID: 21300000, guid: bceea3a61340c6b41963a3e39a0fcc7f, type: 3}
-  - {fileID: 21300000, guid: 9481c5e7364662a4e8c4184bb293697e, type: 3}
-  - {fileID: 21300000, guid: 1b5d2db4c98906d4098331af6065c336, type: 3}
-  prefabs:
-  - {fileID: 1057885724533165068, guid: fc12a6077ab56cd46bbdf51e36bbe7f7, type: 3}
+  blockAssignmentsContainer: {fileID: 11400000, guid: aca76419ca002444886b300ad72e73f7, type: 2}
   throwZones:
   - xIndentation: 0.5
     yIndentation: 0

@@ -16,6 +16,9 @@ namespace App.GameScene.Gameplay_Management.Block_Management
         private CameraInfoProvider _cameraInfoProvider;
         private Rect _cameraSize;
 
+        [SerializeField] private BlockInteractionControllerSettings settings;
+        private float _maxThrowawaySpeed;
+
         private ScoreController _scoreController;
         
         [SerializeField] private Part partPrefab;
@@ -25,6 +28,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management
             _scoreController = ControllerLocator.Instance.GetController<ScoreController>();
             _cameraInfoProvider = ControllerLocator.Instance.GetController<CameraInfoProvider>();
             _cameraSize = _cameraInfoProvider.CameraRect;
+            _maxThrowawaySpeed = settings.MaxThrowawaySpeed;
         }
 
         public void AddBlock(Block block)
@@ -117,8 +121,8 @@ namespace App.GameScene.Gameplay_Management.Block_Management
                 new Vector2(0.5f, 0.5f)));
                     
                     
-            firstPart.ThrowItself(firstPartPosition, deathLine.Speed * deathLineDirection / 5f + perp * deathLine.Speed / 10f);
-            secondPart.ThrowItself(secondPartPosition, deathLine.Speed * deathLineDirection / 5f - perp * deathLine.Speed / 10f);
+            firstPart.ThrowItself(firstPartPosition,  Mathf.Min(deathLine.Speed, _maxThrowawaySpeed) * (deathLineDirection / 5f + perp / 10f));
+            secondPart.ThrowItself(secondPartPosition, Mathf.Min(deathLine.Speed, _maxThrowawaySpeed) * (deathLineDirection / 5f - perp / 10f));
 
             firstPart.transform.DORotate(rotation.eulerAngles + new Vector3(0, 0, 360), 5, RotateMode.FastBeyond360).SetLoops(-1);
             secondPart.transform.DORotate(rotation.eulerAngles + new Vector3(0, 0, -360), 5, RotateMode.FastBeyond360).SetLoops(-1);

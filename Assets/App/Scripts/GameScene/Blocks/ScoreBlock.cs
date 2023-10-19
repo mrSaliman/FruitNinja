@@ -5,9 +5,6 @@ namespace App.GameScene.Blocks
 {
     public class ScoreBlock : Block
     {
-        [SerializeField] private DisappearingSprite disappearingSprite;
-        [SerializeField] private List<Sprite> splashes;
-        
         private void Awake()
         {
             IsHalfable = true;
@@ -21,10 +18,9 @@ namespace App.GameScene.Blocks
 
         private void SpawnAnimatedSplash(Vector3 position)
         {
-            System.Random random = new();
-            
+            if (disappearingSprite is null || splash is null) return;
             var disappearingSpriteInstance = Instantiate(disappearingSprite, position, Quaternion.identity);
-            disappearingSpriteInstance.Setup(splashes[random.Next(splashes.Count)], 1);
+            disappearingSpriteInstance.Setup(splash, 1);
         }
     }
 }
