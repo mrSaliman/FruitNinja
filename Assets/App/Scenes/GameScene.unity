@@ -261,6 +261,7 @@ MonoBehaviour:
   - {fileID: 1765934569}
   - {fileID: 1479789526}
   - {fileID: 944998268}
+  - {fileID: 313610255}
 --- !u!4 &313610254
 Transform:
   m_ObjectHideFlags: 0
@@ -625,6 +626,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreLabel: {fileID: 739497487}
+  popLabelPrefab: {fileID: 8777934488636904390, guid: eb77630e65e81c346a0d00f1cee4447a, type: 3}
+  popLabelsContainer: {fileID: 2014599094}
   comboTimerDelay: 0.1
 --- !u!4 &944998269
 Transform:
@@ -673,6 +676,7 @@ Transform:
   - {fileID: 902155304}
   - {fileID: 519420032}
   - {fileID: 298935995}
+  - {fileID: 2014599094}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1361,3 +1365,34 @@ MonoBehaviour:
     probability: 1
     showTrajectory: 0
   camEditorInfo: {fileID: 313610255}
+--- !u!1 &2014599093
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2014599094}
+  m_Layer: 0
+  m_Name: Pop Labels
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2014599094
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2014599093}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1131955922}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
