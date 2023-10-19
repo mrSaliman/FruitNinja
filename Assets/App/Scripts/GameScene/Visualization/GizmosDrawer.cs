@@ -8,12 +8,12 @@ namespace App.GameScene.Visualization
 {
     public static class GizmosDrawer
     {
-        public static void DrawThrowZones(List<ThrowZone> throwZones, CameraManager cameraManager)
+        public static void DrawThrowZones(List<ThrowZone> throwZones, CameraInfoProvider cameraInfoProvider)
         {
-            if (throwZones is null || cameraManager is null) return;
+            if (throwZones is null || cameraInfoProvider is null) return;
             foreach (var throwZone in throwZones)
             {
-                var cameraSize = cameraManager.CameraRect;
+                var cameraSize = cameraInfoProvider.CameraRect;
             
                 var radPlatformAngle = throwZone.platformAngle * Mathf.Deg2Rad;
                 var sinPlatform = math.sin(radPlatformAngle);

@@ -6,14 +6,14 @@ using UnityEngine;
 namespace App.GameScene.Editors
 {
     #if UNITY_EDITOR
-    [CustomEditor(typeof(BlockThrowManager))]
+    [CustomEditor(typeof(BlockThrowController))]
     internal class BlockThrowManagerEditor : Editor
     {
         private bool _showThrowZonesFoldout;
         
         public override void OnInspectorGUI()
         {
-            var blockThrowManager = (BlockThrowManager)target;
+            var blockThrowManager = (BlockThrowController)target;
 
             DrawDefaultInspector();
             

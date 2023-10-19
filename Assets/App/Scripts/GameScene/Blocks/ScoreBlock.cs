@@ -15,6 +15,7 @@ namespace App.GameScene.Blocks
 
         public override void OnHit()
         {
+            base.OnHit();
             SpawnAnimatedSplash(transform.position);
         }
 

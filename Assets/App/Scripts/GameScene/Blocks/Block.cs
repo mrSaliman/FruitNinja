@@ -16,6 +16,9 @@ namespace App.GameScene.Blocks
 
         public bool IsInteractable { get; protected set; } = true;
         public bool IsHalfable { get; protected set; } = false;
+        
+        public delegate void BlockHitAction();
+        public event BlockHitAction OnBlockHit;
 
         public float Radius
         {
@@ -23,7 +26,10 @@ namespace App.GameScene.Blocks
             private set => _radius = value;
         }
 
-        public virtual void OnHit() { }
+        public virtual void OnHit()
+        {
+            OnBlockHit?.Invoke();
+        }
 
         public virtual void OnMiss() { }
 
