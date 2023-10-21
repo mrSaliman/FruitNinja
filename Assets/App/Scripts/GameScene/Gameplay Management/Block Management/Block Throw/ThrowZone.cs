@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace App.GameScene.Gameplay_Management.Block_Management
+namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
 {
     [Serializable]
     public class ThrowZone

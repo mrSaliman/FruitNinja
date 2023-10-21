@@ -1,4 +1,6 @@
 ﻿using App.GameScene.Gameplay_Management.Block_Management;
+using App.GameScene.Gameplay_Management.Block_Management.Block_Interaction;
+using App.GameScene.Settings;
 using App.GameScene.Visualization;
 using UnityEngine;
 using UnityEngine.Serialization;

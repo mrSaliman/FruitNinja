@@ -1,5 +1,4 @@
-﻿using App.GameScene.Gameplay_Management.Input_Management;
-using App.GameScene.Physics;
+﻿using App.GameScene.Physics;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -15,13 +14,16 @@ namespace App.GameScene.Blocks
         [SerializeField] [CanBeNull] private ShadowController shadowController;
 
         public bool IsInteractable { get; protected set; } = true;
-        public bool IsHalfable { get; protected set; } = false;
+        public bool IsHalfable { get; protected set; }
 
         [SerializeField] [CanBeNull] protected DisappearingSprite disappearingSprite;
         [CanBeNull] public Sprite splash;
         
         public delegate void BlockHitAction();
+
+        public delegate void BlockMissAction();
         public event BlockHitAction OnBlockHit;
+        public event BlockMissAction OnBlockMiss;
 
         public float Radius
         {
@@ -34,7 +36,10 @@ namespace App.GameScene.Blocks
             OnBlockHit?.Invoke();
         }
 
-        public virtual void OnMiss() { }
+        public virtual void OnMiss()
+        {
+            OnBlockMiss?.Invoke();
+        }
 
         public virtual void SetSprite(Sprite sprite)
         {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace App.GameScene.Gameplay_Management.UI_Management
+namespace App.GameScene.Settings
 {
     [CreateAssetMenu(menuName = "Settings/ScoreControllerSettings", fileName = "New ScoreControllerSettings")]
     public class ScoreControllerSettings : ScriptableObject

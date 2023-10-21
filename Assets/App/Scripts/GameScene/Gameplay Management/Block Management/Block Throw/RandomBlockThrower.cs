@@ -4,7 +4,7 @@ using DG.Tweening;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace App.GameScene.Gameplay_Management.Block_Management
+namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
 {
     public class RandomBlockThrower
     {

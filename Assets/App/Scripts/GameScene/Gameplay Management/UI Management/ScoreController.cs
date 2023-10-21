@@ -1,6 +1,5 @@
-﻿using System;
-using App.GameScene.Blocks;
-using App.GameScene.Visualization;
+﻿using App.GameScene.Blocks;
+using App.GameScene.Settings;
 using App.GameScene.Visualization.UI;
 using UnityEngine;
 
@@ -13,8 +12,6 @@ namespace App.GameScene.Gameplay_Management.UI_Management
         [SerializeField] private Transform popLabelsContainer;
         [SerializeField] private ScoreControllerSettings settings;
 
-        private CameraInfoProvider _cameraInfoProvider;
-
         private int _maxCombo;
         private float _comboTimerDelay;
         private int _comboCount;
@@ -22,7 +19,6 @@ namespace App.GameScene.Gameplay_Management.UI_Management
         
         public override void Init()
         {
-            _cameraInfoProvider = ControllerLocator.Instance.GetController<CameraInfoProvider>();
             scoreLabel.ResetValue();
             _comboCount = 0;
             _comboTimer = 0;
@@ -75,7 +71,7 @@ namespace App.GameScene.Gameplay_Management.UI_Management
                 Quaternion.identity,
                 popLabelsContainer);
             
-            popLabel.Setup(_cameraInfoProvider.mainCamera, text, 1);
+            popLabel.Setup(text, 1);
         }
     }
 }

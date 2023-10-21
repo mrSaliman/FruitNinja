@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace App.GameScene.Gameplay_Management.Block_Management
+namespace App.GameScene.Settings
 {
     [CreateAssetMenu(menuName = "Settings/BlockThrowManagerSettings", fileName = "New BlockThrowManagerSettings")]
     public class BlockThrowControllerSettings : ScriptableObject

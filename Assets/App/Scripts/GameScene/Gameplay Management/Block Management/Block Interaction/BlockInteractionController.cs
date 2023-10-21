@@ -2,12 +2,12 @@
 using App.GameScene.Blocks;
 using App.GameScene.Gameplay_Management.Input_Management;
 using App.GameScene.Gameplay_Management.UI_Management;
+using App.GameScene.Settings;
 using App.GameScene.Visualization;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace App.GameScene.Gameplay_Management.Block_Management
+namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
 {
     public class BlockInteractionController : BaseController
     {
@@ -20,12 +20,14 @@ namespace App.GameScene.Gameplay_Management.Block_Management
         private float _maxThrowawaySpeed;
 
         private ScoreController _scoreController;
+        private HealthController _healthController;
         
         [SerializeField] private Part partPrefab;
 
         public override void Init()
         {
             _scoreController = ControllerLocator.Instance.GetController<ScoreController>();
+            _healthController = ControllerLocator.Instance.GetController<HealthController>();
             _cameraInfoProvider = ControllerLocator.Instance.GetController<CameraInfoProvider>();
             _cameraSize = _cameraInfoProvider.CameraRect;
             _maxThrowawaySpeed = settings.MaxThrowawaySpeed;
@@ -41,6 +43,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management
         private void SubscribeBlock(Block block)
         {
             block.OnBlockHit += () => _scoreController.HandleBlockHit(block);
+            block.OnBlockMiss += () => _healthController.HandleBlockMiss(block);
         }
 
         private void DeleteBlock(Block block)

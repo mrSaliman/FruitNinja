@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace App.GameScene.Gameplay_Management.Block_Management
+namespace App.GameScene.Settings
 {
     [CreateAssetMenu(menuName = "Settings/BlockInteractionControllerSettings", fileName = "New BlockInteractionControllerSettings")]
     public class BlockInteractionControllerSettings : ScriptableObject

@@ -1,11 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using App.GameScene.Blocks;
+using App.GameScene.Gameplay_Management.Block_Management.Block_Assignment;
+using App.GameScene.Gameplay_Management.Block_Management.Block_Interaction;
+using App.GameScene.Settings;
 using App.GameScene.Visualization;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace App.GameScene.Gameplay_Management.Block_Management
+namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
 {
     public class BlockThrowController : BaseController
     {

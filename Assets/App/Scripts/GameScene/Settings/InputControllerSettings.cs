@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace App.GameScene.Gameplay_Management.Input_Management
+namespace App.GameScene.Settings
 {
     [CreateAssetMenu(menuName = "Settings/TouchManagerSettings", fileName = "New TouchManagerSettings")]
     public class InputControllerSettings : ScriptableObject
