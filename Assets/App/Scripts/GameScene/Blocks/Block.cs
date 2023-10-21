@@ -16,8 +16,10 @@ namespace App.GameScene.Blocks
         public bool IsInteractable { get; protected set; } = true;
         public bool IsHalfable { get; protected set; }
 
-        [SerializeField] [CanBeNull] protected DisappearingSprite disappearingSprite;
+        [SerializeField] [CanBeNull] public DisappearingSprite disappearingSprite;
+        [SerializeField] [CanBeNull] public ParticleSystem splashParticle;
         [CanBeNull] public Sprite splash;
+        public Color particleColor;
         
         public delegate void BlockHitAction();
 
@@ -34,6 +36,7 @@ namespace App.GameScene.Blocks
         public virtual void OnHit()
         {
             OnBlockHit?.Invoke();
+            SpawnAnimatedSplash(transform.position);
         }
 
         public virtual void OnMiss()
@@ -47,6 +50,13 @@ namespace App.GameScene.Blocks
             var spriteSize = (Vector2)sprite.bounds.size - (new Vector2(sprite.border.x + sprite.border.z, sprite.border.y + sprite.border.w)) / sprite.pixelsPerUnit;
             Radius = Mathf.Min(spriteSize.x, spriteSize.y) / 2f;
             SetupShadow();
+        }
+        
+        private void SpawnAnimatedSplash(Vector3 position)
+        {
+            if (disappearingSprite is null || splash is null) return;
+            var disappearingSpriteInstance = Instantiate(disappearingSprite, position, Quaternion.identity);
+            disappearingSpriteInstance.Setup(splash, 1);
         }
 
         protected void SetupShadow()

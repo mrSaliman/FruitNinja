@@ -109,9 +109,10 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
                 var blockAssignment = blockAssignmentsContainer.BlockAssignments[blockTypeId];
                 var block = Instantiate(blockAssignment.blockPrefab, _cameraSize.size, Quaternion.identity);
                 var spriteSplashAssignment =
-                    blockAssignment.spriteSplashAssignments[random.Next(blockAssignment.spriteSplashAssignments.Count)];
+                    blockAssignment.sspAssignments[random.Next(blockAssignment.sspAssignments.Count)];
                 block.SetSprite(spriteSplashAssignment.sprite);
                 block.splash = spriteSplashAssignment.splash;
+                block.particleColor = spriteSplashAssignment.particleColor;
                 _currentPack.Add(block);
                 _blockInteractionController.AddBlock(block);
             }

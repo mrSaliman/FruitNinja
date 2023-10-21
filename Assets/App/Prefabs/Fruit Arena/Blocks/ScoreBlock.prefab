@@ -64,11 +64,9 @@ MonoBehaviour:
   spriteRenderer: {fileID: 6085316780666921919}
   shadowController: {fileID: 8719022798298980164, guid: ce8f5a76909fb7346811cafbc2dd7e2e, type: 3}
   disappearingSprite: {fileID: 5614099553726789458, guid: 5b34886528807ce4dbdb96157bd98453, type: 3}
-  splashes:
-  - {fileID: 21300000, guid: 3dc7ed43e9226454cbbc653ae8c0aeea, type: 3}
-  - {fileID: 21300000, guid: ad736e52018ba9b4883cec39878f84fe, type: 3}
-  - {fileID: 21300000, guid: da1c45da4bc7a334cb121ccaf2ccb597, type: 3}
-  - {fileID: 21300000, guid: eb29af85207afd94dabdeb8f814343e8, type: 3}
+  splashParticle: {fileID: 3044496816650611438, guid: b36399c311c49684cbde0d4f1164faa8, type: 3}
+  splash: {fileID: 21300000, guid: 1b0503d9ec3abc942a38d4a8334cef6d, type: 3}
+  particleColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!212 &6085316780666921919
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -9,18 +9,5 @@ namespace App.GameScene.Blocks
         {
             IsHalfable = true;
         }
-
-        public override void OnHit()
-        {
-            base.OnHit();
-            SpawnAnimatedSplash(transform.position);
-        }
-
-        private void SpawnAnimatedSplash(Vector3 position)
-        {
-            if (disappearingSprite is null || splash is null) return;
-            var disappearingSpriteInstance = Instantiate(disappearingSprite, position, Quaternion.identity);
-            disappearingSpriteInstance.Setup(splash, 1);
-        }
     }
 }

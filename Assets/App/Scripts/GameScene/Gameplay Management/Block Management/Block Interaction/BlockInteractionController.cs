@@ -23,6 +23,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
         private HealthController _healthController;
         
         [SerializeField] private Part partPrefab;
+        [SerializeField] private Transform effectsFolder;
 
         public override void Init()
         {
@@ -87,9 +88,43 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
                 }
                 
                 block.OnHit();
+                HandleAfterBlockAnimations(block, deathLine);
                 DeleteBlock(block);
                 i--;
             }
+        }
+
+        private void HandleAfterBlockAnimations(Block block, DeathLine deathLine)
+        {
+            SpawnAnimatedSplash(block);
+            var deathLineDirection = (deathLine.To - deathLine.From).normalized;
+            SpawnSplashParticle(block, deathLineDirection);
+        }
+        
+        private static void SpawnAnimatedSplash(Block block)
+        {
+            if (block.disappearingSprite is null || block.splash is null) return;
+            var disappearingSpriteInstance = 
+                Instantiate(block.disappearingSprite, block.transform.position, Quaternion.identity);
+            disappearingSpriteInstance.Setup(block.splash, 1);
+        }
+
+        private void SpawnSplashParticle(Block block, Vector2 direction)
+        {
+            if (block.splashParticle is null) return;
+            
+            var angleInDegrees = -Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            print(angleInDegrees);
+            
+            var particles = 
+                Instantiate(block.splashParticle,
+                    block.transform.position,
+                    Quaternion.Euler(angleInDegrees, 90, 0),
+                    effectsFolder);
+            
+            var main = particles.main;
+            main.startColor = block.particleColor;
+            main.startRotation = angleInDegrees * Mathf.Deg2Rad;
         }
 
         private void CreateAndSetupParts(DeathLine deathLine, Block block)
