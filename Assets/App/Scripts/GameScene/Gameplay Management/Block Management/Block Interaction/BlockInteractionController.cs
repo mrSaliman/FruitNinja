@@ -101,11 +101,11 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
             SpawnSplashParticle(block, deathLineDirection);
         }
         
-        private static void SpawnAnimatedSplash(Block block)
+        private void SpawnAnimatedSplash(Block block)
         {
             if (block.disappearingSprite is null || block.splash is null) return;
             var disappearingSpriteInstance = 
-                Instantiate(block.disappearingSprite, block.transform.position, Quaternion.identity);
+                Instantiate(block.disappearingSprite, block.transform.position, Quaternion.identity, effectsFolder);
             disappearingSpriteInstance.Setup(block.splash, 1);
         }
 

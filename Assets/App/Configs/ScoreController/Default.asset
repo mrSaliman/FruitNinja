@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71845ee70dc24bb69465a759e3155b4b, type: 3}
   m_Name: Default
   m_EditorClassIdentifier: 
-  comboTimerDelay: 0.1
+  comboTimerDelay: 0.2
   maxCombo: 5
   timeToSave: 1

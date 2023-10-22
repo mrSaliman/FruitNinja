@@ -9,14 +9,18 @@ namespace App.GameScene.Gameplay_Management.UI_Management
     {
         [SerializeField] private NumberLabel scoreLabel;
         [SerializeField] private NumberLabel bestScoreLabel;
+        
         [SerializeField] private PopLabel popLabelPrefab;
-        [SerializeField] private Transform popLabelsContainer;
+        [SerializeField] private SeriesLabel seriesLabelPrefab;
+        [SerializeField] private RectTransform popLabelsContainer;
+        
         [SerializeField] private ScoreControllerSettings settings;
 
         private int _maxCombo;
         private int _comboCount;
         private float _comboTimerDelay;
         private float _comboTimer;
+        private Vector3 _labelPosition;
 
         private float _timeToSave;
         private float _saveTimer;
@@ -58,6 +62,7 @@ namespace App.GameScene.Gameplay_Management.UI_Management
 
         private void EnrollScoreForCombo(int combo)
         {
+            SpawnSeriesLabel(combo);
             scoreLabel.AddValueAnimated(50 * combo * (combo - 1));
             UpdateBestScore();
         }
@@ -78,9 +83,10 @@ namespace App.GameScene.Gameplay_Management.UI_Management
         {
             if (block is ScoreBlock)
             {
+                _labelPosition = block.transform.position;
                 scoreLabel.AddValueAnimated(50);
                 UpdateBestScore();
-                SpawnPopLabel(block, 50.ToString());
+                SpawnPopLabel(50.ToString());
                 _comboCount++;
                 _comboTimer = _comboTimerDelay;
                 if (_comboCount > _maxCombo)
@@ -92,14 +98,24 @@ namespace App.GameScene.Gameplay_Management.UI_Management
             }
         }
 
-        private void SpawnPopLabel(Component block, string text)
+        private void SpawnPopLabel(string text)
         {
             var popLabel = Instantiate(popLabelPrefab,
-                block.transform.position,
+                _labelPosition,
                 Quaternion.identity,
                 popLabelsContainer);
             
             popLabel.Setup(text, 1);
+        }
+        
+        private void SpawnSeriesLabel(int combo)
+        {
+            var popLabel = Instantiate(seriesLabelPrefab,
+                _labelPosition,
+                Quaternion.identity,
+                popLabelsContainer);
+            
+            popLabel.Setup(combo, 2, popLabelsContainer);
         }
     }
 }
