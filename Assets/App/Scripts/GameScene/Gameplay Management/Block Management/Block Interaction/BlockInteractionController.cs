@@ -114,7 +114,6 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
             if (block.splashParticle is null) return;
             
             var angleInDegrees = -Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            print(angleInDegrees);
             
             var particles = 
                 Instantiate(block.splashParticle,

@@ -764,6 +764,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animationDuration: 1
+  startText: 
   label: {fileID: 739497485}
 --- !u!1 &842076843
 GameObject:
@@ -890,7 +891,7 @@ GameObject:
   - component: {fileID: 944998269}
   - component: {fileID: 944998268}
   m_Layer: 0
-  m_Name: Score UI
+  m_Name: ScoreController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -909,6 +910,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreLabel: {fileID: 739497487}
+  bestScoreLabel: {fileID: 1249804716}
   popLabelPrefab: {fileID: 8858969280814603624, guid: eb77630e65e81c346a0d00f1cee4447a, type: 3}
   popLabelsContainer: {fileID: 582629863}
   settings: {fileID: 11400000, guid: 69bf19324c0eb664a9420e881bb0ac86, type: 2}
@@ -975,6 +977,7 @@ GameObject:
   - component: {fileID: 1249804713}
   - component: {fileID: 1249804715}
   - component: {fileID: 1249804714}
+  - component: {fileID: 1249804716}
   m_Layer: 0
   m_Name: Best Score
   m_TagString: Untagged
@@ -1099,6 +1102,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1249804712}
   m_CullTransparentMesh: 1
+--- !u!114 &1249804716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249804712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ee38a2e8e5b40445a161201edd1c0c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationDuration: 1
+  startText: "\u041B\u0443\u0447\u0448\u0438\u0439: "
+  label: {fileID: 1249804714}
 --- !u!1 &1427956429
 GameObject:
   m_ObjectHideFlags: 0

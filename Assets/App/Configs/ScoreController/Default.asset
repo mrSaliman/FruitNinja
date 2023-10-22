@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   comboTimerDelay: 0.1
   maxCombo: 5
+  timeToSave: 1
