@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-namespace App.GameScene.Visualization.UI
+namespace App.Mixed.Visualization.UI
 {
     public class NumberLabel : MonoBehaviour
     {

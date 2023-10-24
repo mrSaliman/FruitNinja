@@ -1,6 +1,8 @@
 ﻿using App.GameScene.Blocks;
 using App.GameScene.Settings;
 using App.GameScene.Visualization.UI;
+using App.Mixed;
+using App.Mixed.Visualization.UI;
 using UnityEngine;
 
 namespace App.GameScene.Gameplay_Management.UI_Management
@@ -31,7 +33,7 @@ namespace App.GameScene.Gameplay_Management.UI_Management
         public override void Init()
         {
             bestScoreLabel.ResetValue();
-            bestScoreLabel.SetValueAnimated(PlayerPrefs.GetInt("BestScore", 0));
+            bestScoreLabel.SetValueAnimated(DataRepository.BestScore);
             scoreLabel.ResetValue();
             _comboCount = 0;
             _comboTimer = 0;
@@ -59,7 +61,7 @@ namespace App.GameScene.Gameplay_Management.UI_Management
 
             if (_saveTimer < 0)
             {
-                PlayerPrefs.SetInt("BestScore", bestScoreLabel.GetTargetData());
+                DataRepository.BestScore = bestScoreLabel.GetTargetData();
                 _saveTimer = 0;
             }
         }

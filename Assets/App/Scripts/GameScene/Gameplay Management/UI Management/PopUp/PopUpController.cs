@@ -1,9 +1,10 @@
 ﻿using System;
 using App.GameScene.Gameplay_Management.Block_Management.Block_Interaction;
 using App.GameScene.Gameplay_Management.State;
-using App.GameScene.Visualization.UI;
+using App.Mixed.Visualization.UI;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace App.GameScene.Gameplay_Management.UI_Management.PopUp
@@ -117,12 +118,16 @@ namespace App.GameScene.Gameplay_Management.UI_Management.PopUp
         
         public void OnRestartButtonClicked()
         {
+            popUpBg.interactable = false;
             _gameInitializer.Restart();
         }
 
         public void OnMenuButtonClicked()
         {
-            // Обработка нажатия кнопки меню
+            popUpBg.interactable = false;
+            Time.timeScale = 1f;
+            DOTween.KillAll();
+            SceneManager.LoadScene("MainMenu");
         }
 
         public void OnContinueButtonClicked()
