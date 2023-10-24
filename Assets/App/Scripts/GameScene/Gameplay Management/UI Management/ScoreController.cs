@@ -10,6 +10,9 @@ namespace App.GameScene.Gameplay_Management.UI_Management
         [SerializeField] private NumberLabel scoreLabel;
         [SerializeField] private NumberLabel bestScoreLabel;
         
+        public NumberLabel ScoreLabel => scoreLabel;
+        public NumberLabel BestScoreLabel => bestScoreLabel;
+        
         [SerializeField] private PopLabel popLabelPrefab;
         [SerializeField] private SeriesLabel seriesLabelPrefab;
         [SerializeField] private RectTransform popLabelsContainer;
@@ -28,7 +31,7 @@ namespace App.GameScene.Gameplay_Management.UI_Management
         public override void Init()
         {
             bestScoreLabel.ResetValue();
-            bestScoreLabel.SetValueAnimated(PlayerPrefs.GetFloat("BestScore", 0));
+            bestScoreLabel.SetValueAnimated(PlayerPrefs.GetInt("BestScore", 0));
             scoreLabel.ResetValue();
             _comboCount = 0;
             _comboTimer = 0;
@@ -56,7 +59,8 @@ namespace App.GameScene.Gameplay_Management.UI_Management
 
             if (_saveTimer < 0)
             {
-                PlayerPrefs.SetFloat("BestScore", bestScoreLabel.GetTargetData());
+                PlayerPrefs.SetInt("BestScore", bestScoreLabel.GetTargetData());
+                _saveTimer = 0;
             }
         }
 

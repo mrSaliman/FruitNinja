@@ -3,6 +3,7 @@ using System.Linq;
 using App.GameScene.Blocks;
 using App.GameScene.Gameplay_Management.Block_Management.Block_Assignment;
 using App.GameScene.Gameplay_Management.Block_Management.Block_Interaction;
+using App.GameScene.Gameplay_Management.State;
 using App.GameScene.Settings;
 using App.GameScene.Visualization;
 using UnityEngine;
@@ -35,11 +36,12 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
             _throwBlockDelay,
             _difficultyFactor,
             _maxDifficulty;
-        private bool _stop = true;
+
         private int _blockIndex;
         
         public override void Init()
         {
+            _currentPack.Clear();
             _cameraInfoProvider = ControllerLocator.Instance.GetController<CameraInfoProvider>();
             _blockInteractionController = ControllerLocator.Instance.GetController<BlockInteractionController>();
             _randomBlockThrower = new RandomBlockThrower();
@@ -48,7 +50,17 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
 
         private void Update()
         {
-            if (_stop) return;
+            if (CurrentGameState is GameState.Paused) return;
+            if (CurrentGameState is GameState.GameOver)
+            {
+                if (_currentPack.Count - _blockIndex <= 0) return;
+                for (var i = _blockIndex; i < _currentPack.Count; i++)
+                {
+                    _blockInteractionController.DeleteBlock(_currentPack[i]);
+                }
+                _currentPack.Clear();
+                return;
+            }
             _blockTimer -= Time.deltaTime;
             _packTimer -= Time.deltaTime;
             ThrowingLoop();
@@ -76,8 +88,6 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
 
         private void StartThrowingLoop()
         {
-            _stop = false;
-            
             _throwPackDelay = settings.BaseThrowPackDelay;
             _throwBlockDelay = settings.BaseThrowBlockDelay;
             

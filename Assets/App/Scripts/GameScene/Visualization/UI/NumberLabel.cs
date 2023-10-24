@@ -46,9 +46,9 @@ namespace App.GameScene.Visualization.UI
             SetValueAnimated(_targetLabelData + value);
         }
 
-        public float GetTargetData()
+        public int GetTargetData()
         {
-            return _targetLabelData;
+            return (int)_targetLabelData;
         }
 
         private void SetLabelText(string text)

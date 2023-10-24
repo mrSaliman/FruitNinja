@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using App.GameScene.Blocks;
 using App.GameScene.Gameplay_Management.Input_Management;
+using App.GameScene.Gameplay_Management.State;
 using App.GameScene.Gameplay_Management.UI_Management;
+using App.GameScene.Gameplay_Management.UI_Management.PopUp;
 using App.GameScene.Settings;
 using App.GameScene.Visualization;
 using DG.Tweening;
@@ -12,7 +14,9 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
     public class BlockInteractionController : BaseController
     {
         private readonly List<Block> _blocks = new();
-        
+
+        public int BlocksCount => _blocks.Count;
+
         private CameraInfoProvider _cameraInfoProvider;
         private Rect _cameraSize;
 
@@ -27,6 +31,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
 
         public override void Init()
         {
+            _blocks.Clear();
             _scoreController = ControllerLocator.Instance.GetController<ScoreController>();
             _healthController = ControllerLocator.Instance.GetController<HealthController>();
             _cameraInfoProvider = ControllerLocator.Instance.GetController<CameraInfoProvider>();
@@ -47,7 +52,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
             block.OnBlockMiss += () => _healthController.HandleBlockMiss(block);
         }
 
-        private void DeleteBlock(Block block)
+        public void DeleteBlock(Block block)
         {
             block.transform.DOKill();
             Destroy(block.gameObject);
@@ -56,6 +61,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
 
         private void Update()
         {
+            if (CurrentGameState is GameState.Paused) return;
             _cameraSize = _cameraInfoProvider.CameraRect;
             for (var i = 0; i < _blocks.Count; i++)
             {

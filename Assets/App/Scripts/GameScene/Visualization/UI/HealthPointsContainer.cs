@@ -82,13 +82,9 @@ namespace App.GameScene.Visualization.UI
             AnimateUIElement(additionalHp, 0, 0);
         }
         
-        private static void AnimateUIElement<T>(T element, float targetAlpha, float duration) where T : Graphic
+        public static void AnimateUIElement<T>(T element, float targetAlpha, float duration) where T : Graphic
         {
-            element.DOKill();
-            if (Math.Abs(element.color.a - targetAlpha) > 0.01)
-            {
-                element.DOFade(targetAlpha, duration);
-            }
+            element.DOFade(targetAlpha, duration);
         }
     }
 }

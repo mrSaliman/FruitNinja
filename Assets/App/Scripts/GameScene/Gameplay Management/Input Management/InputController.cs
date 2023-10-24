@@ -1,5 +1,6 @@
 ﻿using App.GameScene.Gameplay_Management.Block_Management;
 using App.GameScene.Gameplay_Management.Block_Management.Block_Interaction;
+using App.GameScene.Gameplay_Management.State;
 using App.GameScene.Settings;
 using App.GameScene.Visualization;
 using UnityEngine;
@@ -25,7 +26,7 @@ namespace App.GameScene.Gameplay_Management.Input_Management
         private bool _isMoving;
         private float _travelDistance;
         private Vector2 _previousPosition;
-        
+
         public override void Init()
         {
             _cameraInfoProvider = ControllerLocator.Instance.GetController<CameraInfoProvider>();
@@ -34,10 +35,12 @@ namespace App.GameScene.Gameplay_Management.Input_Management
             _minTravelDistance = settings.MinTravelDistance;
             _deathLineThickness = settings.DeathLineThickness;
             trailHandler.cameraInfoProvider = _cameraInfoProvider;
+            _isMoving = false;
         }
 
         private void Update()
         {
+            if (CurrentGameState is GameState.Paused or GameState.GameOver) return;
             if (Input.GetMouseButton(0) && _isMoving)
             {
                 Vector2 currentPosition = Input.mousePosition;
