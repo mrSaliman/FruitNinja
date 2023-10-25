@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -13,6 +12,7 @@ namespace App.GameScene.Visualization.UI
         [SerializeField] private HorizontalLayoutGroup layoutGroup;
         [SerializeField] private Image imagePrefab;
         [SerializeField] private TextMeshProUGUI additionalHp;
+        [SerializeField] private RectTransform inGameUI;
         
         private Sprite _hpSprite;
         private Vector2 _spriteSize;
@@ -33,7 +33,7 @@ namespace App.GameScene.Visualization.UI
             layoutGroup.spacing = spacing;
 
             InitHpList(_maxHpInRow);
-            UpdateContent(startHp);
+            UpdateContent(startHp, 1);
         }
 
         private void InitHpList(int length)
@@ -41,23 +41,23 @@ namespace App.GameScene.Visualization.UI
             _healthPointsRow = new List<Image>(_maxHpInRow);
             for (var i = 0; i < length; i++)
             {
-                _healthPointsRow.Add(BuildNewImage());
+                _healthPointsRow.Add(BuildNewImage(transform));
             }
         }
 
-        private Image BuildNewImage()
+        private Image BuildNewImage(Transform parent)
         {
-            var img = Instantiate(imagePrefab, transform);
+            var img = Instantiate(imagePrefab, parent);
             img.sprite = _hpSprite;
             img.rectTransform.sizeDelta = _spriteSize;
             return img;
         }
 
-        public void UpdateContent(int hp)
+        public void UpdateContent(int hp, float animationDuration)
         {
             for (var i = 0; i < _healthPointsRow.Count; i++)
             {
-                AnimateUIElement(_healthPointsRow[i], i < hp ? 1 : 0, 1);
+                AnimateUIElement(_healthPointsRow[i], i < hp ? 1 : 0, animationDuration);
             }
 
             if (hp > _maxHpInRow)
@@ -81,10 +81,23 @@ namespace App.GameScene.Visualization.UI
             additionalHp.text = "";
             AnimateUIElement(additionalHp, 0, 0);
         }
-        
-        public static void AnimateUIElement<T>(T element, float targetAlpha, float duration) where T : Graphic
+
+        private static void AnimateUIElement<T>(T element, float targetAlpha, float duration) where T : Graphic
         {
             element.DOFade(targetAlpha, duration);
+        }
+
+        public Tween AnimateHpFlight(Vector3 position, int index)
+        {
+            var healthPoint = BuildNewImage(inGameUI);
+            healthPoint.transform.position = position;
+            AnimateUIElement(healthPoint, 1, 0);
+            return healthPoint.transform.DOMove(GetHpPosition(index), 1).OnComplete(() => Destroy(healthPoint));
+        }
+
+        private Vector3 GetHpPosition(int index)
+        {
+            return index > _maxHpInRow - 1 ? additionalHp.transform.position : _healthPointsRow[index].transform.position;
         }
     }
 }

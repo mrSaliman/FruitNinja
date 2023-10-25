@@ -473,7 +473,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 55}
-  m_Pivot: {x: 1, y: 1}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &279573909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3783,6 +3783,7 @@ MonoBehaviour:
   layoutGroup: {fileID: 1808977245}
   imagePrefab: {fileID: 5315896250941342143, guid: 425830d0a8e28534980d45ecc6e552f5, type: 3}
   additionalHp: {fileID: 279573909}
+  inGameUI: {fileID: 298935995}
 --- !u!1 &1818756557
 GameObject:
   m_ObjectHideFlags: 0
