@@ -16,4 +16,4 @@ MonoBehaviour:
   spacing: 20
   maxHpInRow: 6
   startHp: 3
-  maxHp: 3
+  maxHp: 10

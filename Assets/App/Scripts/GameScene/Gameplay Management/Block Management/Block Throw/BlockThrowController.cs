@@ -35,9 +35,12 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
             _throwPackDelay,
             _throwBlockDelay,
             _difficultyFactor,
-            _maxDifficulty;
+            _maxDifficulty,
+            _minScoreBlockPercent,
+            _totalThrowZonesProbability,
+            _totalBlockProbability;
 
-        private int _blockIndex;
+        private int _blockIndex, _scoreBlockId;
         
         public override void Init()
         {
@@ -100,6 +103,13 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
             _maxDifficulty = settings.MaxDifficulty;
             
             _cameraSize = _cameraInfoProvider.CameraRect;
+
+            _scoreBlockId = blockAssignmentsContainer.ScoreBlockAssignmentId;
+            _minScoreBlockPercent = settings.MinScoreBlockPercent;
+
+            _totalThrowZonesProbability = throwZones.Sum(throwZone => throwZone.probability);
+            _totalBlockProbability =
+                blockAssignmentsContainer.BlockAssignments.Sum(blockAssignment => blockAssignment.probability);
         }
 
         private void GeneratePack(Vector2Int packSizeRange)
@@ -112,17 +122,38 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
             _randomBlockThrower.CameraSize = _cameraSize;
             
             var size = random.Next(packSizeRange.x, packSizeRange.y + 1);
+            var scoreBlockCount = 0;
+            var requiredScoreBlockAmount = Mathf.CeilToInt(_minScoreBlockPercent * size);
             
             for (var i = 0; i < size; i++)
             {
-                var blockTypeId = random.Next(blockAssignmentsContainer.BlockAssignments.Count);
+                var randomValue = random.NextDouble() * _totalBlockProbability;
+                var blockTypeId = _scoreBlockId;
+                for (var j = 0; j < blockAssignmentsContainer.BlockAssignments.Count; j++)
+                {
+                    var assignment = blockAssignmentsContainer.BlockAssignments[j];
+                    if (randomValue < assignment.probability)
+                    {
+                        blockTypeId = j;
+                        break;
+                    }
+
+                    randomValue -= assignment.probability;
+                }
+
+                if (blockTypeId == _scoreBlockId) scoreBlockCount++;
+                else if (requiredScoreBlockAmount - scoreBlockCount == size - i)
+                {
+                    blockTypeId = _scoreBlockId;
+                    scoreBlockCount++;
+                }
                 var blockAssignment = blockAssignmentsContainer.BlockAssignments[blockTypeId];
                 var block = Instantiate(blockAssignment.blockPrefab, _cameraSize.size, Quaternion.identity);
-                var spriteSplashAssignment =
+                var sspAssignment =
                     blockAssignment.sspAssignments[random.Next(blockAssignment.sspAssignments.Count)];
-                block.SetSprite(spriteSplashAssignment.sprite);
-                block.splash = spriteSplashAssignment.splash;
-                block.particleColor = spriteSplashAssignment.particleColor;
+                block.SetSprite(sspAssignment.sprite);
+                block.splash = sspAssignment.splash;
+                block.particleColor = sspAssignment.particleColor;
                 _currentPack.Add(block);
                 _blockInteractionController.AddBlock(block);
             }
@@ -131,8 +162,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
         private ThrowZone GetRandomThrowZone()
         {
             if (throwZones is null || throwZones.Count == 0) return null;
-            var totalProbability = throwZones.Sum(throwZone => throwZone.probability);
-            var randomValue = Random.value * totalProbability;
+            var randomValue = Random.value * _totalThrowZonesProbability;
             foreach (var throwZone in throwZones)
             {
                 if (randomValue < throwZone.probability)
@@ -141,7 +171,6 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
                 }
                 randomValue -= throwZone.probability;
             }
-            
             return throwZones[^1];
         }
 

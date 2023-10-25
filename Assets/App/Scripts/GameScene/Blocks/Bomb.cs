@@ -2,5 +2,8 @@
 {
     public class Bomb : Block
     {
+        public override void OnMiss()
+        {
+        }
     }
 }

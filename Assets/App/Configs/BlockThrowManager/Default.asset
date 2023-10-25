@@ -17,3 +17,4 @@ MonoBehaviour:
   difficultyFactor: 0.8
   maxDifficulty: 0.35
   packSizeRange: {x: 2, y: 5}
+  minScoreBlockPercent: 0.5

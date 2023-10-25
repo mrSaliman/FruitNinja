@@ -3,7 +3,6 @@ using App.GameScene.Blocks;
 using App.GameScene.Gameplay_Management.Input_Management;
 using App.GameScene.Gameplay_Management.State;
 using App.GameScene.Gameplay_Management.UI_Management;
-using App.GameScene.Gameplay_Management.UI_Management.PopUp;
 using App.GameScene.Settings;
 using App.GameScene.Visualization;
 using DG.Tweening;
@@ -22,6 +21,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
 
         [SerializeField] private BlockInteractionControllerSettings settings;
         private float _maxThrowawaySpeed;
+        private float _bombPowerMultiplier;
 
         private ScoreController _scoreController;
         private HealthController _healthController;
@@ -37,6 +37,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
             _cameraInfoProvider = ControllerLocator.Instance.GetController<CameraInfoProvider>();
             _cameraSize = _cameraInfoProvider.CameraRect;
             _maxThrowawaySpeed = settings.MaxThrowawaySpeed;
+            _bombPowerMultiplier = settings.BombPowerMultiplier;
         }
 
         public void AddBlock(Block block)
@@ -49,7 +50,25 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
         private void SubscribeBlock(Block block)
         {
             block.OnBlockHit += () => _scoreController.HandleBlockHit(block);
+            block.OnBlockHit += () => _healthController.HandleBlockHit(block);
+            block.OnBlockHit += () => HandleBlockHit(block);
             block.OnBlockMiss += () => _healthController.HandleBlockMiss(block);
+        }
+
+        private void HandleBlockHit(Block block)
+        {
+            if (block is Bomb)
+            {
+                foreach (var item in _blocks)
+                {
+                    if (item.physicsObject.isFrozen) return;
+                    var itemPosition = item.transform.position;
+                    var blockPosition = block.transform.position;
+                    Vector2 direction = (itemPosition - blockPosition).normalized;
+                    var distance = Mathf.Max(Vector3.Distance(itemPosition, blockPosition), Mathf.Sqrt(_bombPowerMultiplier));
+                    item.AddVelocity(1f / Mathf.Sqrt(distance) * _bombPowerMultiplier * direction);
+                }
+            }
         }
 
         public void DeleteBlock(Block block)
@@ -117,9 +136,10 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
 
         private void SpawnSplashParticle(Block block, Vector2 direction)
         {
-            if (block.splashParticle is null) return;
+            if (block.splashParticle == null) return;
             
             var angleInDegrees = -Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            if (!block.useDirectionForParticle) angleInDegrees = 0;
             
             var particles = 
                 Instantiate(block.splashParticle,
@@ -128,7 +148,10 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
                     effectsFolder);
             
             var main = particles.main;
-            main.startColor = block.particleColor;
+            var mainStartColor = main.startColor;
+            mainStartColor.colorMin += block.particleColor;
+            mainStartColor.colorMax += block.particleColor;
+            main.startColor = mainStartColor;
             main.startRotation = angleInDegrees * Mathf.Deg2Rad;
         }
 

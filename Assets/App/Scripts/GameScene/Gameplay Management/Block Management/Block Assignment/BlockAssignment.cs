@@ -9,6 +9,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Assignment
     public class BlockAssignment
     {
         public Block blockPrefab;
+        public float probability;
         public List<SSPAssignment> sspAssignments;
     }
 }

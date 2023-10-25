@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a8aade2df7c4e599183bb5380a823cd, type: 3}
   m_Name: Default BlockAssignmentsContainer
   m_EditorClassIdentifier: 
+  scoreBlockAssignmentId: 0
   blockAssignments:
   - blockPrefab: {fileID: 1057885724533165068, guid: fc12a6077ab56cd46bbdf51e36bbe7f7, type: 3}
+    probability: 10
     sspAssignments:
     - sprite: {fileID: 21300000, guid: 1b5d2db4c98906d4098331af6065c336, type: 3}
       splash: {fileID: 21300000, guid: ddfb1571833da064190447c5370dfa80, type: 3}
@@ -39,3 +41,9 @@ MonoBehaviour:
     - sprite: {fileID: 21300000, guid: 9481c5e7364662a4e8c4184bb293697e, type: 3}
       splash: {fileID: 21300000, guid: ad736e52018ba9b4883cec39878f84fe, type: 3}
       particleColor: {r: 0.7686275, g: 0.12941177, b: 0.12941177, a: 1}
+  - blockPrefab: {fileID: 3853955580576289292, guid: 888da01f01b9d6b4ca77e1f5a4f06089, type: 3}
+    probability: 1
+    sspAssignments:
+    - sprite: {fileID: 21300000, guid: a49572f1bf023894598e88893f348167, type: 3}
+      splash: {fileID: 0}
+      particleColor: {r: 0, g: 0, b: 0, a: 1}

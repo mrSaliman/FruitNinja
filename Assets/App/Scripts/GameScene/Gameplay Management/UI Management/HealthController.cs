@@ -34,6 +34,14 @@ namespace App.GameScene.Gameplay_Management.UI_Management
             }
         }
 
+        public void HandleBlockHit(Block block)
+        {
+            if (block is Bomb)
+            {
+                AddHp(-1);
+            }
+        }
+
         private void SetHp(int hp)
         {
             _currentHp = hp;

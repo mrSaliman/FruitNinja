@@ -49,6 +49,11 @@ MonoBehaviour:
   physicsObject: {fileID: 1186918169523176235}
   spriteRenderer: {fileID: 1186918169523176232}
   shadowController: {fileID: 8719022798298980164, guid: ce8f5a76909fb7346811cafbc2dd7e2e, type: 3}
+  disappearingSprite: {fileID: 0}
+  splashParticle: {fileID: 0}
+  useDirectionForParticle: 1
+  splash: {fileID: 0}
+  particleColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1186918169523176235
 MonoBehaviour:
   m_ObjectHideFlags: 0

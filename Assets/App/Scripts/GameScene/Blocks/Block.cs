@@ -18,8 +18,9 @@ namespace App.GameScene.Blocks
 
         [SerializeField] [CanBeNull] public DisappearingSprite disappearingSprite;
         [SerializeField] [CanBeNull] public ParticleSystem splashParticle;
+        [SerializeField] public bool useDirectionForParticle;
         [CanBeNull] public Sprite splash;
-        public Color particleColor;
+        [HideInInspector] public Color particleColor;
         
         public delegate void BlockHitAction();
 
@@ -57,6 +58,11 @@ namespace App.GameScene.Blocks
             shadowController = Instantiate(shadowController, transform);
             shadowController.mainSpriteRenderer.sprite = spriteRenderer.sprite;
             shadowController.parent = this;
+        }
+
+        public void AddVelocity(Vector2 velocity)
+        {
+            physicsObject.velocity += velocity;
         }
 
         public void ThrowItself(Vector3 position, Vector2 velocity)

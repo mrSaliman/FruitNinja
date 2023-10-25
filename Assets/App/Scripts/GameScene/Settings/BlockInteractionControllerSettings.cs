@@ -6,7 +6,9 @@ namespace App.GameScene.Settings
     public class BlockInteractionControllerSettings : ScriptableObject
     {
         [SerializeField] private float maxThrowawaySpeed;
-
+        [SerializeField] private float bombPowerMultiplier;
+        
+        public float BombPowerMultiplier => bombPowerMultiplier;
         public float MaxThrowawaySpeed => maxThrowawaySpeed;
     }
 }
