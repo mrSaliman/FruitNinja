@@ -58,6 +58,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
             block.OnBlockHit += () => _scoreController.HandleBlockHit(block);
             block.OnBlockHit += () => _healthController.HandleBlockHit(block);
             block.OnBlockHit += () => HandleBlockHit(block);
+            block.OnBlockHit += () => _timeController.HandleBlockHit(block);
             block.OnBlockMiss += () => _healthController.HandleBlockMiss(block);
         }
 
