@@ -19,7 +19,6 @@ namespace App.GameScene.Gameplay_Management.UI_Management.PopUp
         [SerializeField] private NumberLabel scoreLabel;
         [SerializeField] private NumberLabel bestScoreLabel;
         
-        private GameStateController _gameStateController;
         private BlockInteractionController _blockInteractionController;
         private ScoreController _scoreController;
         private GameInitializer _gameInitializer;
@@ -33,7 +32,6 @@ namespace App.GameScene.Gameplay_Management.UI_Management.PopUp
             bestScoreLabel.ResetValue();
             _gameInitializer = ControllerLocator.Instance.GetController<GameInitializer>();
             _scoreController = ControllerLocator.Instance.GetController<ScoreController>();
-            _gameStateController = ControllerLocator.Instance.GetController<GameStateController>();
             _blockInteractionController = ControllerLocator.Instance.GetController<BlockInteractionController>();
         }
 
@@ -113,7 +111,7 @@ namespace App.GameScene.Gameplay_Management.UI_Management.PopUp
 
         public void OnPauseButtonClicked()
         {
-            _gameStateController.SwitchGameState(GameState.Paused);
+            ControllerLocator.Instance.PushGameState(GameState.Paused);
         }
         
         public void OnRestartButtonClicked()
@@ -125,7 +123,6 @@ namespace App.GameScene.Gameplay_Management.UI_Management.PopUp
         public void OnMenuButtonClicked()
         {
             popUpBg.interactable = false;
-            Time.timeScale = 1f;
             DOTween.KillAll();
             SceneManager.LoadScene("MainMenu");
         }
@@ -133,7 +130,7 @@ namespace App.GameScene.Gameplay_Management.UI_Management.PopUp
         public void OnContinueButtonClicked()
         {
             popUpBg.interactable = false;
-            _gameStateController.SwitchGameState(GameState.InGame);
+            ControllerLocator.Instance.PushGameState(GameState.InGame);
         }
 
     }

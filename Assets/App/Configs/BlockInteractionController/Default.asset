@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxThrowawaySpeed: 50
   bombPowerMultiplier: 20
+  maxBlockToBombDistance: 5

@@ -7,8 +7,6 @@ namespace App.GameScene.Gameplay_Management
     public class GameInitializer : BaseController
     {
         [SerializeReference] private List<BaseController> controllers;
-
-        private GameStateController _gameStateController;
         
         private void Awake()
         {
@@ -17,13 +15,12 @@ namespace App.GameScene.Gameplay_Management
         
         public override void Init()
         {
-            Time.timeScale = 0f;
             QualitySettings.vSyncCount = 0;
             Application.targetFrameRate = 60;
             RegisterControllers();
+            ControllerLocator.Instance.PushGameState(GameState.Paused);
             InitControllers();
-            _gameStateController = ControllerLocator.Instance.GetController<GameStateController>();
-            _gameStateController.SwitchGameState(GameState.InGame);
+            ControllerLocator.Instance.PushGameState(GameState.InGame);
         }
 
         private void RegisterControllers()
@@ -46,7 +43,7 @@ namespace App.GameScene.Gameplay_Management
         public void Restart()
         {
             InitControllers();
-            _gameStateController.SwitchGameState(GameState.InGame);
+            ControllerLocator.Instance.PushGameState(GameState.InGame);
         }
     }
 }

@@ -15,12 +15,9 @@ namespace App.GameScene.Gameplay_Management.UI_Management
         private int _targetHp;
 
         [SerializeField] private HealthPointsContainer hpContainer;
-
-        private GameStateController _gameStateController;
         
         public override void Init()
         {
-            _gameStateController = ControllerLocator.Instance.GetController<GameStateController>();
             _maxHp = settings.MaxHp;
             _currentHp = settings.StartHp;
             _targetHp = _currentHp;
@@ -64,7 +61,7 @@ namespace App.GameScene.Gameplay_Management.UI_Management
             _currentHp = hp;
             ValidHp();
             UpdateContainer();
-            if (_targetHp == 0 && CurrentGameState != GameState.GameOver) _gameStateController.SwitchGameState(GameState.GameOver);
+            if (_targetHp == 0 && CurrentGameState != GameState.GameOver) ControllerLocator.Instance.PushGameState(GameState.GameOver);
         }
 
         private void AddHp(int hp)

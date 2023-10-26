@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace App.GameScene.Settings
 {
@@ -7,7 +8,9 @@ namespace App.GameScene.Settings
     {
         [SerializeField] private float maxThrowawaySpeed;
         [SerializeField] private float bombPowerMultiplier;
+        [SerializeField] private float maxBlockToBombDistance;
         
+        public float MaxBlockToBombDistance => maxBlockToBombDistance;
         public float BombPowerMultiplier => bombPowerMultiplier;
         public float MaxThrowawaySpeed => maxThrowawaySpeed;
     }

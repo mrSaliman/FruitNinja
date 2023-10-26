@@ -3,6 +3,7 @@ using App.GameScene.Blocks;
 using App.GameScene.Gameplay_Management.Input_Management;
 using App.GameScene.Gameplay_Management.State;
 using App.GameScene.Gameplay_Management.UI_Management;
+using App.GameScene.Physics;
 using App.GameScene.Settings;
 using App.GameScene.Visualization;
 using DG.Tweening;
@@ -22,9 +23,11 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
         [SerializeField] private BlockInteractionControllerSettings settings;
         private float _maxThrowawaySpeed;
         private float _bombPowerMultiplier;
+        private float _maxBlockToBombDistance;
 
         private ScoreController _scoreController;
         private HealthController _healthController;
+        private TimeController _timeController;
         
         [SerializeField] private Part partPrefab;
         [SerializeField] private Transform effectsFolder;
@@ -32,17 +35,20 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
         public override void Init()
         {
             _blocks.Clear();
+            _timeController = ControllerLocator.Instance.GetController<TimeController>();
             _scoreController = ControllerLocator.Instance.GetController<ScoreController>();
             _healthController = ControllerLocator.Instance.GetController<HealthController>();
             _cameraInfoProvider = ControllerLocator.Instance.GetController<CameraInfoProvider>();
             _cameraSize = _cameraInfoProvider.CameraRect;
             _maxThrowawaySpeed = settings.MaxThrowawaySpeed;
             _bombPowerMultiplier = settings.BombPowerMultiplier;
+            _maxBlockToBombDistance = settings.MaxBlockToBombDistance;
         }
 
         public void AddBlock(Block block)
         {
             _blocks.Add(block);
+            block.physicsObject.timeController = _timeController;
             block.transform.parent = transform;
             SubscribeBlock(block);
         }
@@ -66,7 +72,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
                     var blockPosition = block.transform.position;
                     Vector2 direction = (itemPosition - blockPosition).normalized;
                     var distance = Mathf.Max(Vector3.Distance(itemPosition, blockPosition), Mathf.Sqrt(_bombPowerMultiplier));
-                    item.AddVelocity(1f / Mathf.Sqrt(distance) * _bombPowerMultiplier * direction);
+                    if (distance < _maxBlockToBombDistance) item.AddVelocity(1f / Mathf.Sqrt(distance) * _bombPowerMultiplier * direction);
                 }
             }
         }
@@ -187,11 +193,23 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
                 new Vector2(0.5f, 0.5f)));
                     
                     
-            firstPart.ThrowItself(firstPartPosition,  Mathf.Min(deathLine.Speed, _maxThrowawaySpeed) * (deathLineDirection / 5f + perp / 10f));
-            secondPart.ThrowItself(secondPartPosition, Mathf.Min(deathLine.Speed, _maxThrowawaySpeed) * (deathLineDirection / 5f - perp / 10f));
+            firstPart.ThrowItself(firstPartPosition,
+                Mathf.Min(deathLine.Speed,
+                    _maxThrowawaySpeed) *
+                (deathLineDirection / 5f + perp / 10f));
+            secondPart.ThrowItself(secondPartPosition,
+                Mathf.Min(deathLine.Speed,
+                    _maxThrowawaySpeed) *
+                (deathLineDirection / 5f - perp / 10f));
 
-            firstPart.transform.DORotate(rotation.eulerAngles + new Vector3(0, 0, 360), 5, RotateMode.FastBeyond360).SetLoops(-1);
-            secondPart.transform.DORotate(rotation.eulerAngles + new Vector3(0, 0, -360), 5, RotateMode.FastBeyond360).SetLoops(-1);
+            firstPart.physicsObject.AngularVelocity = 360f / 5;
+            secondPart.physicsObject.AngularVelocity = -360f / 5;
+            /*firstPart.transform.DORotate(
+                rotation.eulerAngles + new Vector3(0, 0, 360), 5, 
+                RotateMode.FastBeyond360).SetLoops(-1);
+            secondPart.transform.DORotate(
+                rotation.eulerAngles + new Vector3(0, 0, -360), 5, 
+                RotateMode.FastBeyond360).SetLoops(-1);*/
                     
             AddBlock(firstPart);
             AddBlock(secondPart);

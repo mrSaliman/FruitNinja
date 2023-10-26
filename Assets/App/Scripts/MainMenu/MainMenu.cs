@@ -15,6 +15,8 @@ namespace App.MainMenu
 
         private void Awake()
         {
+            QualitySettings.vSyncCount = 0;
+            Application.targetFrameRate = 60;
             Time.timeScale = 1;
             bestScoreLabel.ResetValue();
             bestScoreLabel.SetValueAnimated(DataRepository.BestScore);

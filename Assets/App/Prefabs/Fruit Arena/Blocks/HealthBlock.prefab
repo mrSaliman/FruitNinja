@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   physicsObject: {fileID: 5568376324899830925}
   spriteRenderer: {fileID: 4873054353075448753}
-  shadowController: {fileID: 0}
+  shadowController: {fileID: 8719022798298980164, guid: ce8f5a76909fb7346811cafbc2dd7e2e, type: 3}
   disappearingSprite: {fileID: 0}
   splashParticle: {fileID: 2903124963415976546, guid: 41a410496d0f5e142a75bd32b14d72eb, type: 3}
   useDirectionForParticle: 0
@@ -68,6 +68,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocity: {x: 0, y: 0}
   isFrozen: 0
+  timeController: {fileID: 0}
 --- !u!212 &4873054353075448753
 SpriteRenderer:
   m_ObjectHideFlags: 0
