@@ -15,3 +15,6 @@ MonoBehaviour:
   maxThrowawaySpeed: 50
   bombPowerMultiplier: 20
   maxBlockToBombDistance: 5
+  magnetizeTime: 3
+  magnetRadius: {x: 1, y: 6}
+  magnetPower: 700

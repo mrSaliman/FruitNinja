@@ -1,6 +1,7 @@
 ﻿using App.GameScene.Physics;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace App.GameScene.Blocks
 {
@@ -13,8 +14,8 @@ namespace App.GameScene.Blocks
 
         [SerializeField] [CanBeNull] private ShadowController shadowController;
 
-        public bool IsInteractable { get; protected set; } = true;
-        public bool IsHalfable { get; protected set; }
+        public bool isInteractable;
+        public bool isHalfable;
 
         [SerializeField] [CanBeNull] public DisappearingSprite disappearingSprite;
         [SerializeField] [CanBeNull] public ParticleSystem splashParticle;

@@ -68,11 +68,9 @@ namespace App.GameScene.Physics
         {
             if (!(_freezeTimer > 0)) return;
             _freezeTimer -= Time.deltaTime * (CurrentGameState is GameState.Paused ? 0 : 1);
-            if (_freezeTimer <= 0)
-            {
-                CurrentTimeScale = 1;
-                freezeBg.DOFade(0f, 0.4f);
-            }
+            if (!(_freezeTimer <= 0)) return;
+            CurrentTimeScale = 1;
+            freezeBg.DOFade(0f, 0.4f);
         }
     }
 }

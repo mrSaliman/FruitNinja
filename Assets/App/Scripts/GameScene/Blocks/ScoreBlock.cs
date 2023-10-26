@@ -5,9 +5,5 @@ namespace App.GameScene.Blocks
 {
     public class ScoreBlock : Block
     {
-        private void Awake()
-        {
-            IsHalfable = true;
-        }
     }
 }

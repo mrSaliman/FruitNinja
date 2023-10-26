@@ -48,7 +48,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   physicsObject: {fileID: 2964582230307922804}
   spriteRenderer: {fileID: 2864858955590579272}
-  shadowController: {fileID: 0}
+  shadowController: {fileID: 8719022798298980164, guid: ce8f5a76909fb7346811cafbc2dd7e2e, type: 3}
+  isInteractable: 1
+  isHalfable: 1
   disappearingSprite: {fileID: 0}
   splashParticle: {fileID: 0}
   useDirectionForParticle: 0

@@ -9,7 +9,13 @@ namespace App.GameScene.Settings
         [SerializeField] private float maxThrowawaySpeed;
         [SerializeField] private float bombPowerMultiplier;
         [SerializeField] private float maxBlockToBombDistance;
+        [SerializeField] private float magnetizeTime;
+        [SerializeField] private Vector2 magnetRadius;
+        [SerializeField] private float magnetPower;
         
+        public float MagnetPower => magnetPower;
+        public Vector2 MagnetRadius => magnetRadius;
+        public float MagnetizeTime => magnetizeTime;
         public float MaxBlockToBombDistance => maxBlockToBombDistance;
         public float BombPowerMultiplier => bombPowerMultiplier;
         public float MaxThrowawaySpeed => maxThrowawaySpeed;

@@ -6,7 +6,7 @@ namespace App.GameScene.Blocks
     {
         private void Awake()
         {
-            IsInteractable = false;
+            isInteractable = false;
         }
 
         public override void SetSprite(Sprite sprite)

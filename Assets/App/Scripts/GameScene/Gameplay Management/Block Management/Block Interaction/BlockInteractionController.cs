@@ -21,9 +21,15 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
         private Rect _cameraSize;
 
         [SerializeField] private BlockInteractionControllerSettings settings;
-        private float _maxThrowawaySpeed;
-        private float _bombPowerMultiplier;
-        private float _maxBlockToBombDistance;
+        private float _maxThrowawaySpeed,
+            _bombPowerMultiplier,
+            _maxBlockToBombDistance, 
+            _magnetizeTime,
+            _magnetPower;
+
+        private Vector2 _magnetRadius;
+        
+        private readonly List<MagneticField> _magneticFields = new();
 
         private ScoreController _scoreController;
         private HealthController _healthController;
@@ -35,6 +41,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
         public override void Init()
         {
             _blocks.Clear();
+            _magneticFields.Clear();
             _timeController = ControllerLocator.Instance.GetController<TimeController>();
             _scoreController = ControllerLocator.Instance.GetController<ScoreController>();
             _healthController = ControllerLocator.Instance.GetController<HealthController>();
@@ -43,6 +50,9 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
             _maxThrowawaySpeed = settings.MaxThrowawaySpeed;
             _bombPowerMultiplier = settings.BombPowerMultiplier;
             _maxBlockToBombDistance = settings.MaxBlockToBombDistance;
+            _magnetizeTime = settings.MagnetizeTime;
+            _magnetRadius = settings.MagnetRadius;
+            _magnetPower = settings.MagnetPower;
         }
 
         public void AddBlock(Block block)
@@ -64,16 +74,28 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
 
         private void HandleBlockHit(Block block)
         {
-            if (block is Bomb)
+            switch (block)
             {
-                foreach (var item in _blocks)
+                case Bomb:
                 {
-                    if (item.physicsObject.isFrozen) return;
-                    var itemPosition = item.transform.position;
-                    var blockPosition = block.transform.position;
-                    Vector2 direction = (itemPosition - blockPosition).normalized;
-                    var distance = Mathf.Max(Vector3.Distance(itemPosition, blockPosition), Mathf.Sqrt(_bombPowerMultiplier));
-                    if (distance < _maxBlockToBombDistance) item.AddVelocity(1f / Mathf.Sqrt(distance) * _bombPowerMultiplier * direction);
+                    foreach (var item in _blocks)
+                    {
+                        if (item.physicsObject.isFrozen) continue;
+                        var itemPosition = item.transform.position;
+                        var blockPosition = block.transform.position;
+                        Vector2 direction = (itemPosition - blockPosition).normalized;
+                        var distance = Mathf.Max(Vector3.Distance(itemPosition, blockPosition), Mathf.Sqrt(_bombPowerMultiplier));
+                        if (distance < _maxBlockToBombDistance) item.AddVelocity(1f / Mathf.Sqrt(distance) * _bombPowerMultiplier * direction);
+                    }
+
+                    break;
+                }
+                case Magnet:
+                {
+                    var particleMain = block.splashParticle!.main;
+                    particleMain.duration = _magnetizeTime;
+                    _magneticFields.Add(new MagneticField(block.transform.position, _magnetizeTime));
+                    break;
                 }
             }
         }
@@ -104,6 +126,34 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
                 DeleteBlock(block);
                 i--;
             }
+
+            CheckMagnets();
+        }
+
+        private void CheckMagnets()
+        {
+            for (var i = _magneticFields.Count - 1; i >= 0; i--)
+            {
+                var magneticField = _magneticFields[i];
+                magneticField.TimeToDie -= _timeController.DeltaTime;
+                foreach (var block in _blocks)
+                {
+                    if (block is Bomb) continue;
+                    if (block.physicsObject.isFrozen) continue;
+                    var distance = Vector2.Distance(block.transform.position, magneticField.Position); 
+                    
+                    if (distance > _magnetRadius.y) continue;
+                    if (distance < _magnetRadius.x)
+                    {
+                        block.physicsObject.velocity *= Mathf.Sqrt(distance);
+                        continue;
+                    }
+                    var direction = (magneticField.Position - (Vector2)block.transform.position).normalized;
+                    block.AddVelocity(_magnetPower / (distance * distance) * _timeController.DeltaTime * direction);
+                }
+
+                if (magneticField.TimeToDie <= 0) _magneticFields.Remove(magneticField);
+            }
         }
 
         public void HandleDeathLine(DeathLine deathLine)
@@ -111,10 +161,10 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
             for (var i = 0; i < _blocks.Count; i++)
             {
                 var block = _blocks[i];
-                if (!block.IsInteractable) continue;
+                if (!block.isInteractable) continue;
                 if (!(DistanceToSegment(deathLine, block) <= block.Radius)) continue;
 
-                if (block.IsHalfable)
+                if (block.isHalfable)
                 {
                     CreateAndSetupParts(deathLine, block);
                 }
@@ -144,14 +194,18 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
         private void SpawnSplashParticle(Block block, Vector2 direction)
         {
             if (block.splashParticle == null) return;
-            
+            var yRot = 90;
             var angleInDegrees = -Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            if (!block.useDirectionForParticle) angleInDegrees = 0;
+            if (!block.useDirectionForParticle)
+            {
+                angleInDegrees = 0;
+                yRot = 0;
+            }
             
             var particles = 
                 Instantiate(block.splashParticle,
                     block.transform.position,
-                    Quaternion.Euler(angleInDegrees, 90, 0),
+                    Quaternion.Euler(angleInDegrees, yRot, 0),
                     effectsFolder);
             
             var main = particles.main;
