@@ -1,4 +1,6 @@
-﻿using App.GameScene.Gameplay_Management.Block_Management;
+﻿using App.GameScene.Blocks;
+using App.GameScene.Blocks.SpecialBlocks;
+using App.GameScene.Gameplay_Management.Block_Management;
 using App.GameScene.Gameplay_Management.Block_Management.Block_Interaction;
 using App.GameScene.Gameplay_Management.State;
 using App.GameScene.Settings;
@@ -36,6 +38,14 @@ namespace App.GameScene.Gameplay_Management.Input_Management
             _deathLineThickness = settings.DeathLineThickness;
             trailHandler.cameraInfoProvider = _cameraInfoProvider;
             _isMoving = false;
+        }
+
+        public void HandleBlockHit(Block block)
+        {
+            if (block is Brick)
+            {
+                _isMoving = false;
+            }
         }
 
         private void Update()

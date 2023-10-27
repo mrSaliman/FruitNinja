@@ -51,6 +51,7 @@ MonoBehaviour:
   shadowController: {fileID: 8719022798298980164, guid: ce8f5a76909fb7346811cafbc2dd7e2e, type: 3}
   isInteractable: 1
   isHalfable: 1
+  isDestructible: 1
   disappearingSprite: {fileID: 0}
   splashParticle: {fileID: 6659537445033844294, guid: 45f22640cc23ae74dae4808445859393, type: 3}
   useDirectionForParticle: 0

@@ -1,4 +1,4 @@
-﻿namespace App.GameScene.Blocks
+﻿namespace App.GameScene.Blocks.SpecialBlocks
 {
     public class Bomb : Block
     {

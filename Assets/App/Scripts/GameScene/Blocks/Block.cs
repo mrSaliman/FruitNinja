@@ -1,4 +1,5 @@
-﻿using App.GameScene.Physics;
+﻿using System;
+using App.GameScene.Physics;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -16,6 +17,7 @@ namespace App.GameScene.Blocks
 
         public bool isInteractable;
         public bool isHalfable;
+        public bool isDestructible;
 
         [SerializeField] [CanBeNull] public DisappearingSprite disappearingSprite;
         [SerializeField] [CanBeNull] public ParticleSystem splashParticle;

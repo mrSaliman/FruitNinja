@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using App.GameScene.Blocks;
+using App.GameScene.Blocks.SpecialBlocks;
 using App.GameScene.Gameplay_Management.Block_Management.Block_Assignment;
 using App.GameScene.Gameplay_Management.Block_Management.Block_Interaction;
 using App.GameScene.Gameplay_Management.State;
@@ -141,6 +142,8 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
                     randomValue -= assignment.probability;
                 }
 
+                if (blockAssignmentsContainer.BlockAssignments[blockTypeId].blockPrefab is Brick &&
+                    _blockInteractionController.BrickQuantity > 0) blockTypeId = _scoreBlockId;
                 if (blockTypeId == _scoreBlockId) scoreBlockCount++;
                 else if (requiredScoreBlockAmount - scoreBlockCount == size - i)
                 {

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using App.GameScene.Blocks;
+using App.GameScene.Blocks.SpecialBlocks;
 using App.GameScene.Gameplay_Management.Input_Management;
 using App.GameScene.Gameplay_Management.State;
 using App.GameScene.Gameplay_Management.UI_Management;
@@ -26,6 +27,8 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
             _maxBlockToBombDistance, 
             _magnetizeTime,
             _magnetPower;
+        
+        public float BrickQuantity { get; private set; } 
 
         private Vector2 _magnetRadius;
         
@@ -34,6 +37,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
         private ScoreController _scoreController;
         private HealthController _healthController;
         private TimeController _timeController;
+        private InputController _inputController;
         
         [SerializeField] private Part partPrefab;
         [SerializeField] private Transform effectsFolder;
@@ -42,11 +46,23 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
         {
             _blocks.Clear();
             _magneticFields.Clear();
+            BrickQuantity = 0;
+            GetControllers();
+            _cameraSize = _cameraInfoProvider.CameraRect;
+            UnpackSettings();
+        }
+
+        private void GetControllers()
+        {
+            _inputController = ControllerLocator.Instance.GetController<InputController>();
             _timeController = ControllerLocator.Instance.GetController<TimeController>();
             _scoreController = ControllerLocator.Instance.GetController<ScoreController>();
             _healthController = ControllerLocator.Instance.GetController<HealthController>();
             _cameraInfoProvider = ControllerLocator.Instance.GetController<CameraInfoProvider>();
-            _cameraSize = _cameraInfoProvider.CameraRect;
+        }
+
+        private void UnpackSettings()
+        {
             _maxThrowawaySpeed = settings.MaxThrowawaySpeed;
             _bombPowerMultiplier = settings.BombPowerMultiplier;
             _maxBlockToBombDistance = settings.MaxBlockToBombDistance;
@@ -57,6 +73,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
 
         public void AddBlock(Block block)
         {
+            if (block is Brick) BrickQuantity++;
             _blocks.Add(block);
             block.physicsObject.timeController = _timeController;
             block.transform.parent = transform;
@@ -69,6 +86,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
             block.OnBlockHit += () => _healthController.HandleBlockHit(block);
             block.OnBlockHit += () => HandleBlockHit(block);
             block.OnBlockHit += () => _timeController.HandleBlockHit(block);
+            block.OnBlockHit += () => _inputController.HandleBlockHit(block);
             block.OnBlockMiss += () => _healthController.HandleBlockMiss(block);
         }
 
@@ -102,6 +120,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
 
         public void DeleteBlock(Block block)
         {
+            if (block is Brick) BrickQuantity--;
             block.transform.DOKill();
             Destroy(block.gameObject);
             _blocks.Remove(block);
@@ -158,7 +177,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
 
         public void HandleDeathLine(DeathLine deathLine)
         {
-            for (var i = 0; i < _blocks.Count; i++)
+            for (var i = _blocks.Count - 1; i >= 0; i--)
             {
                 var block = _blocks[i];
                 if (!block.isInteractable) continue;
@@ -169,10 +188,9 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
                     CreateAndSetupParts(deathLine, block);
                 }
                 
-                block.OnHit();
                 HandleAfterBlockAnimations(block, deathLine);
-                DeleteBlock(block);
-                i--;
+                block.OnHit();
+                if (block.isDestructible) DeleteBlock(block);
             }
         }
 

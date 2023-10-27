@@ -1,4 +1,5 @@
 ﻿using App.GameScene.Blocks;
+using App.GameScene.Blocks.SpecialBlocks;
 using App.GameScene.Gameplay_Management.State;
 using App.GameScene.Settings;
 using App.GameScene.Visualization.UI;
