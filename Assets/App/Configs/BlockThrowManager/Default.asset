@@ -18,3 +18,5 @@ MonoBehaviour:
   maxDifficulty: 0.35
   packSizeRange: {x: 2, y: 5}
   minScoreBlockPercent: 0.5
+  stringBagSizeRange: {x: 2, y: 4}
+  stringBagImmortalityTime: 0.5

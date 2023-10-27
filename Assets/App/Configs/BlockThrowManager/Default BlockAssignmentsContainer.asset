@@ -71,3 +71,9 @@ MonoBehaviour:
     - sprite: {fileID: 21300000, guid: 382fed331e9aeb64f9e319d6f37880e2, type: 3}
       splash: {fileID: 0}
       particleColor: {r: 0, g: 0, b: 0, a: 1}
+  - blockPrefab: {fileID: 1803495535306204234, guid: 308dcc062754ae249b7a7f15e47daaf7, type: 3}
+    probability: 0.4
+    sspAssignments:
+    - sprite: {fileID: 21300000, guid: 91522ac57d2540b49890f4bb011c7e2a, type: 3}
+      splash: {fileID: 0}
+      particleColor: {r: 0, g: 0, b: 0, a: 1}

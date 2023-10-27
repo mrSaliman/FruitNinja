@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using App.GameScene.Blocks;
 using App.GameScene.Blocks.SpecialBlocks;
+using App.GameScene.Gameplay_Management.Block_Management.Block_Throw;
 using App.GameScene.Gameplay_Management.Input_Management;
 using App.GameScene.Gameplay_Management.State;
 using App.GameScene.Gameplay_Management.UI_Management;
@@ -38,6 +39,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
         private HealthController _healthController;
         private TimeController _timeController;
         private InputController _inputController;
+        private BlockThrowController _blockThrowController;
         
         [SerializeField] private Part partPrefab;
         [SerializeField] private Transform effectsFolder;
@@ -54,6 +56,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
 
         private void GetControllers()
         {
+            _blockThrowController = ControllerLocator.Instance.GetController<BlockThrowController>();
             _inputController = ControllerLocator.Instance.GetController<InputController>();
             _timeController = ControllerLocator.Instance.GetController<TimeController>();
             _scoreController = ControllerLocator.Instance.GetController<ScoreController>();
@@ -87,6 +90,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
             block.OnBlockHit += () => HandleBlockHit(block);
             block.OnBlockHit += () => _timeController.HandleBlockHit(block);
             block.OnBlockHit += () => _inputController.HandleBlockHit(block);
+            block.OnBlockHit += () => _blockThrowController.HandleBlockHit(block);
             block.OnBlockMiss += () => _healthController.HandleBlockMiss(block);
         }
 
@@ -130,9 +134,12 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
         {
             if (CurrentGameState is GameState.Paused) return;
             _cameraSize = _cameraInfoProvider.CameraRect;
-            for (var i = 0; i < _blocks.Count; i++)
+            for (var i = _blocks.Count - 1; i >= 0; i--)
             {
                 var block = _blocks[i];
+                
+                UpdateImmortality(block);
+                
                 if (block.transform.position.y + block.Radius >= _cameraSize.height / 2f &&
                     block.physicsObject.velocity.y > 0) block.physicsObject.velocity.y *= -1f;
 
@@ -143,10 +150,17 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
                 
                 block.OnMiss();
                 DeleteBlock(block);
-                i--;
             }
 
             CheckMagnets();
+        }
+
+        private void UpdateImmortality(Block block)
+        {
+            if (block.isInteractable) return;
+            if (block.immortalityTimer <= 0) return;
+            block.immortalityTimer -= _timeController.AbsoluteDeltaTime;
+            if (block.immortalityTimer <= 0) block.isInteractable = true;
         }
 
         private void CheckMagnets()

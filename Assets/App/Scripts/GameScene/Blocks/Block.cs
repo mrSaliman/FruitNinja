@@ -15,6 +15,8 @@ namespace App.GameScene.Blocks
 
         [SerializeField] [CanBeNull] private ShadowController shadowController;
 
+        public float immortalityTimer;
+        
         public bool isInteractable;
         public bool isHalfable;
         public bool isDestructible;
@@ -50,7 +52,10 @@ namespace App.GameScene.Blocks
         public virtual void SetSprite(Sprite sprite)
         {
             spriteRenderer.sprite = sprite;
-            var spriteSize = (Vector2)sprite.bounds.size - (new Vector2(sprite.border.x + sprite.border.z, sprite.border.y + sprite.border.w)) / sprite.pixelsPerUnit;
+            var spriteSize = (Vector2)sprite.bounds.size -
+                             (new Vector2(sprite.border.x + sprite.border.z,
+                                 sprite.border.y + sprite.border.w)) /
+                             sprite.pixelsPerUnit;
             Radius = Mathf.Min(spriteSize.x, spriteSize.y) / 2f;
             SetupShadow();
         }

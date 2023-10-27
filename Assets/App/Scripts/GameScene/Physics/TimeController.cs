@@ -37,6 +37,7 @@ namespace App.GameScene.Physics
         }
 
         public float DeltaTime => Time.deltaTime * _timeScale;
+        public float AbsoluteDeltaTime => Time.deltaTime * (CurrentGameState is GameState.Paused ? 0 : 1);
 
         public override void Init()
         {
