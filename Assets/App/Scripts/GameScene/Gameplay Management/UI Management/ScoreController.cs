@@ -88,7 +88,7 @@ namespace App.GameScene.Gameplay_Management.UI_Management
 
         public void HandleBlockHit(Block block)
         {
-            if (block is ScoreBlock)
+            if (block.blockType is BlockType.ScoreBlock)
             {
                 _labelPosition = block.transform.position;
                 scoreLabel.AddValueAnimated(50);

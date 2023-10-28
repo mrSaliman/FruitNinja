@@ -5,7 +5,6 @@ using App.GameScene.Gameplay_Management;
 using App.GameScene.Gameplay_Management.State;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace App.GameScene.Physics
@@ -58,7 +57,7 @@ namespace App.GameScene.Physics
 
         public void HandleBlockHit(Block block)
         {
-            if (block is FreezeBlock)
+            if (block.blockType is BlockType.FreezeBlock)
             {
                 _freezeTimer = timeToFreeze;
                 CurrentTimeScale = frozenTimeScale;

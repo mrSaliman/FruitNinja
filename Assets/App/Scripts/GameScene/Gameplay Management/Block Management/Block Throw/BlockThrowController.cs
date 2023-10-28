@@ -152,7 +152,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
                     randomValue -= assignment.probability;
                 }
 
-                if (blockAssignmentsContainer.BlockAssignments[blockTypeId].blockPrefab is Brick &&
+                if (blockAssignmentsContainer.BlockAssignments[blockTypeId].blockPrefab.blockType is BlockType.Brick &&
                     _blockInteractionController.BrickQuantity > 0) blockTypeId = _scoreBlockId;
                 if (blockTypeId == _scoreBlockId) scoreBlockCount++;
                 else if (requiredScoreBlockAmount - scoreBlockCount == size - i)
@@ -180,7 +180,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
 
         public void HandleBlockHit(Block block)
         {
-            if (block is StringBag)
+            if (block.blockType is BlockType.StringBag)
             {
                 System.Random random = new();
                 

@@ -43,15 +43,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 8987594553235813450}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9b0ba1304094172b80c4c0a72bdc751, type: 3}
+  m_Script: {fileID: 11500000, guid: 28a3f63edaf843d981e7bc82d76eccbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   physicsObject: {fileID: 3278799013225874898}
   spriteRenderer: {fileID: 2550985220821619438}
+  blockType: 1
   shadowController: {fileID: 8719022798298980164, guid: ce8f5a76909fb7346811cafbc2dd7e2e, type: 3}
+  immortalityTimer: 0
   isInteractable: 1
   isHalfable: 0
   isDestructible: 0
+  isMissable: 0
   disappearingSprite: {fileID: 0}
   splashParticle: {fileID: 6129588573287892227, guid: d0ea62d5a6949fb488ef09dff8bb4019, type: 3}
   useDirectionForParticle: 0

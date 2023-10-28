@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 842121954472428804}
-  - component: {fileID: 6527169966905685123}
   - component: {fileID: 1057885724533165068}
+  - component: {fileID: 6527169966905685123}
   - component: {fileID: 6085316780666921919}
   m_Layer: 9
   m_Name: ScoreBlock
@@ -34,6 +34,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1057885724533165068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 842121954472428827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28a3f63edaf843d981e7bc82d76eccbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  physicsObject: {fileID: 6527169966905685123}
+  spriteRenderer: {fileID: 6085316780666921919}
+  blockType: 7
+  shadowController: {fileID: 8719022798298980164, guid: ce8f5a76909fb7346811cafbc2dd7e2e, type: 3}
+  immortalityTimer: 0
+  isInteractable: 1
+  isHalfable: 1
+  isDestructible: 1
+  isMissable: 1
+  disappearingSprite: {fileID: 5614099553726789458, guid: 5b34886528807ce4dbdb96157bd98453, type: 3}
+  splashParticle: {fileID: 3044496816650611438, guid: b36399c311c49684cbde0d4f1164faa8, type: 3}
+  useDirectionForParticle: 1
+  splash: {fileID: 0}
+  particleColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &6527169966905685123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49,29 +75,6 @@ MonoBehaviour:
   velocity: {x: 0, y: 0}
   isFrozen: 0
   timeController: {fileID: 0}
---- !u!114 &1057885724533165068
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 842121954472428827}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0f17cb8b0384025b53b1123cd5a2477, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  physicsObject: {fileID: 6527169966905685123}
-  spriteRenderer: {fileID: 6085316780666921919}
-  shadowController: {fileID: 8719022798298980164, guid: ce8f5a76909fb7346811cafbc2dd7e2e, type: 3}
-  isInteractable: 1
-  isHalfable: 1
-  isDestructible: 1
-  disappearingSprite: {fileID: 5614099553726789458, guid: 5b34886528807ce4dbdb96157bd98453, type: 3}
-  splashParticle: {fileID: 3044496816650611438, guid: b36399c311c49684cbde0d4f1164faa8, type: 3}
-  useDirectionForParticle: 1
-  splash: {fileID: 21300000, guid: 1b0503d9ec3abc942a38d4a8334cef6d, type: 3}
-  particleColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!212 &6085316780666921919
 SpriteRenderer:
   m_ObjectHideFlags: 0

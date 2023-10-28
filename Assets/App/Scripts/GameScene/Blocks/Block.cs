@@ -1,17 +1,18 @@
-﻿using System;
+﻿using App.GameScene.Blocks.SpecialBlocks;
 using App.GameScene.Physics;
 using JetBrains.Annotations;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace App.GameScene.Blocks
 {
-    public abstract class Block : MonoBehaviour
+    public class Block : MonoBehaviour
     {
         public PhysicsObject2D physicsObject;
         
         public SpriteRenderer spriteRenderer;
         private float _radius;
+
+        public BlockType blockType;
 
         [SerializeField] [CanBeNull] private ShadowController shadowController;
 
@@ -20,11 +21,12 @@ namespace App.GameScene.Blocks
         public bool isInteractable;
         public bool isHalfable;
         public bool isDestructible;
+        public bool isMissable;
 
         [SerializeField] [CanBeNull] public DisappearingSprite disappearingSprite;
         [SerializeField] [CanBeNull] public ParticleSystem splashParticle;
         [SerializeField] public bool useDirectionForParticle;
-        [CanBeNull] public Sprite splash;
+        [HideInInspector] [CanBeNull] public Sprite splash;
         [HideInInspector] public Color particleColor;
         
         public delegate void BlockHitAction();
@@ -39,12 +41,12 @@ namespace App.GameScene.Blocks
             private set => _radius = value;
         }
 
-        public virtual void OnHit()
+        public void OnHit()
         {
             OnBlockHit?.Invoke();
         }
 
-        public virtual void OnMiss()
+        public void OnMiss()
         {
             OnBlockMiss?.Invoke();
         }

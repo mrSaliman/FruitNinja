@@ -1,5 +1,4 @@
-﻿using System;
-using App.Mixed;
+﻿using App.Mixed;
 using App.Mixed.Visualization.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;

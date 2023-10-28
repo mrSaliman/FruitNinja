@@ -28,7 +28,7 @@ namespace App.GameScene.Gameplay_Management.UI_Management
 
         public void HandleBlockMiss(Block block)
         {
-            if (block is ScoreBlock)
+            if (block.blockType is BlockType.ScoreBlock)
             {
                 AddHp(-1);
             }
@@ -36,12 +36,12 @@ namespace App.GameScene.Gameplay_Management.UI_Management
 
         public void HandleBlockHit(Block block)
         {
-            switch (block)
+            switch (block.blockType)
             {
-                case Bomb:
+                case BlockType.Bomb:
                     AddHp(-1);
                     break;
-                case HealthBlock:
+                case BlockType.HealthBlock:
                     if (_currentHp + 1 <= _maxHp)
                     {
                         var tween = hpContainer.AnimateHpFlight(block.transform.position, _targetHp);

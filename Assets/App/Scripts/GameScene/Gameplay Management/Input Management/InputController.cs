@@ -1,12 +1,10 @@
 ﻿using App.GameScene.Blocks;
 using App.GameScene.Blocks.SpecialBlocks;
-using App.GameScene.Gameplay_Management.Block_Management;
 using App.GameScene.Gameplay_Management.Block_Management.Block_Interaction;
 using App.GameScene.Gameplay_Management.State;
 using App.GameScene.Settings;
 using App.GameScene.Visualization;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace App.GameScene.Gameplay_Management.Input_Management
 {
@@ -42,7 +40,7 @@ namespace App.GameScene.Gameplay_Management.Input_Management
 
         public void HandleBlockHit(Block block)
         {
-            if (block is Brick)
+            if (block.blockType is BlockType.Brick)
             {
                 _isMoving = false;
             }

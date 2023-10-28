@@ -1,6 +1,5 @@
 ﻿using App.Configs.Physics;
 using App.GameScene.Blocks;
-using DG.Tweening;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

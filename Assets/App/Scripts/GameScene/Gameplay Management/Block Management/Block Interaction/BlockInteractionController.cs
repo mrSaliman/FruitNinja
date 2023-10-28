@@ -76,7 +76,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
 
         public void AddBlock(Block block)
         {
-            if (block is Brick) BrickQuantity++;
+            if (block.blockType is BlockType.Brick) BrickQuantity++;
             _blocks.Add(block);
             block.physicsObject.timeController = _timeController;
             block.transform.parent = transform;
@@ -96,9 +96,9 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
 
         private void HandleBlockHit(Block block)
         {
-            switch (block)
+            switch (block.blockType)
             {
-                case Bomb:
+                case BlockType.Bomb:
                 {
                     foreach (var item in _blocks)
                     {
@@ -106,13 +106,15 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
                         var itemPosition = item.transform.position;
                         var blockPosition = block.transform.position;
                         Vector2 direction = (itemPosition - blockPosition).normalized;
-                        var distance = Mathf.Max(Vector3.Distance(itemPosition, blockPosition), Mathf.Sqrt(_bombPowerMultiplier));
-                        if (distance < _maxBlockToBombDistance) item.AddVelocity(1f / Mathf.Sqrt(distance) * _bombPowerMultiplier * direction);
+                        var distance = Mathf.Max(Vector3.Distance(itemPosition, blockPosition),
+                            Mathf.Sqrt(_bombPowerMultiplier));
+                        if (distance < _maxBlockToBombDistance)
+                            item.AddVelocity(1f / Mathf.Sqrt(distance) * _bombPowerMultiplier * direction);
                     }
 
                     break;
                 }
-                case Magnet:
+                case BlockType.Magnet:
                 {
                     var particleMain = block.splashParticle!.main;
                     particleMain.duration = _magnetizeTime;
@@ -124,7 +126,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
 
         public void DeleteBlock(Block block)
         {
-            if (block is Brick) BrickQuantity--;
+            if (block.blockType is BlockType.Brick) BrickQuantity--;
             block.transform.DOKill();
             Destroy(block.gameObject);
             _blocks.Remove(block);
@@ -148,7 +150,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
                         new Rect((Vector2)block.transform.position - new Vector2(block.Radius, block.Radius),
                             new Vector2(block.Radius * 2, block.Radius * 2)))) continue;
                 
-                block.OnMiss();
+                if (block.isMissable) block.OnMiss();
                 DeleteBlock(block);
             }
 
@@ -171,7 +173,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
                 magneticField.TimeToDie -= _timeController.DeltaTime;
                 foreach (var block in _blocks)
                 {
-                    if (block is Bomb or Brick) continue;
+                    if (block.blockType is BlockType.Bomb or BlockType.Brick) continue;
                     if (block.physicsObject.isFrozen) continue;
                     var distance = Vector2.Distance(block.transform.position, magneticField.Position); 
                     
