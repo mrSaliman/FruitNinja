@@ -28,9 +28,8 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
             var scaleSpeed = (Random.Range(0.66f, 1.55f) - 1) / timeToEnd;
             var angularVelocity = Random.Range(-360, 360) / timeToEnd;
             block.physicsObject.ScaleSpeed = scaleSpeed;
+            block.physicsObject.ScaleRange = new Vector2(0.66f, 1.55f);
             block.physicsObject.AngularVelocity = angularVelocity;
-            //block.transform.DOScale(Random.Range(0.66f, 1.55f), timeToEnd).SetEase(Ease.Linear);
-            //block.transform.DOLocalRotate(new Vector3(0, 0, Random.Range(-360, 360)), timeToEnd, RotateMode.FastBeyond360);
         }
 
         private static float CalculateTimeToDrown(float initialVelocityY, float startY, float targetY)

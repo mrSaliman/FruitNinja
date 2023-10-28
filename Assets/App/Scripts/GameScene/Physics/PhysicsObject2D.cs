@@ -9,6 +9,7 @@ namespace App.GameScene.Physics
 
         public float AngularVelocity { get; set; }
         public float ScaleSpeed { get; set; }
+        public Vector2 ScaleRange { get; set; }
 
         [HideInInspector] public bool isFrozen;
         [HideInInspector] public TimeController timeController;
@@ -26,7 +27,8 @@ namespace App.GameScene.Physics
             var mainTransform = transform;
             mainTransform.position += (Vector3)velocity * deltaTime;
             mainTransform.Rotate(0, 0, AngularVelocity * deltaTime); 
-            mainTransform.localScale += Vector3.one * (ScaleSpeed * deltaTime);
+            if (mainTransform.localScale.x > ScaleRange.x && mainTransform.localScale.x < ScaleRange.y) 
+                mainTransform.localScale += Vector3.one * (ScaleSpeed * deltaTime);
         }
 
     }

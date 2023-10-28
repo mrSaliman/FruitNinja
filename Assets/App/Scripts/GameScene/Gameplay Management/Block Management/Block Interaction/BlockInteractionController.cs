@@ -171,7 +171,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
                 magneticField.TimeToDie -= _timeController.DeltaTime;
                 foreach (var block in _blocks)
                 {
-                    if (block is Bomb) continue;
+                    if (block is Bomb or Brick) continue;
                     if (block.physicsObject.isFrozen) continue;
                     var distance = Vector2.Distance(block.transform.position, magneticField.Position); 
                     
