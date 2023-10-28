@@ -18,8 +18,10 @@ MonoBehaviour:
   maxDifficulty: 0.35
   packSizeRange: {x: 2, y: 5}
   minScoreBlockPercent: 0.5
-  stringBagSizeRange: {x: 2, y: 4}
+  stringBagSizeRange: {x: 3, y: 5}
   stringBagImmortalityTime: 0.5
   samuraiPackSizeMultiplier: 2
   samuraiThrowPackDelayMultiplier: 0.1
   samuraiModeTime: 9
+  mimicChance: 0.05
+  mimicParticlePrefab: {fileID: 5292523807418325273, guid: 3efe04a982f9db746a4c44ee7591e79d, type: 3}

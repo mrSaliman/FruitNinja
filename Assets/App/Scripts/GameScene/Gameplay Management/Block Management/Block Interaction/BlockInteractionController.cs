@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using App.GameScene.Blocks;
 using App.GameScene.Blocks.SpecialBlocks;
+using App.GameScene.Gameplay_Management.Block_Management.Block_Assignment;
 using App.GameScene.Gameplay_Management.Block_Management.Block_Throw;
 using App.GameScene.Gameplay_Management.Input_Management;
 using App.GameScene.Gameplay_Management.State;
@@ -172,7 +173,6 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
         private void HandleMimics()
         {
             System.Random random = new();
-            var values = Enum.GetValues(typeof(BlockType));
             
             foreach (var block in _blocks)
             {
@@ -180,8 +180,21 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
                 block.mimicTimer -= _timeController.AbsoluteDeltaTime;
                 if (!(block.mimicTimer <= 0)) continue;
                 block.mimicTimer = _mimicTime;
-                block.blockType = (BlockType)values.GetValue(random.Next(values.Length));
+                Mimic(block, random);
             }
+        }
+
+        private void Mimic(Block block, System.Random random)
+        {
+            var blockAssignment =
+                _blockThrowController.blockAssignmentsContainer.BlockAssignments[
+                    _blockThrowController.GetRandomAssignmentId(random)];
+            block.SetSettings(blockAssignment.blockSettings);
+            var sspAssignment =
+                blockAssignment.sspAssignments[random.Next(blockAssignment.sspAssignments.Count)];
+            block.SetSprite(sspAssignment.sprite);
+            block.splash = sspAssignment.splash;
+            block.particleColor = sspAssignment.particleColor;
         }
 
         private void HandleMagnets()

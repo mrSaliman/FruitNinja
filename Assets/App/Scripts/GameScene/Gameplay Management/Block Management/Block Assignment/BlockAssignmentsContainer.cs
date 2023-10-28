@@ -8,10 +8,13 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Assignment
     public class BlockAssignmentsContainer : ScriptableObject
     {
         [SerializeField] private Block blockPrefab;
+        [SerializeField] private ShadowController shadowPrefab;
         [SerializeField] private int scoreBlockAssignmentId;
         [SerializeField] private List<BlockAssignment> blockAssignments;
-        
+
+
         public Block BlockPrefab => blockPrefab;
+        public ShadowController ShadowPrefab => shadowPrefab;
         public int ScoreBlockAssignmentId => scoreBlockAssignmentId;
         public List<BlockAssignment> BlockAssignments => blockAssignments;
     }

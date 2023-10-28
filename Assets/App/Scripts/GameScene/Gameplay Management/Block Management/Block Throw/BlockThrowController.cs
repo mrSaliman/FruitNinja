@@ -34,13 +34,14 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
             _minScoreBlockPercent,
             _stringBagImmortalityTime,
             _samuraiThrowPackDelayMultiplier,
-            _samuraiModeTime;
+            _samuraiModeTime,
+            _mimicChance;
 
         private int _samuraiPackSizeMultiplier;
-
         private Vector2Int _stringBagSizeRange;
+        private ParticleSystem _mimicParticlePrefab;
         
-        [SerializeField] private BlockAssignmentsContainer blockAssignmentsContainer;
+        public BlockAssignmentsContainer blockAssignmentsContainer;
         
         [HideInInspector] public List<ThrowZone> throwZones;
 
@@ -84,6 +85,8 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
             _samuraiThrowPackDelayMultiplier = settings.SamuraiThrowPackDelayMultiplier;
             _samuraiModeTime = settings.SamuraiModeTime;
             _samuraiPackSizeMultiplier = settings.SamuraiPackSizeMultiplier;
+            _mimicChance = settings.MimicChance;
+            _mimicParticlePrefab = settings.MimicParticlePrefab;
         }
         
         private void StartThrowingLoop()
@@ -176,19 +179,8 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
             
             for (var i = 0; i < size; i++)
             {
-                var randomValue = random.NextDouble() * _totalBlockProbability;
-                var blockTypeId = _scoreBlockId;
-                for (var j = 0; j < blockAssignmentsContainer.BlockAssignments.Count; j++)
-                {
-                    var assignment = blockAssignmentsContainer.BlockAssignments[j];
-                    if (randomValue < assignment.probability)
-                    {
-                        blockTypeId = j;
-                        break;
-                    }
 
-                    randomValue -= assignment.probability;
-                }
+                var blockTypeId = GetRandomAssignmentId(random);
 
                 if (blockAssignmentsContainer.BlockAssignments[blockTypeId].blockSettings.blockType is BlockType.Brick &&
                     _blockInteractionController.BrickQuantity > 0) blockTypeId = _scoreBlockId;
@@ -201,15 +193,44 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
                 var blockAssignment = blockAssignmentsContainer.BlockAssignments[blockTypeId];
                 var block = SetupBlock(blockAssignment, _cameraSize.size, random);
                 if (_samuraiMode) block.isMissable = false;
+                else if (random.NextDouble() < _mimicChance)
+                {
+                    block.isMimic = true;
+                    block.mimicParticle = Instantiate(_mimicParticlePrefab, block.transform);
+                }
+
                 _currentPack.Add(block);
                 _blockInteractionController.AddBlock(block);
             }
+        }
+
+        public int GetRandomAssignmentId(System.Random random)
+        {
+            var randomValue = random.NextDouble() * _totalBlockProbability;
+            var blockTypeId = _scoreBlockId;
+            for (var j = 0; j < blockAssignmentsContainer.BlockAssignments.Count; j++)
+            {
+                var assignment = blockAssignmentsContainer.BlockAssignments[j];
+                if (randomValue < assignment.probability)
+                {
+                    blockTypeId = j;
+                    break;
+                }
+
+                randomValue -= assignment.probability;
+            }
+
+            return blockTypeId;
         }
 
         private Block SetupBlock(BlockAssignment blockAssignment, Vector3 blockPosition, System.Random random)
         {
             var block = Instantiate(blockAssignmentsContainer.BlockPrefab, blockPosition, Quaternion.identity);
             block.SetSettings(blockAssignment.blockSettings);
+            if (blockAssignment.blockSettings.hasShadow)
+            {
+                block.shadowController = Instantiate(blockAssignmentsContainer.ShadowPrefab, block.transform);
+            }
             var sspAssignment =
                 blockAssignment.sspAssignments[random.Next(blockAssignment.sspAssignments.Count)];
             block.SetSprite(sspAssignment.sprite);
@@ -237,7 +258,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
                         sbBlock.transform.localScale = block.transform.localScale;
                         _blockInteractionController.AddBlock(sbBlock);
 
-                        sbBlock.physicsObject.velocity = new Vector2(Random.Range(-1, 1) * 5, 5);
+                        sbBlock.physicsObject.velocity = new Vector2(((float)random.NextDouble() * 2 - 1) * 5, 5);
                         sbBlock.physicsObject.isFrozen = false;
                     }
 

@@ -50,6 +50,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 1186918169523176232}
   blockType: 6
   shadowController: {fileID: 8719022798298980164, guid: ce8f5a76909fb7346811cafbc2dd7e2e, type: 3}
+  hasShadow: 1
   immortalityTimer: 0
   isInteractable: 0
   isHalfable: 0

@@ -16,7 +16,11 @@ namespace App.GameScene.Settings
         [SerializeField] private int samuraiPackSizeMultiplier;
         [SerializeField] private float samuraiThrowPackDelayMultiplier;
         [SerializeField] private float samuraiModeTime;
+        [SerializeField] private float mimicChance;
+        [SerializeField] private ParticleSystem mimicParticlePrefab;
         
+        public ParticleSystem MimicParticlePrefab => mimicParticlePrefab;
+        public float MimicChance => mimicChance;
         public int SamuraiPackSizeMultiplier => samuraiPackSizeMultiplier;
         public float SamuraiThrowPackDelayMultiplier => samuraiThrowPackDelayMultiplier;
         public float SamuraiModeTime => samuraiModeTime;

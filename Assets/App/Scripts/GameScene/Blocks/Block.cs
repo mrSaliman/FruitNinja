@@ -15,7 +15,8 @@ namespace App.GameScene.Blocks
 
         public BlockType blockType;
 
-        [SerializeField] [CanBeNull] private ShadowController shadowController;
+        public ShadowController shadowController;
+        public bool hasShadow;
 
         public float immortalityTimer;
         
@@ -27,9 +28,11 @@ namespace App.GameScene.Blocks
 
         public float mimicTimer;
 
-        [SerializeField] [CanBeNull] public DisappearingSprite disappearingSprite;
-        [SerializeField] [CanBeNull] public ParticleSystem splashParticle;
-        [SerializeField] public bool useDirectionForParticle;
+        [CanBeNull] public DisappearingSprite disappearingSprite;
+        [CanBeNull] public ParticleSystem splashParticle;
+        [CanBeNull] public ParticleSystem mimicParticle;
+        
+        public bool useDirectionForParticle;
         [HideInInspector] [CanBeNull] public Sprite splash;
         [HideInInspector] public Color particleColor;
         
@@ -69,7 +72,6 @@ namespace App.GameScene.Blocks
         protected void SetupShadow()
         {
             if (shadowController is null) return;
-            shadowController = Instantiate(shadowController, transform);
             shadowController.mainSpriteRenderer.sprite = spriteRenderer.sprite;
             shadowController.parent = this;
         }
@@ -89,7 +91,7 @@ namespace App.GameScene.Blocks
         public void SetSettings(BlockSettings blockSettings)
         {
             blockType = blockSettings.blockType;
-            shadowController = blockSettings.shadowController;
+            hasShadow = blockSettings.hasShadow;
             isInteractable = blockSettings.isInteractable;
             isHalfable = blockSettings.isHalfable;
             isDestructible = blockSettings.isDestructible;
