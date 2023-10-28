@@ -39,9 +39,12 @@ namespace App.GameScene.Gameplay_Management.UI_Management
             switch (block.blockType)
             {
                 case BlockType.Bomb:
+                {
                     AddHp(-1);
                     break;
+                }
                 case BlockType.HealthBlock:
+                {
                     if (_currentHp + 1 <= _maxHp)
                     {
                         var tween = hpContainer.AnimateHpFlight(block.transform.position, _targetHp);
@@ -52,7 +55,9 @@ namespace App.GameScene.Gameplay_Management.UI_Management
                         };
                         _targetHp++;
                     }
+
                     break;
+                }
             }
         }
 

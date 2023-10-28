@@ -15,5 +15,5 @@ MonoBehaviour:
   hpSprite: {fileID: 21300000, guid: c39bff52171e5c64c9b78c1cd1a6b1b4, type: 3}
   spacing: 20
   maxHpInRow: 6
-  startHp: 103
-  maxHp: 116
+  startHp: 3
+  maxHp: 15

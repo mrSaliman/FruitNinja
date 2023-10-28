@@ -13,7 +13,13 @@ namespace App.GameScene.Settings
         [SerializeField] [Range(0, 1)] private float minScoreBlockPercent;
         [SerializeField] private Vector2Int stringBagSizeRange;
         [SerializeField] private float stringBagImmortalityTime;
+        [SerializeField] private int samuraiPackSizeMultiplier;
+        [SerializeField] private float samuraiThrowPackDelayMultiplier;
+        [SerializeField] private float samuraiModeTime;
         
+        public int SamuraiPackSizeMultiplier => samuraiPackSizeMultiplier;
+        public float SamuraiThrowPackDelayMultiplier => samuraiThrowPackDelayMultiplier;
+        public float SamuraiModeTime => samuraiModeTime;
         public float StringBagImmortalityTime => stringBagImmortalityTime;
         public Vector2Int StringBagSizeRange => stringBagSizeRange;
         public float MinScoreBlockPercent => minScoreBlockPercent;

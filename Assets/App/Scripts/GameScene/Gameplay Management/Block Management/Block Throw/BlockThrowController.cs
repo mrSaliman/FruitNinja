@@ -8,7 +8,10 @@ using App.GameScene.Gameplay_Management.State;
 using App.GameScene.Physics;
 using App.GameScene.Settings;
 using App.GameScene.Visualization;
+using App.GameScene.Visualization.UI;
+using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
@@ -29,7 +32,11 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
             _difficultyFactor,
             _maxDifficulty,
             _minScoreBlockPercent,
-            _stringBagImmortalityTime;
+            _stringBagImmortalityTime,
+            _samuraiThrowPackDelayMultiplier,
+            _samuraiModeTime;
+
+        private int _samuraiPackSizeMultiplier;
 
         private Vector2Int _stringBagSizeRange;
         
@@ -37,6 +44,8 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
         
         [HideInInspector] public List<ThrowZone> throwZones;
 
+        [SerializeField] private TimerLabel timerLabel;
+        [SerializeField] private Image samuraiBg;
 
         private readonly List<Block> _currentPack = new();
         private ThrowZone _currentThrowZone;
@@ -45,9 +54,12 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
             _packTimer,
             _difficulty,
             _totalThrowZonesProbability,
-            _totalBlockProbability;
+            _totalBlockProbability,
+            _samuraiModeTimer;
 
         private int _blockIndex, _scoreBlockId;
+
+        private bool _samuraiMode;
         
         public override void Init()
         {
@@ -56,7 +68,41 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
             _cameraInfoProvider = ControllerLocator.Instance.GetController<CameraInfoProvider>();
             _blockInteractionController = ControllerLocator.Instance.GetController<BlockInteractionController>();
             _randomBlockThrower = new RandomBlockThrower();
+            UnpackSettings();
             StartThrowingLoop();
+        }
+
+        private void UnpackSettings()
+        {
+            _throwPackDelay = settings.BaseThrowPackDelay;
+            _throwBlockDelay = settings.BaseThrowBlockDelay;
+            _difficultyFactor = settings.DifficultyFactor;
+            _maxDifficulty = settings.MaxDifficulty;
+            _minScoreBlockPercent = settings.MinScoreBlockPercent;
+            _stringBagSizeRange = settings.StringBagSizeRange;
+            _stringBagImmortalityTime = settings.StringBagImmortalityTime;
+            _samuraiThrowPackDelayMultiplier = settings.SamuraiThrowPackDelayMultiplier;
+            _samuraiModeTime = settings.SamuraiModeTime;
+            _samuraiPackSizeMultiplier = settings.SamuraiPackSizeMultiplier;
+        }
+        
+        private void StartThrowingLoop()
+        {
+            _packTimer = _throwPackDelay;
+            _blockTimer = _throwBlockDelay;
+            _blockIndex = 0;
+
+            _samuraiModeTimer = 0;
+            
+            _difficulty = 1f;
+            
+            _cameraSize = _cameraInfoProvider.CameraRect;
+
+            _scoreBlockId = blockAssignmentsContainer.ScoreBlockAssignmentId;
+
+            _totalThrowZonesProbability = throwZones.Sum(throwZone => throwZone.probability);
+            _totalBlockProbability =
+                blockAssignmentsContainer.BlockAssignments.Sum(blockAssignment => blockAssignment.probability);
         }
 
         private void Update()
@@ -74,6 +120,18 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
             }
             _blockTimer -= _timeController.DeltaTime;
             _packTimer -= _timeController.DeltaTime;
+            if (_samuraiModeTimer > 0)
+            {
+                _samuraiModeTimer -= _timeController.AbsoluteDeltaTime;
+                timerLabel.SetValue((int)_samuraiModeTimer);
+            }
+            if (_samuraiModeTimer < 0)
+            {
+                _samuraiModeTimer = 0;
+                _samuraiMode = false;
+                timerLabel.ClearValue();
+                samuraiBg.DOFade(0, 1);
+            }
             ThrowingLoop();
         }
 
@@ -88,7 +146,8 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
                 _blockIndex++;
                 _blockTimer = _throwBlockDelay * _difficulty;
                 
-                if (_currentPack.Count - _blockIndex == 1) _packTimer = _throwPackDelay * _difficulty;
+                if (_currentPack.Count - _blockIndex == 1)
+                    _packTimer = _throwPackDelay * _difficulty * (_samuraiMode ? _samuraiThrowPackDelayMultiplier : 1);
             }
             else if (_packTimer <= 0)
             {
@@ -96,33 +155,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
                 if (_difficulty > _maxDifficulty) _difficulty *= _difficultyFactor;
             }
         }
-
-        private void StartThrowingLoop()
-        {
-            _throwPackDelay = settings.BaseThrowPackDelay;
-            _throwBlockDelay = settings.BaseThrowBlockDelay;
-            
-            _packTimer = _throwPackDelay;
-            _blockTimer = _throwBlockDelay;
-            _blockIndex = 0;
-            
-            _difficulty = 1f;
-            _difficultyFactor = settings.DifficultyFactor;
-            _maxDifficulty = settings.MaxDifficulty;
-            
-            _cameraSize = _cameraInfoProvider.CameraRect;
-
-            _scoreBlockId = blockAssignmentsContainer.ScoreBlockAssignmentId;
-            _minScoreBlockPercent = settings.MinScoreBlockPercent;
-
-            _stringBagSizeRange = settings.StringBagSizeRange;
-            _stringBagImmortalityTime = settings.StringBagImmortalityTime;
-
-            _totalThrowZonesProbability = throwZones.Sum(throwZone => throwZone.probability);
-            _totalBlockProbability =
-                blockAssignmentsContainer.BlockAssignments.Sum(blockAssignment => blockAssignment.probability);
-        }
-
+        
         private void GenerateRandomPack(Vector2Int packSizeRange)
         {
             _blockIndex = 0;
@@ -135,6 +168,11 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
             var size = random.Next(packSizeRange.x, packSizeRange.y + 1);
             var scoreBlockCount = 0;
             var requiredScoreBlockAmount = Mathf.CeilToInt(_minScoreBlockPercent * size);
+            if (_samuraiMode)
+            {
+                size *= _samuraiPackSizeMultiplier;
+                requiredScoreBlockAmount = size;
+            }
             
             for (var i = 0; i < size; i++)
             {
@@ -162,6 +200,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
                 }
                 var blockAssignment = blockAssignmentsContainer.BlockAssignments[blockTypeId];
                 var block = SetupBlock(blockAssignment, _cameraSize.size, random);
+                if (_samuraiMode) block.isMissable = false;
                 _currentPack.Add(block);
                 _blockInteractionController.AddBlock(block);
             }
@@ -180,25 +219,37 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
 
         public void HandleBlockHit(Block block)
         {
-            if (block.blockType is BlockType.StringBag)
+            switch (block.blockType)
             {
-                System.Random random = new();
-                
-                var size = random.Next(_stringBagSizeRange.x, _stringBagSizeRange.y + 1);
-
-                for (var i = 0; i < size; i++)
+                case BlockType.StringBag:
                 {
-                    var sbBlock = SetupBlock(blockAssignmentsContainer.BlockAssignments[_scoreBlockId],
-                        block.transform.position, random);
-                    sbBlock.isInteractable = false;
-                    sbBlock.immortalityTimer = _stringBagImmortalityTime;
-                    sbBlock.transform.localScale = block.transform.localScale;
-                    _blockInteractionController.AddBlock(sbBlock);
-
-                    sbBlock.physicsObject.velocity = new Vector2(Random.Range(-1, 1) * 5, 5);
-                    sbBlock.physicsObject.isFrozen = false;
-                }
+                    System.Random random = new();
                 
+                    var size = random.Next(_stringBagSizeRange.x, _stringBagSizeRange.y + 1);
+
+                    for (var i = 0; i < size; i++)
+                    {
+                        var sbBlock = SetupBlock(blockAssignmentsContainer.BlockAssignments[_scoreBlockId],
+                            block.transform.position, random);
+                        sbBlock.isInteractable = false;
+                        sbBlock.immortalityTimer = _stringBagImmortalityTime;
+                        sbBlock.transform.localScale = block.transform.localScale;
+                        _blockInteractionController.AddBlock(sbBlock);
+
+                        sbBlock.physicsObject.velocity = new Vector2(Random.Range(-1, 1) * 5, 5);
+                        sbBlock.physicsObject.isFrozen = false;
+                    }
+
+                    break;
+                }
+                case BlockType.SamuraiBlock:
+                {
+                    _samuraiMode = true;
+                    _samuraiModeTimer = _samuraiModeTime;
+                    timerLabel.SetValue((int)_samuraiModeTimer);
+                    samuraiBg.DOFade(1, 1);
+                    break;
+                }
             }
         }
         

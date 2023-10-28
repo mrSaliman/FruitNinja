@@ -22,6 +22,9 @@ namespace App.GameScene.Blocks
         public bool isHalfable;
         public bool isDestructible;
         public bool isMissable;
+        public bool isMimic;
+
+        public float mimicTimer;
 
         [SerializeField] [CanBeNull] public DisappearingSprite disappearingSprite;
         [SerializeField] [CanBeNull] public ParticleSystem splashParticle;

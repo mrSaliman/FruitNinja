@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using App.GameScene.Blocks;
 using App.GameScene.Blocks.SpecialBlocks;
 using App.GameScene.Gameplay_Management.Block_Management.Block_Throw;
@@ -27,7 +28,8 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
             _bombPowerMultiplier,
             _maxBlockToBombDistance, 
             _magnetizeTime,
-            _magnetPower;
+            _magnetPower,
+            _mimicTime;
         
         public float BrickQuantity { get; private set; } 
 
@@ -72,6 +74,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
             _magnetizeTime = settings.MagnetizeTime;
             _magnetRadius = settings.MagnetRadius;
             _magnetPower = settings.MagnetPower;
+            _mimicTime = settings.MimicTime;
         }
 
         public void AddBlock(Block block)
@@ -154,7 +157,8 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
                 DeleteBlock(block);
             }
 
-            CheckMagnets();
+            HandleMagnets();
+            HandleMimics();
         }
 
         private void UpdateImmortality(Block block)
@@ -165,7 +169,22 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Interaction
             if (block.immortalityTimer <= 0) block.isInteractable = true;
         }
 
-        private void CheckMagnets()
+        private void HandleMimics()
+        {
+            System.Random random = new();
+            var values = Enum.GetValues(typeof(BlockType));
+            
+            foreach (var block in _blocks)
+            {
+                if (!block.isMimic) continue;
+                block.mimicTimer -= _timeController.AbsoluteDeltaTime;
+                if (!(block.mimicTimer <= 0)) continue;
+                block.mimicTimer = _mimicTime;
+                block.blockType = (BlockType)values.GetValue(random.Next(values.Length));
+            }
+        }
+
+        private void HandleMagnets()
         {
             for (var i = _magneticFields.Count - 1; i >= 0; i--)
             {

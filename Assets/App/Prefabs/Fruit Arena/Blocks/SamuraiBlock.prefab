@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1186918169523176233
+--- !u!1 &6795109145864076914
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,24 +8,24 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1186918169523176213}
-  - component: {fileID: 1186918169523176234}
-  - component: {fileID: 1186918169523176235}
-  - component: {fileID: 1186918169523176232}
-  m_Layer: 0
-  m_Name: Part
+  - component: {fileID: 6795109145864076909}
+  - component: {fileID: 6795109145864076913}
+  - component: {fileID: 1114614726506942442}
+  - component: {fileID: 113049511143626966}
+  m_Layer: 9
+  m_Name: SamuraiBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1186918169523176213
+--- !u!4 &6795109145864076909
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1186918169523176233}
+  m_GameObject: {fileID: 6795109145864076914}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -34,41 +34,41 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1186918169523176234
+--- !u!114 &6795109145864076913
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1186918169523176233}
+  m_GameObject: {fileID: 6795109145864076914}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 625f7f89adc348139dac3f71663171c9, type: 3}
+  m_Script: {fileID: 11500000, guid: 28a3f63edaf843d981e7bc82d76eccbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  physicsObject: {fileID: 1186918169523176235}
-  spriteRenderer: {fileID: 1186918169523176232}
-  blockType: 6
+  physicsObject: {fileID: 1114614726506942442}
+  spriteRenderer: {fileID: 113049511143626966}
+  blockType: 5
   shadowController: {fileID: 8719022798298980164, guid: ce8f5a76909fb7346811cafbc2dd7e2e, type: 3}
   immortalityTimer: 0
-  isInteractable: 0
-  isHalfable: 0
-  isDestructible: 0
+  isInteractable: 1
+  isHalfable: 1
+  isDestructible: 1
   isMissable: 0
   isMimic: 0
   mimicTimer: 0
   disappearingSprite: {fileID: 0}
   splashParticle: {fileID: 0}
-  useDirectionForParticle: 1
+  useDirectionForParticle: 0
   splash: {fileID: 0}
   particleColor: {r: 0, g: 0, b: 0, a: 0}
---- !u!114 &1186918169523176235
+--- !u!114 &1114614726506942442
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1186918169523176233}
+  m_GameObject: {fileID: 6795109145864076914}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ecc5fee6381047c8940b20c22486f076, type: 3}
@@ -77,13 +77,13 @@ MonoBehaviour:
   velocity: {x: 0, y: 0}
   isFrozen: 0
   timeController: {fileID: 0}
---- !u!212 &1186918169523176232
+--- !u!212 &113049511143626966
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1186918169523176233}
+  m_GameObject: {fileID: 6795109145864076914}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0

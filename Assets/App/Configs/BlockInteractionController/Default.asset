@@ -18,3 +18,4 @@ MonoBehaviour:
   magnetizeTime: 3
   magnetRadius: {x: 1, y: 6}
   magnetPower: 700
+  mimicTime: 1

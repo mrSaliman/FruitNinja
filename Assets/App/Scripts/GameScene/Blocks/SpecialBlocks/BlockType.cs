@@ -7,7 +7,6 @@
         FreezeBlock,
         HealthBlock,
         Magnet,
-        Part,
         SamuraiBlock,
         ScoreBlock,
         StringBag

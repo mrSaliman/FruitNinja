@@ -11,7 +11,9 @@ namespace App.GameScene.Settings
         [SerializeField] private float magnetizeTime;
         [SerializeField] private Vector2 magnetRadius;
         [SerializeField] private float magnetPower;
+        [SerializeField] private float mimicTime;
         
+        public float MimicTime => mimicTime;
         public float MagnetPower => magnetPower;
         public Vector2 MagnetRadius => magnetRadius;
         public float MagnetizeTime => magnetizeTime;

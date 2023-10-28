@@ -48,13 +48,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   physicsObject: {fileID: 6527169966905685123}
   spriteRenderer: {fileID: 6085316780666921919}
-  blockType: 7
+  blockType: 6
   shadowController: {fileID: 8719022798298980164, guid: ce8f5a76909fb7346811cafbc2dd7e2e, type: 3}
   immortalityTimer: 0
   isInteractable: 1
   isHalfable: 1
   isDestructible: 1
   isMissable: 1
+  isMimic: 0
+  mimicTimer: 0
   disappearingSprite: {fileID: 5614099553726789458, guid: 5b34886528807ce4dbdb96157bd98453, type: 3}
   splashParticle: {fileID: 3044496816650611438, guid: b36399c311c49684cbde0d4f1164faa8, type: 3}
   useDirectionForParticle: 1
