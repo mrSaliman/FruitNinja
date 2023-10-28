@@ -190,7 +190,7 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
                     randomValue -= assignment.probability;
                 }
 
-                if (blockAssignmentsContainer.BlockAssignments[blockTypeId].blockPrefab.blockType is BlockType.Brick &&
+                if (blockAssignmentsContainer.BlockAssignments[blockTypeId].blockSettings.blockType is BlockType.Brick &&
                     _blockInteractionController.BrickQuantity > 0) blockTypeId = _scoreBlockId;
                 if (blockTypeId == _scoreBlockId) scoreBlockCount++;
                 else if (requiredScoreBlockAmount - scoreBlockCount == size - i)
@@ -206,9 +206,10 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
             }
         }
 
-        private static Block SetupBlock(BlockAssignment blockAssignment, Vector3 blockPosition, System.Random random)
+        private Block SetupBlock(BlockAssignment blockAssignment, Vector3 blockPosition, System.Random random)
         {
-            var block = Instantiate(blockAssignment.blockPrefab, blockPosition, Quaternion.identity);
+            var block = Instantiate(blockAssignmentsContainer.BlockPrefab, blockPosition, Quaternion.identity);
+            block.SetSettings(blockAssignment.blockSettings);
             var sspAssignment =
                 blockAssignment.sspAssignments[random.Next(blockAssignment.sspAssignments.Count)];
             block.SetSprite(sspAssignment.sprite);

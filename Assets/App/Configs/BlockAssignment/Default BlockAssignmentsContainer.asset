@@ -12,9 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a8aade2df7c4e599183bb5380a823cd, type: 3}
   m_Name: Default BlockAssignmentsContainer
   m_EditorClassIdentifier: 
+  blockPrefab: {fileID: 3999088383706826101, guid: 0524e8cf4067d0448b812b0d0631ad1c, type: 3}
   scoreBlockAssignmentId: 0
   blockAssignments:
-  - blockPrefab: {fileID: 1057885724533165068, guid: fc12a6077ab56cd46bbdf51e36bbe7f7, type: 3}
+  - blockSettings:
+      blockType: 6
+      shadowController: {fileID: 8719022798298980164, guid: ce8f5a76909fb7346811cafbc2dd7e2e, type: 3}
+      isInteractable: 1
+      isHalfable: 1
+      isDestructible: 1
+      isMissable: 1
+      disappearingSprite: {fileID: 5614099553726789458, guid: 5b34886528807ce4dbdb96157bd98453, type: 3}
+      splashParticle: {fileID: 3044496816650611438, guid: b36399c311c49684cbde0d4f1164faa8, type: 3}
+      useDirectionForParticle: 1
     probability: 10
     sspAssignments:
     - sprite: {fileID: 21300000, guid: 1b5d2db4c98906d4098331af6065c336, type: 3}
@@ -41,43 +51,106 @@ MonoBehaviour:
     - sprite: {fileID: 21300000, guid: 9481c5e7364662a4e8c4184bb293697e, type: 3}
       splash: {fileID: 21300000, guid: ad736e52018ba9b4883cec39878f84fe, type: 3}
       particleColor: {r: 0.7686275, g: 0.12941177, b: 0.12941177, a: 1}
-  - blockPrefab: {fileID: 3853955580576289292, guid: 888da01f01b9d6b4ca77e1f5a4f06089, type: 3}
+  - blockSettings:
+      blockType: 0
+      shadowController: {fileID: 0}
+      isInteractable: 1
+      isHalfable: 0
+      isDestructible: 1
+      isMissable: 0
+      disappearingSprite: {fileID: 0}
+      splashParticle: {fileID: 6789670740338421662, guid: 98d41336bad7a6142b72df64f9174220, type: 3}
+      useDirectionForParticle: 0
     probability: 2
     sspAssignments:
     - sprite: {fileID: 21300000, guid: a49572f1bf023894598e88893f348167, type: 3}
       splash: {fileID: 0}
       particleColor: {r: 0, g: 0, b: 0, a: 1}
-  - blockPrefab: {fileID: 2052554252638260500, guid: 5b1c7e0ff665f4d478f8506769fe87b8, type: 3}
+  - blockSettings:
+      blockType: 3
+      shadowController: {fileID: 8719022798298980164, guid: ce8f5a76909fb7346811cafbc2dd7e2e, type: 3}
+      isInteractable: 1
+      isHalfable: 1
+      isDestructible: 1
+      isMissable: 0
+      disappearingSprite: {fileID: 0}
+      splashParticle: {fileID: 2903124963415976546, guid: 41a410496d0f5e142a75bd32b14d72eb, type: 3}
+      useDirectionForParticle: 0
     probability: 0.2
     sspAssignments:
     - sprite: {fileID: 21300000, guid: fe94dde38767b794a915e082b53f7292, type: 3}
       splash: {fileID: 0}
       particleColor: {r: 0, g: 0, b: 0, a: 1}
-  - blockPrefab: {fileID: 8655553586791551727, guid: b21a8e77f397ce745bcfe6c3a04cf5a6, type: 3}
+  - blockSettings:
+      blockType: 2
+      shadowController: {fileID: 8719022798298980164, guid: ce8f5a76909fb7346811cafbc2dd7e2e, type: 3}
+      isInteractable: 1
+      isHalfable: 1
+      isDestructible: 1
+      isMissable: 0
+      disappearingSprite: {fileID: 0}
+      splashParticle: {fileID: 0}
+      useDirectionForParticle: 0
     probability: 0.6
     sspAssignments:
     - sprite: {fileID: 21300000, guid: 330230b3d2301e14eab39ac7cfd4a31d, type: 3}
       splash: {fileID: 0}
       particleColor: {r: 0, g: 0, b: 0, a: 1}
-  - blockPrefab: {fileID: 3936773626072720066, guid: 8595ce981b95d3744b5936f8d22db288, type: 3}
+  - blockSettings:
+      blockType: 4
+      shadowController: {fileID: 8719022798298980164, guid: ce8f5a76909fb7346811cafbc2dd7e2e, type: 3}
+      isInteractable: 1
+      isHalfable: 1
+      isDestructible: 1
+      isMissable: 0
+      disappearingSprite: {fileID: 0}
+      splashParticle: {fileID: 6659537445033844294, guid: 45f22640cc23ae74dae4808445859393, type: 3}
+      useDirectionForParticle: 0
     probability: 0.4
     sspAssignments:
     - sprite: {fileID: 21300000, guid: e478bb4c804ea7146bd3e922dfd1af93, type: 3}
       splash: {fileID: 0}
       particleColor: {r: 0, g: 0, b: 0, a: 1}
-  - blockPrefab: {fileID: 8987594553235813453, guid: 06514ce409967f241aa77dcf902ca4af, type: 3}
+  - blockSettings:
+      blockType: 1
+      shadowController: {fileID: 8719022798298980164, guid: ce8f5a76909fb7346811cafbc2dd7e2e, type: 3}
+      isInteractable: 1
+      isHalfable: 0
+      isDestructible: 0
+      isMissable: 0
+      disappearingSprite: {fileID: 0}
+      splashParticle: {fileID: 6129588573287892227, guid: d0ea62d5a6949fb488ef09dff8bb4019, type: 3}
+      useDirectionForParticle: 0
     probability: 0.2
     sspAssignments:
     - sprite: {fileID: 21300000, guid: 382fed331e9aeb64f9e319d6f37880e2, type: 3}
       splash: {fileID: 0}
       particleColor: {r: 0, g: 0, b: 0, a: 1}
-  - blockPrefab: {fileID: 1803495535306204234, guid: 308dcc062754ae249b7a7f15e47daaf7, type: 3}
+  - blockSettings:
+      blockType: 7
+      shadowController: {fileID: 8719022798298980164, guid: ce8f5a76909fb7346811cafbc2dd7e2e, type: 3}
+      isInteractable: 1
+      isHalfable: 0
+      isDestructible: 1
+      isMissable: 0
+      disappearingSprite: {fileID: 0}
+      splashParticle: {fileID: 0}
+      useDirectionForParticle: 0
     probability: 0.4
     sspAssignments:
     - sprite: {fileID: 21300000, guid: 91522ac57d2540b49890f4bb011c7e2a, type: 3}
       splash: {fileID: 0}
       particleColor: {r: 0, g: 0, b: 0, a: 1}
-  - blockPrefab: {fileID: 6795109145864076913, guid: 4fc4bec3c5a03984f8b7a9f2bc5a3f5f, type: 3}
+  - blockSettings:
+      blockType: 5
+      shadowController: {fileID: 8719022798298980164, guid: ce8f5a76909fb7346811cafbc2dd7e2e, type: 3}
+      isInteractable: 1
+      isHalfable: 1
+      isDestructible: 1
+      isMissable: 0
+      disappearingSprite: {fileID: 0}
+      splashParticle: {fileID: 0}
+      useDirectionForParticle: 0
     probability: 0.2
     sspAssignments:
     - sprite: {fileID: 21300000, guid: 99d0950e42efbae4b824de362b18edcd, type: 3}

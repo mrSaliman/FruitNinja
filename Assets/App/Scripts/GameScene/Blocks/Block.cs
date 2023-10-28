@@ -1,4 +1,5 @@
 ﻿using App.GameScene.Blocks.SpecialBlocks;
+using App.GameScene.Gameplay_Management.Block_Management.Block_Assignment;
 using App.GameScene.Physics;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -83,6 +84,19 @@ namespace App.GameScene.Blocks
             transform.position = position;
             physicsObject.velocity = velocity;
             physicsObject.isFrozen = false;
+        }
+
+        public void SetSettings(BlockSettings blockSettings)
+        {
+            blockType = blockSettings.blockType;
+            shadowController = blockSettings.shadowController;
+            isInteractable = blockSettings.isInteractable;
+            isHalfable = blockSettings.isHalfable;
+            isDestructible = blockSettings.isDestructible;
+            isMissable = blockSettings.isMissable;
+            disappearingSprite = blockSettings.disappearingSprite;
+            splashParticle = blockSettings.splashParticle;
+            useDirectionForParticle = blockSettings.useDirectionForParticle;
         }
     }
 }
