@@ -2,6 +2,7 @@
 using App.Mixed.Visualization.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace App.MainMenu
@@ -11,6 +12,7 @@ namespace App.MainMenu
         [SerializeField] private NumberLabel bestScoreLabel;
         [SerializeField] private Button playButton;
         [SerializeField] private Button exitButton;
+        [SerializeField] private SceneTransition sceneTransition;
 
         private void Awake()
         {
@@ -31,7 +33,7 @@ namespace App.MainMenu
 
         public void OnPlayButtonClicked()
         {
-            SceneManager.LoadScene("GameScene");
+            sceneTransition.SwitchToScene("GameScene");
             DeactivateButtons();
         }
 

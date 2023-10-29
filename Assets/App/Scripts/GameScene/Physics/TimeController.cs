@@ -46,13 +46,20 @@ namespace App.GameScene.Physics
         public override void SetState(GameState newGameState)
         {
             base.SetState(newGameState);
-            _timeScale = newGameState switch
+            switch (newGameState)
             {
-                GameState.Paused => 0,
-                GameState.InGame => _currentTimeScale,
-                GameState.GameOver => _currentTimeScale,
-                _ => throw new ArgumentOutOfRangeException(nameof(newGameState), newGameState, null)
-            };
+                case GameState.Paused:
+                    _timeScale = 0;
+                    Time.timeScale = 0;
+                    break;
+                case GameState.InGame:
+                case GameState.GameOver:
+                    Time.timeScale = 1; 
+                    _timeScale = _currentTimeScale;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(newGameState), newGameState, null);
+            }
         }
 
         public void HandleBlockHit(Block block)

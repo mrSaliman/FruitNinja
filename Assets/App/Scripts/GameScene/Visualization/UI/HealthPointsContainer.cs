@@ -57,7 +57,16 @@ namespace App.GameScene.Visualization.UI
         {
             for (var i = 0; i < _healthPointsRow.Count; i++)
             {
-                AnimateUIElement(_healthPointsRow[i], i < hp ? 1 : 0, animationDuration);
+                if (animationDuration == 0)
+                {
+                    var color = _healthPointsRow[i].color;
+                    color.a = i < hp ? 1 : 0;
+                    _healthPointsRow[i].color = color;
+                }
+                else
+                {
+                    AnimateUIElement(_healthPointsRow[i], i < hp ? 1 : 0, animationDuration);
+                }
             }
 
             if (hp > _maxHpInRow)

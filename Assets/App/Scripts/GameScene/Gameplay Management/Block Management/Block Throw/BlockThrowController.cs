@@ -96,6 +96,11 @@ namespace App.GameScene.Gameplay_Management.Block_Management.Block_Throw
             _blockIndex = 0;
 
             _samuraiModeTimer = 0;
+            _samuraiMode = false;
+            timerLabel.ClearValue();
+            var samuraiBgColor = samuraiBg.color;
+            samuraiBgColor.a = 0;
+            samuraiBg.color = samuraiBgColor;
             
             _difficulty = 1f;
             

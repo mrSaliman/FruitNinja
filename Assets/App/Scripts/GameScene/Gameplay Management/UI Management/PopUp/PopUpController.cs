@@ -1,10 +1,12 @@
 ﻿using System;
 using App.GameScene.Gameplay_Management.Block_Management.Block_Interaction;
 using App.GameScene.Gameplay_Management.State;
+using App.Mixed;
 using App.Mixed.Visualization.UI;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace App.GameScene.Gameplay_Management.UI_Management.PopUp
@@ -18,6 +20,8 @@ namespace App.GameScene.Gameplay_Management.UI_Management.PopUp
         [SerializeField] private CanvasGroup gameOverPopUp;
         [SerializeField] private NumberLabel scoreLabel;
         [SerializeField] private NumberLabel bestScoreLabel;
+
+        [SerializeField] private SceneTransition sceneTransition;
         
         private BlockInteractionController _blockInteractionController;
         private ScoreController _scoreController;
@@ -124,7 +128,7 @@ namespace App.GameScene.Gameplay_Management.UI_Management.PopUp
         {
             popUpBg.interactable = false;
             DOTween.KillAll();
-            SceneManager.LoadScene("MainMenu");
+            sceneTransition.SwitchToScene("MainMenu");
         }
 
         public void OnContinueButtonClicked()

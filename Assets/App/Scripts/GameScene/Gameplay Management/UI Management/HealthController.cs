@@ -48,11 +48,11 @@ namespace App.GameScene.Gameplay_Management.UI_Management
                     if (_currentHp + 1 <= _maxHp)
                     {
                         var tween = hpContainer.AnimateHpFlight(block.transform.position, _targetHp);
-                        tween.onComplete += () =>
+                        tween.onComplete = (() =>
                         {
                             if (_currentHp < _targetHp) _currentHp++;
                             hpContainer.UpdateContent(_currentHp, 0);
-                        };
+                        }) + tween.onComplete;
                         _targetHp++;
                     }
 
